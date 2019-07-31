@@ -3,9 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "activedirectory": "^0.7.2",
+    "async": "^3.1.0",
+    "bunyan": "^1.8.12",
+    "express": "^4.17.1",
+    "ldapjs": "^1.0.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-scripts": "3.0.1"
+    "react-scripts": "3.0.1",
+    "styled-components": "^4.3.2",
+    "underscore": "^1.9.1"
   },
   "scripts": {
     "start": "react-scripts start",
