@@ -4,22 +4,26 @@ import Input from './Input/Input'
 
 import * as S from './styledComponents'
 
-let Search = () => {
+let Search = ({handleFormSubmit}) => {
     let [userInput, setUserInput] = useState({
-        name: '',
-        surname: ''
+        fullName: '',
     })
 
     let handleInput = (value, fieldName) => {
-        setUserInput({ ...userInput, [fieldName]: value })
+        let newInput = {...userInput}
+        newInput[fieldName] = value;
+        setUserInput({...newInput})
     }
 
+    let onFormSubmit = (event) =>{
+        event.preventDefault();
+        handleFormSubmit(userInput)
+    }
     return (
         <S.Search>
-            <h2>Znajdź użytkownika</h2>
-            <S.Form>
-                <Input value={userInput.name} handleInput={handleInput} fieldName={'name'} placeholder={'imie'} />
-                <Input value={userInput.surname} handleInput={handleInput} fieldName={'surname'} placeholder={'nazwisko'} />
+            <S.FormTitle>Znajdź użytkownika</S.FormTitle>
+            <S.Form onSubmit={e=>onFormSubmit(e)}>
+                <Input value={userInput.fullName} handleInput={handleInput} fieldName={'fullName'} placeholder={'imie nazwisko'} />
                 <S.Submit type='submit'>Szukaj</S.Submit>
             </S.Form>
         </S.Search>

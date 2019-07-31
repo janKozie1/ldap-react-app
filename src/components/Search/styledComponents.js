@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 
-import {sizes} from '../cssVariables'
+import {sizes,colors} from '../cssVariables'
 
 export let Search = styled.section`
     width:${sizes.breakpoints.mobile};
-    margin-top:90px;
+    margin-top:calc(${sizes.margins.formMargin} * 2);
     display:flex;
     align-items:center;
     flex-direction:column;
@@ -14,17 +14,27 @@ export let Search = styled.section`
         width:80%;
     }
 `
+export let FormTitle = styled.h2`
+    margin:0;
+    color:${colors.font};
 
+`
 
 export let Form = styled.form`
-    width:60%;
+    margin-top:${sizes.margins.formMargin};
+    width:80%;
     display:flex;
     justify-content:center;
-    flex-direction:column;
+
 `
 
 export let Submit = styled.button`
-    margin-top:40px;
     border:0;
-    padding:15px 20px;   
+    padding:10px 15px;
+    background:${colors.main};
+    color:white;
+    font-family:inherit;
+    font-size:0.8rem;
+    flex:1;
+    border-radius: 0 5px 5px 0;
 `

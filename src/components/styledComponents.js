@@ -24,7 +24,7 @@ export let GlobalStyle = createGlobalStyle`
 
 export let Main = styled.main`
     width:100%;
-    margin-top:30px;
+    margin-top:${sizes.margins.formMargin};
     display:flex;
     align-items:center;
     justify-content:flex-start;

@@ -1,17 +1,22 @@
 import styled from 'styled-components'
-
+import {colors} from '../../cssVariables'
 export let Input = styled.input`
-    width:100%;
+    flex:5;
     padding:10px 20px;
-    margin-top:20px;
-    
+
     font-family:inherit;
+    color:${colors.font};
 
     border:1px solid rgba(0,0,0,0.5);
-    border-radius:3px;
+    border-right:0;
+    border-radius:5px 0 0 5px;
     
     &::placeholder{
         text-transform:capitalize;
+    }
+    &:focus{
+        outline:none;
+        border-color:${colors.main}
     }
 
 `
