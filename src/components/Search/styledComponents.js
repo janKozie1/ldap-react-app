@@ -23,8 +23,11 @@ export let FormTitle = styled.h2`
 export let Form = styled.form`
     margin-top:${sizes.margins.formMargin};
     width:80%;
-    display:flex;
-    justify-content:center;
+    display:grid;
+    grid-template-columns:5fr 1fr;
+    grid-row-gap:1rem;      
+    align-content:center;
+    justify-items:center;
 
 `
 
@@ -35,6 +38,6 @@ export let Submit = styled.button`
     color:white;
     font-family:inherit;
     font-size:0.8rem;
-    flex:1;
+    width:100%;
     border-radius: 0 5px 5px 0;
 `

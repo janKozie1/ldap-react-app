@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 
 import Search from './Search/Search'
-import Toggle from './Toggle/Toggle'
 import Logo from '../assets/logo.png'
 
 import {useFetch} from '../logic/hooks'
@@ -21,11 +20,10 @@ let App = () => {
             text:'Pełne imię'
         }
     ]
-    let [mode, setMode] = useState(modes[1]);
     let [query, setQuery] = useState(null)
     let [result,error,isLoading] = useFetch(query)
-    let handleFormSubmit = ({fullName}) => {
-        setQuery({query:fullName})
+    let handleFormSubmit = (value) => {
+        setQuery({query:value.fullName})
     }
     return (
         <>
@@ -33,8 +31,7 @@ let App = () => {
 
             <S.Main>
                 <S.Logo src={Logo}/>
-                <Toggle values={modes} updateFunction={setMode} />
-                <Search handleFormSubmit={handleFormSubmit} modes={modes} mode={mode}/>
+                <Search handleFormSubmit={handleFormSubmit} modes={modes}/>
             </S.Main>
 
         </>
