@@ -16,18 +16,18 @@ export let Label = styled.label`
     flex:1;
     
     &:first-of-type{
-        padding-right:20px;
+        padding-right:15px;
         text-align:right;
     }
     &:last-of-type{
-        padding-left:20px;
+        padding-left:15px;
         text-align:left;
     }
     
 `
 
 export let Option = styled.p`
-    font-size:0.5rem;
+    font-size:0.55rem;
     padding:5px;
     cursor:pointer;
     
@@ -55,7 +55,7 @@ export let ToggleIndicator = styled.div`
         background:${colors.main};
         border-radius:50%;
     }
-    ${props => props.selected == 1 && css`
+    ${props => props.selected === 1 && css`
         &::after{
             transform:translate(100%,-50%)
         }   

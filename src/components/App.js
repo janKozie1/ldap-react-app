@@ -22,8 +22,8 @@ let App = () => {
     ]
     let [query, setQuery] = useState(null)
     let [result,error,isLoading] = useFetch(query)
-    let handleFormSubmit = (value) => {
-        setQuery({query:value.fullName})
+    let handleFormSubmit = (value,{type}) => {
+        setQuery({query:value[type].trim(),type})
     }
     return (
         <>

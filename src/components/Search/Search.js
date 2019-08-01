@@ -8,7 +8,6 @@ let Search = ({ handleFormSubmit, modes }) => {
     let [mode, setMode] = useState(0)
     let { type, placeholder } = modes[mode];
     let [userInput, setUserInput] = useState(Object.fromEntries(modes.map(e => [e.type, ''])))
-    console.log(userInput)
     let handleInput = (value, fieldName) => {
         let newInput = { ...userInput }
         newInput[fieldName] = value;
@@ -17,7 +16,7 @@ let Search = ({ handleFormSubmit, modes }) => {
 
     let onFormSubmit = (event) => {
         event.preventDefault();
-        handleFormSubmit(userInput, mode)
+        handleFormSubmit(userInput, modes[mode])
     }
     return (
 
