@@ -4,26 +4,24 @@ import Input from './Input/Input'
 
 import * as S from './styledComponents'
 
-let Search = ({handleFormSubmit}) => {
-    let [userInput, setUserInput] = useState({
-        fullName: '',
-    })
-
+let Search = ({ handleFormSubmit, modes, mode: { placeholder, type } }) => {
+    let [userInput, setUserInput] = useState(Object.fromEntries(modes.map(e => [e.type, ''])))
+    console.log(userInput)
     let handleInput = (value, fieldName) => {
-        let newInput = {...userInput}
+        let newInput = { ...userInput }
         newInput[fieldName] = value;
-        setUserInput({...newInput})
+        setUserInput({ ...newInput })
     }
 
-    let onFormSubmit = (event) =>{
+    let onFormSubmit = (event) => {
         event.preventDefault();
         handleFormSubmit(userInput)
     }
     return (
         <S.Search>
             <S.FormTitle>Znajdź użytkownika</S.FormTitle>
-            <S.Form onSubmit={e=>onFormSubmit(e)}>
-                <Input value={userInput.fullName} handleInput={handleInput} fieldName={'fullName'} placeholder={'imie nazwisko'} />
+            <S.Form onSubmit={e => onFormSubmit(e)}>
+                <Input value={userInput[type]} handleInput={handleInput} fieldName={type} placeholder={placeholder} />
                 <S.Submit type='submit'>Szukaj</S.Submit>
             </S.Form>
         </S.Search>
