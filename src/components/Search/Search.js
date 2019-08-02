@@ -24,7 +24,6 @@ let Search = ({ handleFormSubmit, modes }) => {
             <S.FormTitle>Znajdź użytkownika</S.FormTitle>
             <S.Form onSubmit={e => onFormSubmit(e)}>
                 <Toggle values={modes} updateFunction={setMode} mode={mode} />
-
                 <Input value={userInput[type]} handleInput={handleInput} fieldName={type} placeholder={placeholder} />
                 <S.Submit type='submit'>Szukaj</S.Submit>
 

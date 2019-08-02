@@ -27,8 +27,7 @@ export let Label = styled.label`
 `
 
 export let Option = styled.p`
-    font-size:0.55rem;
-    padding:5px;
+    font-size:0.65rem;
     cursor:pointer;
     
 `

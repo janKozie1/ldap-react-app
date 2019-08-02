@@ -3,19 +3,77 @@ let ActiveDirectory = require('activedirectory')
 let express = require('express')
 let cors = require('cors')
 let app = express();
-
-let config = {
-    url: 'ldap://velvetcare.pl',
-    baseDN: 'dc=velvetcare,dc=pl',
-    username: 'n99037@velvetcare.pl',
-    password: 'Lato,2019'
-}
-
-let ad = new ActiveDirectory(config);
+let {config} = require('./config')
+const sql = require("msnodesqlv8");
 
 app.use(cors({ origin: '*' }))
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+const connectionString = `server=localhost\\SQLEXPRESS;Database=test;Trusted_Connection=yes;Driver={SQL Server Native Client 11.0}`;
+
+let ad = new ActiveDirectory(config);
+
+
+
+let getFolderPaths = (userID)  => {
+    return new Promise((resolve,reject)=>{
+        sql.query(connectionString, `select Grupa from dbo.Klucze where [User ID]='${userID}'`, (err, rows) => {
+            if(!err){
+                let uniques = [
+                    ...new Set(
+                        rows.map(e=>e.Grupa)
+                            .filter(e=>e))
+                ].map(e=>{
+                    return {
+                        grupa: e
+                    }
+                })
+                resolve(uniques);
+            }
+            resolve(null);
+        })
+
+    })
+}
+
+ 
+
+app.post('/getUserData', async(req, res) => {
+    let result = await getFolderPaths(req.body.query);
+    ad.find(`cn=${result[0].grupa}`,(err,res)=>{
+        console.log(res);
+    })
+    // let queryToAD;
+    // console.log(req.body.query,req.body.type)
+    // if (req.body.type === 'id') {
+    //     queryToAD = `cn=${req.body.query}`
+    // } else if (req.body.type === 'fullName') {
+    // let fullName = req.body.query.split(" ")
+    //     queryToAD = `(&(sn=${fullName[1]})(givenName=${fullName[0]}))`
+    // }
+    // ad.find(queryToAD, function (err, results) {
+    //     if(results && results.users){
+    //         results.users.map(e=>{
+    //             console.log(e)
+    //         })
+    //     }
+    // });
+})
+
+
+app.listen('8080', () => {
+    console.log('started at 8080')
+})
+
+
+
+
+
+    
+
+
+
 
 // ad.getUsersForGroup('PLKLCorpSAP_R', function(err, user) {
 //     if (err) {
@@ -37,23 +95,4 @@ app.use(express.urlencoded({ extended: true }));
 //   });
 // ad.find('(&(sn=*Kozieł*)(givenName=*Jan*))', function(err, results) {
 //     console.log(results)
-//   });
-
-app.post('/getUserData', (req, res) => {
-    let fullName = req.body.query.split(" ")
-    console.log(req.body.query)
-    let query;
-    if (req.body.type === 'id') {
-        query = `cn=${req.body.query}`
-    } else if (req.body.type === 'fullName') {
-        query = `(&(sn=*${fullName[1]}*)(givenName=*${fullName[0]}*))`
-    }
-    ad.find(query, function (err, results) {
-        console.log(results)
-    });
-})
-
-
-app.listen('8080', () => {
-    console.log('started at 8080')
-})
+//   });    

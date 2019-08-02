@@ -2,7 +2,8 @@ import styled from 'styled-components'
 import {colors} from '../../cssVariables'
 export let Input = styled.input`
     width:100%;
-    padding:10px 20px;
+    padding:10px;
+  
     font-family:inherit;
     color:${colors.font};
 

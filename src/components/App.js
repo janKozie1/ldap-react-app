@@ -12,18 +12,20 @@ let App = () => {
         {
             type:'id',
             placeholder:'ID',
-            text:'ID'
+            text:'ID',
+            fieldID:'id'
         },
         {
-            type:'fullName',
+            type:'id',
             placeholder:'imie nazwisko',
-            text:'Pełne imię'
+            text:'Pełne imię',
+            fieldID:'fullName'
         }
     ]
     let [query, setQuery] = useState(null)
     let [result,error,isLoading] = useFetch(query)
-    let handleFormSubmit = (value,{type}) => {
-        setQuery({query:value[type].trim(),type})
+    let handleFormSubmit = (value,{type,fieldID}) => {
+        setQuery({query:value[type].trim(),type:fieldID})
     }
     return (
         <>

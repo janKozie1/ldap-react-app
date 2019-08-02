@@ -9,6 +9,8 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "ldapjs": "^1.0.2",
+    "msnodesqlv8": "^0.8.1",
+    "mssql": "^5.1.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "3.0.1",
