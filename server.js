@@ -26,7 +26,7 @@ let getFolderPaths = (userID)  => {
                             .filter(e=>e))
                 ].map(e=>{
                     return {
-                        grupa: e
+                        group: e
                     }
                 })
                 resolve(uniques);
@@ -37,12 +37,23 @@ let getFolderPaths = (userID)  => {
     })
 }
 
- 
+let getGroupMemembers = (group) => {
+   
+    ad.getUsersForGroup(group,(err,res)=>{
+        console.log('query: ' + group)
+        res ? res.map(e=>{
+            console.log(e.description);
+        }) : null;
+
+        console.log("--------------------------")
+    })
+} 
 
 app.post('/getUserData', async(req, res) => {
     let result = await getFolderPaths(req.body.query);
-    ad.find(`cn=${result[0].grupa}`,(err,res)=>{
-        console.log(res);
+    
+    result.map(e=>{
+       getGroupMemembers(e.group)
     })
     // let queryToAD;
     // console.log(req.body.query,req.body.type)
