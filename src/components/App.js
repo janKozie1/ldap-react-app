@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState,useEffect} from 'react'
 
 import Search from './Search/Search'
 import Logo from '../assets/logo.png'
@@ -24,6 +24,9 @@ let App = () => {
     ]
     let [query, setQuery] = useState(null)
     let [result,error,isLoading] = useFetch(query)
+    useEffect(()=>{
+        console.log(result)
+    },[result])
     let handleFormSubmit = (value,{type,fieldID}) => {
         setQuery({query:value[type].trim(),type:fieldID})
     }

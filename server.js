@@ -3,7 +3,7 @@ let ActiveDirectory = require('activedirectory')
 let express = require('express')
 let cors = require('cors')
 let app = express();
-let {config} = require('./config')
+let { config } = require('./config')
 const sql = require("msnodesqlv8");
 
 app.use(cors({ origin: '*' }))
@@ -16,19 +16,20 @@ let ad = new ActiveDirectory(config);
 
 
 
-let getFolderPaths = (userID)  => {
-    return new Promise((resolve,reject)=>{
-        sql.query(connectionString, `select Grupa from dbo.Klucze where [User ID]='${userID}'`, (err, rows) => {
-            if(!err){
+let getFolderInfo = (userID) => {
+    return new Promise((resolve, reject) => {
+        sql.query(connectionString, `select Grupa, Description from dbo.Klucze where [User ID]='${userID}'`, (err, rows) => {
+            if (!err) {
                 let uniques = [
                     ...new Set(
-                        rows.map(e=>e.Grupa)
-                            .filter(e=>e))
-                ].map(e=>{
-                    return {
-                        group: e
-                    }
-                })
+                        rows.map(e => {
+                            return {
+                                group: e.Grupa,
+                                path: e.Description
+                            }
+                        })
+                            .filter(e => e.group && e.path))  //removes the empty ones
+                ]
                 resolve(uniques);
             }
             resolve(null);
@@ -38,24 +39,35 @@ let getFolderPaths = (userID)  => {
 }
 
 let getGroupMemembers = (group) => {
-   
-    ad.getUsersForGroup(group,(err,res)=>{
-        console.log('query: ' + group)
-        res ? res.map(e=>{
-            console.log(e.description);
-        }) : null;
+    return new Promise((resolve, reject) => {
+        ad.getUsersForGroup(group, (err, res) => {
+            let parsed = res ? res.map(({ cn, displayName, description }) => {
+                return {
+                    cn,
+                    displayName,
+                    description
+                }
+            }) : [];
+            resolve(parsed);
+        })
 
-        console.log("--------------------------")
     })
-} 
 
-app.post('/getUserData', async(req, res) => {
-    let result = await getFolderPaths(req.body.query);
-    
-    result.map(e=>{
-       getGroupMemembers(e.group)
+}
+let parseFolderData = (data) =>{
+
+}
+app.post('/getUserData', async (req, res) => {
+    let folderInfo = await getFolderInfo(req.body.query);
+    let results = folderInfo.map(async(e) => {
+        let members = await getGroupMemembers(e.group);
+        return {
+            ...e,
+            members
+        }
     })
-    // let queryToAD;
+   Promise.all(results).then((data)=>res.json(data))
+       // let queryToAD;
     // console.log(req.body.query,req.body.type)
     // if (req.body.type === 'id') {
     //     queryToAD = `cn=${req.body.query}`
@@ -81,7 +93,7 @@ app.listen('8080', () => {
 
 
 
-    
+
 
 
 
