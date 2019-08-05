@@ -21,7 +21,7 @@ let DataDisplay = React.memo(({ data }) => {
             </S.DataHeader>
             {
                 data && data.map((e, i) => {
-                    return <DataItem key={`${i}-${e.group}`} data={e} />
+                    return <DataItem key={`${i}-${e.group}`} index={i} data={e} />
                 })
             }
         </S.DataList>

@@ -1,14 +1,13 @@
-import styled, {css} from 'styled-components'
+import styled, { css } from 'styled-components'
 import { colors } from '../../cssVariables'
-import {ReactComponent as bg} from '../../../assets/arrow.svg'
+import { ReactComponent as bg } from '../../../assets/arrow.svg'
 
 export let DataItem = styled.li`
     max-width:100%;
     word-break:break-all;
     font-size:13px;
-    padding:0 20px;
-    height:40px;
-    border-bottom:1px solid rgba(0,0,0,0.15);
+    padding:10px 20px;
+    border-bottom:1px solid rgba(0,0,0,0.2);
     color:${colors.font};
     display:grid;
     grid-column-gap:2em;
@@ -23,7 +22,7 @@ export let DataItem = styled.li`
         width:3px;
         background:${colors.main};
         content:'';
-        transform-origin:center center;
+        transform-origin:bottom center;
         transform:scaleY(0);
         transition:transform 0.3s ease;
     }
@@ -35,6 +34,7 @@ export let DataItem = styled.li`
     &:last-of-type{
         border-bottom:none;
     }
+
 `
 
 export let Header = styled.h3`
@@ -69,20 +69,25 @@ export let Expand = styled(bg)`
     height:18px;
     fill:#333;
     transition:transform 0.5s ease;
-    ${props=>props.toggled && css`
+    ${props => props.isToggled && css`
         transform:rotate(-180deg);
     `}
 `
 
-export let MembersList = styled.li`
+export let MembersList = styled.ul`
     grid-column:1/3;
     margin:0;
-    margin-left:20px;
+    margin-left:40px;
     padding:0;
-    list-style-type:none;
+    
 `
 
 export let Member = styled.li`
     font-size:10px;
     padding:10px 0;
+    position:relative;
+    border-bottom:1px solid rgba(0,0,0,0.2);
+    &::before{
+
+    }
 `

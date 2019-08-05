@@ -14,11 +14,9 @@ const connectionString = `server=localhost\\SQLEXPRESS;Database=test;Trusted_Con
 
 let ad = new ActiveDirectory(config);
 
-
-
-let getFolderInfo = (userID) => {
+let getFolderInfo = (queryCondition) => {
     return new Promise((resolve, reject) => {
-        sql.query(connectionString, `select Grupa, Description from dbo.Klucze where UPPER([User ID])=UPPER('${userID}')`, (err, rows) => {
+        sql.query(connectionString, `select Grupa, Description from dbo.Klucze where ${queryCondition}`, (err, rows) => {
             if (!err) {
                 let uniques = [
                     ...new Set(
@@ -54,11 +52,20 @@ let getGroupMemembers = (group) => {
     })
 
 }
-let parseFolderData = (data) =>{
 
+let getQueryCondition = (query,type) =>{
+    switch(type){
+        default:
+        case 'id':
+            return `UPPER([User ID])=UPPER('${query}')`
+        case 'fullName':
+            return `UPPER(Name)=UPPER('${query}') OR UPPER(Name) LIKE '${query.split(" ")[1]} ${query.split(" ")[0]}'`
+        
+    }
 }
+
 app.post('/getUserData', async (req, res) => {
-    let folderInfo = await getFolderInfo(req.body.query);
+    let folderInfo = await getFolderInfo(getQueryCondition(req.body.query,req.body.type));
     let results = folderInfo.map(async(e) => {
         let members = await getGroupMemembers(e.group);
         return {
@@ -67,6 +74,19 @@ app.post('/getUserData', async (req, res) => {
         }
     })
    Promise.all(results).then((data)=>res.json(data))
+
+})
+
+
+app.listen('8080', () => {
+    console.log('started at 8080')
+})
+
+
+
+
+
+
        // let queryToAD;
     // console.log(req.body.query,req.body.type)
     // if (req.body.type === 'id') {
@@ -82,19 +102,6 @@ app.post('/getUserData', async (req, res) => {
     //         })
     //     }
     // });
-})
-
-
-app.listen('8080', () => {
-    console.log('started at 8080')
-})
-
-
-
-
-
-
-
 
 
 

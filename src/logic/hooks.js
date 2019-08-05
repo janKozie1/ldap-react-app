@@ -19,12 +19,20 @@ export let useFetch = (query = DEF_QUERY, url = DEF_URL, params = DEF_PARAMS) =>
                 .then(parsed => {
                     
                     timeout=setTimeout(()=>{
-                        setResponse(sortStrings(parsed,'path'));
+                        setResponse(
+                            sortStrings(
+                                parsed.map(e=>{
+                                   return {...e,members:sortStrings(e.members,'description')} 
+                                })
+                            ,'path'));
                         setIsLoading(false)
                     },300)
                     
                 })
-                .catch(setError)
+                .catch((err)=>{
+                    setError(err);
+                    setIsLoading(false);
+                })
             return clearTimeout(timeout);
         }
         if (url && query)
