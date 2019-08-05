@@ -14,15 +14,15 @@ export let DataHeader = styled.li`
     max-width:100%;
     word-break:break-all;
     font-size:13px;
-    padding:10px 10px;
+    padding:13px 20px;
     border-bottom:1px solid rgba(0,0,0,0.15);
- 
+    font-size:15px;
     color:white;
     background:${colors.main};
     border-radius:5px 5px 0 0 ;
     grid-column-gap:2em;
     display:grid;
-    grid-template-columns:auto 110px;
+    grid-template-columns:auto 73px;
  
 `
 export let HeaderItem = styled.p`

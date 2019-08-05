@@ -17,8 +17,9 @@ export let useFetch = (query = DEF_QUERY, url = DEF_URL, params = DEF_PARAMS) =>
                 .then(checkResponseStatus)
                 .then(res => res.json())
                 .then(parsed => {
-                    setResponse(sortStrings(parsed,'path'));
+                    
                     timeout=setTimeout(()=>{
+                        setResponse(sortStrings(parsed,'path'));
                         setIsLoading(false)
                     },300)
                     

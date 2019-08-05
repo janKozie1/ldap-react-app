@@ -8,20 +8,20 @@ import * as S from './styledComponents'
 let DataDisplay = React.memo(({ data }) => {
     console.log(data)
     return (
-        data && <S.DataList>
+        data  && <S.DataList>
             
             <S.DataHeader>
                 <S.HeaderItem>
                     Ścieżka
                 </S.HeaderItem>
                 <S.HeaderItem>
-                    Liczba członków
+                    Członków
                 </S.HeaderItem>
 
             </S.DataHeader>
             {
                 data && data.map((e, i) => {
-                    return <DataItem key={i} data={e} />
+                    return <DataItem key={`${i}-${e.group}`} data={e} />
                 })
             }
         </S.DataList>
