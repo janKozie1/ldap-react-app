@@ -9,5 +9,6 @@ export let sizes = {
 export let colors = {
     divider:'#424242',
     main:'#01A8DC',
+    darker:'#00546e',
     font:"#333"
 }

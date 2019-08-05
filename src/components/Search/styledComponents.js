@@ -33,11 +33,21 @@ export let Form = styled.form`
 
 export let Submit = styled.button`
     border:0;
-    padding:10px 15px;
+
     background:${colors.main};
     color:white;
     font-family:inherit;
     font-size:0.8rem;
     width:100%;
     border-radius: 0 5px 5px 0;
+    cursor:pointer;
+    position:relative;
+    &:active{
+       box-shadow:  inset 0px 0px 10px 5px rgba(0,0,0,0.35);
+       
+    }
+`
+
+export let SpinnerContainer = styled.div`
+
 `
