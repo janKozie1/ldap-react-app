@@ -18,7 +18,7 @@ let ad = new ActiveDirectory(config);
 
 let getFolderInfo = (userID) => {
     return new Promise((resolve, reject) => {
-        sql.query(connectionString, `select Grupa, Description from dbo.Klucze where [User ID]='${userID}'`, (err, rows) => {
+        sql.query(connectionString, `select Grupa, Description from dbo.Klucze where UPPER([User ID])=UPPER('${userID}')`, (err, rows) => {
             if (!err) {
                 let uniques = [
                     ...new Set(

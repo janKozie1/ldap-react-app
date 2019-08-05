@@ -5,6 +5,7 @@ export let GlobalStyle = createGlobalStyle`
     @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap');
     html{   
         width:100%;
+        overflow-y: scroll;
 
     }
     body{
