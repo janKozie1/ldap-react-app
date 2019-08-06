@@ -6,7 +6,6 @@ import * as S from './styledComponents'
 
 
 let DataDisplay = React.memo(({ data }) => {
-    console.log(data)
     return (
         data  && <S.DataList>
             

@@ -44,7 +44,32 @@ export let Header = styled.h3`
     align-items:center;
     justify-content:flex-start;
     margin:0;
+    position:relative;
+    ${props => props.type && css`
+        &::after{
+            content:attr(data-type);
+            position:relative;
+            margin-left:10px;
+            color:#F44336;
+            width:15px;
+            height:15px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            border: 1px solid #cbcbcb;
+        }
+        ${props => props.type === 'C' && css`
+            &::after{
+                color:#4CAF50;
+            }
+        `}
+    `}
+   
+   
 `
+
+
+
 
 export let MembersInfo = styled.div`
     width:100%;
@@ -55,13 +80,13 @@ export let MembersInfo = styled.div`
     align-items:center;
     justify-content:flex-start;
     cursor:pointer;
-   
-    &:hover{
+   ${props => props.isToggled && css`
         color:${colors.main};
         svg{
             fill:${colors.main};
         }
-    }
+   `}
+  
 `
 
 export let Expand = styled(bg)`
@@ -87,7 +112,8 @@ export let Member = styled.li`
     padding:10px 0;
     position:relative;
     border-bottom:1px solid rgba(0,0,0,0.2);
-    &::before{
-
+    >span{
+        font-size:10px;
+        color:#666;
     }
 `

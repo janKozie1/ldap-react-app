@@ -23,7 +23,9 @@ let getFolderInfo = (queryCondition) => {
                         rows.map(e => {
                             return {
                                 group: e.Grupa,
-                                path: e.Description
+                                groupType: determineGroupType(e.Grupa),
+                                path: e.Description,
+                                members:[]
                             }
                         })
                             .filter(e => e.group && e.path))  //removes the empty ones
@@ -34,6 +36,14 @@ let getFolderInfo = (queryCondition) => {
         })
 
     })
+}
+
+let determineGroupType = (name) => {
+    let unparsed = name.split("_");
+    if (unparsed[unparsed.length - 1] === 'C' || unparsed[unparsed.length - 1] === 'R'){
+        return unparsed[unparsed.length - 1];
+    }
+    return '';
 }
 
 let getGroupMemembers = (group) => {
@@ -53,27 +63,27 @@ let getGroupMemembers = (group) => {
 
 }
 
-let getQueryCondition = (query,type) =>{
-    switch(type){
+let getQueryCondition = (query, type) => {
+    switch (type) {
         default:
         case 'id':
             return `UPPER([User ID])=UPPER('${query}')`
         case 'fullName':
             return `UPPER(Name)=UPPER('${query}') OR UPPER(Name) LIKE '${query.split(" ")[1]} ${query.split(" ")[0]}'`
-        
+
     }
 }
 
 app.post('/getUserData', async (req, res) => {
-    let folderInfo = await getFolderInfo(getQueryCondition(req.body.query,req.body.type));
-    let results = folderInfo.map(async(e) => {
+    let folderInfo = await getFolderInfo(getQueryCondition(req.body.query, req.body.type));
+    let results = folderInfo.map(async (e) => {
         let members = await getGroupMemembers(e.group);
         return {
             ...e,
             members
         }
     })
-   Promise.all(results).then((data)=>res.json(data))
+    Promise.all(results).then((data) => res.json(data))
 
 })
 

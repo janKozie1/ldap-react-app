@@ -9,7 +9,7 @@ import * as S from './styledComponents'
 let Search = ({ handleFormSubmit, modes, isLoading }) => {
     let [mode, setMode] = useState(0)
     let { type, placeholder } = modes[mode];
-    let [userInput, setUserInput] = useState(Object.fromEntries(modes.map(e => [e.type, 'E46005'])))
+    let [userInput, setUserInput] = useState(Object.fromEntries(modes.map(e => [e.type, 'E45110'])))
     let handleInput = (value, fieldName) => {
         let newInput = { ...userInput }
         newInput[fieldName] = value;
@@ -24,7 +24,7 @@ let Search = ({ handleFormSubmit, modes, isLoading }) => {
     return (
 
         <S.Search>
-            <S.FormTitle>Znajdź użytkownika</S.FormTitle>
+            <S.FormTitle>Właściciel folderu i członkowie grup</S.FormTitle>
             <S.Form onSubmit={e => onFormSubmit(e)}>
                 <Toggle values={modes} updateFunction={setMode} mode={mode} />
                 <Input value={userInput[type]} handleInput={handleInput} fieldName={type} placeholder={placeholder} />
