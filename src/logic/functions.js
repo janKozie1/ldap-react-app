@@ -1,20 +1,31 @@
 export let checkResponseStatus = (res) => {
-    if(res.ok){
+    if (res.ok) {
         return res;
-    }else{
+    } else {
         throw Error(res.statusText)
     }
 }
 
 
-export let sortStrings = (array,key) => {
-    let sort = (a,b) => {
-        if(a[key].toUpperCase() < b[key].toUpperCase()){
-            return -1;
-        }else if( a[key].toUpperCase() > b[key].toUpperCase()){
-            return 1;
+export let sortByKey = (array, key, dir = 0) => {
+
+    let sort = (a, b) => {
+
+        if (typeof a[key] === typeof b[key] && typeof b[key] !== 'undefined') {
+            if (typeof a[key] === 'string') {
+                if (a[key].toUpperCase() < b[key].toUpperCase()) {
+                    return dir ? 1 : - 1;
+                } else if (a[key].toUpperCase() > b[key].toUpperCase()) {
+                    return dir ? -1 : 1;
+                }
+            } else if (typeof a[key] === 'number') {
+                return dir ? b[key] - a[key] : a[key] - b[key]
+
+            }
         }
         return 0;
     }
-    return array.sort(sort)
+    return array.sort(sort);
+
+
 }

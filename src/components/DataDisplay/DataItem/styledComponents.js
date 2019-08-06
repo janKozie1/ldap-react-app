@@ -6,7 +6,7 @@ export let DataItem = styled.li`
     max-width:100%;
     word-break:break-all;
     font-size:13px;
-    padding:10px 20px;
+    padding:10px 30px;
     border-bottom:1px solid rgba(0,0,0,0.2);
     color:${colors.font};
     display:grid;
@@ -84,6 +84,7 @@ export let MembersInfo = styled.div`
         color:${colors.main};
         svg{
             fill:${colors.main};
+            transform:rotate(180deg);
         }
    `}
   
@@ -94,9 +95,7 @@ export let Expand = styled(bg)`
     height:18px;
     fill:#333;
     transition:transform 0.5s ease;
-    ${props => props.isToggled && css`
-        transform:rotate(-180deg);
-    `}
+   
 `
 
 export let MembersList = styled.ul`

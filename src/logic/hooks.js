@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-import { checkResponseStatus, sortStrings } from './functions'
+import { checkResponseStatus } from './functions'
 import { fetchDefConfig } from '../constants/defaultVariables'
 
 let { DEF_URL, DEF_PARAMS, DEF_QUERY } = fetchDefConfig;
@@ -17,14 +17,8 @@ export let useFetch = (query = DEF_QUERY, url = DEF_URL, params = DEF_PARAMS) =>
                 .then(checkResponseStatus)
                 .then(res => res.json())
                 .then(parsed => {
-                    
                     timeout=setTimeout(()=>{
-                        setResponse(
-                            sortStrings(
-                                parsed.map(e=>{
-                                   return {...e,members:sortStrings(e.members,'description')} 
-                                })
-                            ,'path'));
+                        setResponse(parsed);
                         setIsLoading(false)
                     },300)
                     

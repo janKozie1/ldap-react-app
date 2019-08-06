@@ -80,7 +80,8 @@ app.post('/getUserData', async (req, res) => {
         let members = await getGroupMemembers(e.group);
         return {
             ...e,
-            members
+            members,
+            membersCount:members.length
         }
     })
     Promise.all(results).then((data) => res.json(data))

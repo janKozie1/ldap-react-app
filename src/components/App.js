@@ -36,7 +36,7 @@ let App = () => {
             <S.Main>
                 <S.Logo src={Logo}/>
                 <Search handleFormSubmit={handleFormSubmit} modes={modes} isLoading={isLoading}/>
-                <DataDisplay data={result}></DataDisplay>
+                {result && <DataDisplay data={result}></DataDisplay>}
             </S.Main>
 
         </>
