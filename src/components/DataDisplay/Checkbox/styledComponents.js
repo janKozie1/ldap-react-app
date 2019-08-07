@@ -6,8 +6,7 @@ export let Checkbox = styled.div`
     border:2px solid #333;
     border-radius:2px;
     cursor:pointer;
-    transition:background 0.5s ease;
-    ${props => props.toggled && css`
-        background:black;
+    ${props => props.checked && css`
+        background:#333;
     `}
 `

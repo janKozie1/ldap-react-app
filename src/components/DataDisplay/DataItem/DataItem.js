@@ -1,21 +1,25 @@
 import React, { useState } from 'react';
 import CheckBox from '../Checkbox/Checkbox'
 
-import {Cell } from '../styledComponents'
+import { Cell } from '../styledComponents'
 
 import * as S from './styledComponents'
 
 
 
-let DataItem = ({ data: { path, groupType, members }, index }) => {
-    let [isToggled, setToggled] = useState(false);
+let DataItem = ({ data: { path, group, groupType, members }, index, rowData, handleRowInteraction }) => {
+    let handleCheck = (id) => {
+        handleRowInteraction(id,'check')
+    }
     return (
         <>
-            <S.UserInteraction row={index * 2 + 2} onClick={() => setToggled(!isToggled)} />
+            <S.UserInteraction row={index * 2 + 2} onClick={() => handleRowInteraction(group, 'open')} />
             <Cell>
-                <CheckBox
-                
-                size={9}
+                <CheckBox 
+                    clickHandler={handleCheck}
+                    returnData={group}
+                    checked={rowData.check}
+                    size={12}
                 />
             </Cell>
             <S.Header>
@@ -24,16 +28,16 @@ let DataItem = ({ data: { path, groupType, members }, index }) => {
             <S.GroupType groupType={groupType}>
                 <p>{groupType}</p>
             </S.GroupType>
-            <S.MembersInfo isToggled={isToggled} >
+            <S.MembersInfo isToggled={rowData.open} >
                 <S.Expand />
                 {members.length}
             </S.MembersInfo>
             {members ?
                 <S.MembersList>
-                    {isToggled && members.map(({ description, cn }) => {
-                        return <S.Member key={cn}>{description} - {cn}</S.Member>
-                    })
-
+                    {
+                        rowData.open && members.map(({ description, cn }) => {
+                            return <S.Member key={cn}>{description} - {cn}</S.Member>
+                        })
                     }
                 </S.MembersList>
                 : null}

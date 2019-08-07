@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react'
+import React, {useState} from 'react'
 
 import Search from './Search/Search'
 import Logo from '../assets/logo.png'

@@ -8,9 +8,7 @@ export let checkResponseStatus = (res) => {
 
 
 export let sortByKey = (array, key, dir = 0) => {
-
     let sort = (a, b) => {
-
         if (typeof a[key] === typeof b[key] && typeof b[key] !== 'undefined') {
             if (typeof a[key] === 'string') {
                 if (a[key].toUpperCase() < b[key].toUpperCase()) {
@@ -26,6 +24,12 @@ export let sortByKey = (array, key, dir = 0) => {
         return 0;
     }
     return array.sort(sort);
+}
 
-
+export let arrToObject = (arr, obj , key ) => {
+    return arr.reduce((prev, curr) => {
+        let localObj = {...obj}
+        prev[curr[key]]  = localObj;
+        return prev;
+    }, {})
 }

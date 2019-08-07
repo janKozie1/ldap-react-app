@@ -2,11 +2,11 @@ import React from 'react'
 
 import * as S from './styledComponents'
 
-export let Checkbox = ({toggled, clickHandler, id = 0 ,size}) => {
+export let Checkbox = ({checked, clickHandler, returnData = 0 ,size}) => {
     return (
         <S.Checkbox 
-            toggled={toggled}
-            onClick={()=>clickHandler(id)}
+            checked={checked}
+            onClick={()=>clickHandler(returnData)}
             size={size}
         />
     )
