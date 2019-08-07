@@ -27,6 +27,7 @@ export let sortByKey = (array, key, dir = 0) => {
 }
 
 export let arrToObject = (arr, obj , key ) => {
+    console.log("?")
     return arr.reduce((prev, curr) => {
         let localObj = {...obj}
         prev[curr[key]]  = localObj;

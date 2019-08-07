@@ -7,17 +7,17 @@ import * as S from './styledComponents'
 
 
 
-let DataItem = ({ data: { path, group, groupType, members }, index, rowData, handleRowInteraction }) => {
-    let handleCheck = (id) => {
-        handleRowInteraction(id,'check')
+let DataItem = ({ data: { path, ID, groupType, members }, index, rowData, handleRowInteraction }) => {
+    let handleCheck = (data) => {
+        handleRowInteraction(data,'check')
     }
     return (
         <>
-            <S.UserInteraction row={index * 2 + 2} onClick={() => handleRowInteraction(group, 'open')} />
+            <S.UserInteraction row={index * 2 + 2} onClick={() => handleRowInteraction(ID, 'open')} />
             <Cell>
                 <CheckBox 
                     clickHandler={handleCheck}
-                    returnData={group}
+                    returnData={ID}
                     checked={rowData.check}
                     size={12}
                 />

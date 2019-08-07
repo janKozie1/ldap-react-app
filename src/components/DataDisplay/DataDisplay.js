@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import CheckBox from './Checkbox/Checkbox'
 import DataItem from './DataItem/DataItem'
 import { sortByKey, arrToObject } from '../../logic/functions'
@@ -8,14 +8,26 @@ import * as S from './styledComponents'
 let DataDisplay = React.memo(({ data = [] }) => {
     let [sortKey, setSortKey] = useState('path')
     let [sortDirection, setSortDirection] = useState(1);
-    let [rowData, setRowData] = useState(arrToObject(data, { check: false, open: false }, 'group'))
-    console.log(Object.keys(rowData))
-    let sortedData = sortByKey(data.map(e => {
-        return {
-            ...e,
-            members: sortByKey(e.members, 'description', 0)
-        }
-    }), sortKey, sortDirection)
+    let [rowData, setRowData] = useState(null)
+    let [sortedData,setSortedData] = useState(null);
+    useEffect(()=>{
+        setRowData(arrToObject(data, { check: false, open: false }, 'ID'))
+        setSortedData(sortByKey(data.map(e => {
+            return {
+                ...e,
+                members: sortByKey(e.members, 'description', 0)
+            }
+        }), sortKey, sortDirection))
+    },[data])
+    useEffect(()=>{
+        setSortedData(sortByKey(data.map(e => {
+            return {
+                ...e,
+                members: sortByKey(e.members, 'description', 0)
+            }
+        }), sortKey, sortDirection))
+    },[sortKey,sortDirection])
+
 
     let handleSortChange = (key) => {
         if (sortKey !== key) {
@@ -32,11 +44,14 @@ let DataDisplay = React.memo(({ data = [] }) => {
     }
 
     let changeAll = (type) => {
-        if (type === 'check') {
-            let newRowData = { ...rowData }
-            // if (newRowData.filter(e => !e[type]).length) {
-            //     arrToObject(Object.keys(newRowData),{check:false})
-            // }
+        let newRowData = Object.entries(rowData);
+        console.log(newRowData)
+        if(newRowData.map(e=>e[1][type]).filter(e=>!e).length){
+            //at least one false
+            console.log("at least one false")
+        }else{
+            //no false
+            console.log("no false")
         }
     }
     return (
@@ -78,11 +93,11 @@ let DataDisplay = React.memo(({ data = [] }) => {
 
             </S.HeaderItem>
             {
-                sortedData.map((e, i) => {
+              sortedData &&  sortedData.map((e, i) => {
                     return <DataItem
                         key={`${i}-${e.group}`}
                         data={e}
-                        rowData={rowData[e.group]}
+                        rowData={rowData[e.ID]}
                         handleRowInteraction={handleRowInteraction}
                         index={i}
                     />

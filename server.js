@@ -16,15 +16,16 @@ let ad = new ActiveDirectory(config);
 
 let getFolderInfo = (queryCondition) => {
     return new Promise((resolve, reject) => {
-        sql.query(connectionString, `select Grupa, Description from dbo.Klucze where ${queryCondition}`, (err, rows) => {
+        sql.query(connectionString, `select ID, Grupa, Description from dbo.Klucze where ${queryCondition}`, (err, rows) => {
             if (!err) {
                 let uniques = [
                     ...new Set(
-                        rows.map(e => {
+                        rows.map(({Grupa,Description,ID}) => {
                             return {
-                                group: e.Grupa,
-                                groupType: determineGroupType(e.Grupa),
-                                path: e.Description,
+                                group: Grupa,
+                                groupType: determineGroupType(Grupa),
+                                path: Description,
+                                ID,
                                 members:[]
                             }
                         })
@@ -75,6 +76,8 @@ let getQueryCondition = (query, type) => {
 }
 
 app.post('/getUserData', async (req, res) => {
+    let temp = Date.now();
+    console.log("request")
     let folderInfo = await getFolderInfo(getQueryCondition(req.body.query, req.body.type));
     let results = folderInfo.map(async (e) => {
         let members = await getGroupMemembers(e.group);
@@ -84,7 +87,10 @@ app.post('/getUserData', async (req, res) => {
             membersCount:members.length
         }
     })
-    Promise.all(results).then((data) => res.json(data))
+    Promise.all(results).then((data) => {
+        console.log('response', (Date.now() - temp)/1000)
+        return res.json(data)
+    })
 
 })
 

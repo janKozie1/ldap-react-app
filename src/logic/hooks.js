@@ -12,6 +12,8 @@ export let useFetch = (query = DEF_QUERY, url = DEF_URL, params = DEF_PARAMS) =>
     useEffect(() => {
         let fetchData = (query, url, params) => {
             let timeout;
+            // setResponse(null);
+            //temporary fix !
             setIsLoading(true)
             fetch(url, { ...params, body: JSON.stringify(query) })
                 .then(checkResponseStatus)
