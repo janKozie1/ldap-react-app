@@ -8,43 +8,45 @@ export let DataList = styled.ul`
     max-width:80%;
     min-width:50%;
     margin:calc(${sizes.margins.formMargin} * 1) 0;
-
-`
-
-export let DataHeader = styled.li`
-    max-width:100%;
-    word-break:break-all;
-    font-size:13px;
-    padding:13px 30px;
-    border-bottom:1px solid rgba(0,0,0,0.15);
-    font-size:15px;
-    color:white;
-    background:${colors.main};
-    border-radius:5px 5px 0 0 ;
-    grid-column-gap:2em;
     display:grid;
-    grid-template-columns:auto 73px;
- 
+    grid-template-columns:repeat(3,auto);
+    grid-column-gap:2em;
+    position:relative;
+
 `
+
 export let DirIndicator = styled(arrow)`
-    width:14px;
-    visibility:hidden;
+    width:16px;
     height:16px;
+    margin-left:5px;
     transition:transform 0.5s ease;
+    margin-bottom:-1px;
+    transform:rotate(180deg);
     >path{
-        fill:white;
+        transition:fill 0.5s ease;
+        fill:#ccc;
     }
 `
 
 export let HeaderItem = styled.p`
     margin:0;
+    word-break:break-all;
+    font-size:16px;
+    color:${colors.font};
+    font-weight:bolder;
+    width:100%;
     cursor:pointer;
-    width:max-content;
+    padding:10px 0;
+    display:flex;
+    align-items:center;
+    border-bottom:2px solid ${colors.font};
     ${props => props.value === props.sortKey && css`
         >svg{
-            visibility:visible;
+            >path{
+                fill:${colors.font};
+            }
             ${props => props.direction && css`
-                transform:rotate(180deg);
+                transform:rotate(0);
             `}
         }
     `}

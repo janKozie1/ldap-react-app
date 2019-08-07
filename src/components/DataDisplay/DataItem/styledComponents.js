@@ -2,18 +2,13 @@ import styled, { css } from 'styled-components'
 import { colors } from '../../cssVariables'
 import { ReactComponent as bg } from '../../../assets/arrow.svg'
 
-export let DataItem = styled.li`
-    max-width:100%;
-    word-break:break-all;
-    font-size:13px;
-    padding:10px 30px;
-    border-bottom:1px solid rgba(0,0,0,0.2);
-    color:${colors.font};
-    display:grid;
-    grid-column-gap:2em;
-    grid-template-columns:auto 73px;
+export let UserInteraction = styled.div`
+    position:absolute;
+    grid-column:1/4;
     cursor:pointer;
-    position:relative;
+    width:100%;
+    grid-row:${props => props.row};
+    height:33px;
     &::before{
         position:absolute;
         left:0%;
@@ -31,63 +26,46 @@ export let DataItem = styled.li`
             transform:scaleY(1);
         }
     }
-    &:last-of-type{
-        border-bottom:none;
-    }
-
+    
 `
 
-export let Header = styled.h3`
-    font-size:10px;
-    font-weight:bolder;
+
+let Cell = styled.div`
     display:flex;
     align-items:center;
     justify-content:flex-start;
     margin:0;
-    position:relative;
-    ${props => props.type && css`
-        &::after{
-            content:attr(data-type);
-            position:relative;
-            margin-left:10px;
-            color:#F44336;
-            width:15px;
-            height:15px;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            border: 1px solid #cbcbcb;
-        }
-        ${props => props.type === 'C' && css`
-            &::after{
-                color:#4CAF50;
-            }
-        `}
-    `}
-   
-   
+    font-size:10px;
+    color:${colors.font};
+    
 `
 
+export let Header = styled(Cell)`
+    font-weight:bolder;
+    padding:10px 0px;
+    padding-left:10px;
+    white-space: nowrap; 
+    overflow:auto;
+    &::-webkit-scrollbar{
+        display:none;
+    }
+`
+export let GroupType = styled(Cell)`
+    font-weight:bolder;
+    color:#F44336;
+    justify-content:center;
+    ${props => props.groupType === 'C' && css`
+        color:#4CAF50; 
+    `}
+`
 
-
-
-export let MembersInfo = styled.div`
-    width:100%;
-    height:100%;
-    text-align:left;
-    font-size:10px;
-    display:flex;
-    align-items:center;
-    justify-content:flex-start;
+export let MembersInfo = styled(Cell)`
     cursor:pointer;
    ${props => props.isToggled && css`
-        color:${colors.main};
         svg{
-            fill:${colors.main};
             transform:rotate(180deg);
         }
-   `}
-  
+   `} 
 `
 
 export let Expand = styled(bg)`
@@ -99,10 +77,11 @@ export let Expand = styled(bg)`
 `
 
 export let MembersList = styled.ul`
-    grid-column:1/3;
+    grid-column:1/4;
     margin:0;
     margin-left:40px;
     padding:0;
+    list-style-type:disc;
     
 `
 
@@ -110,7 +89,6 @@ export let Member = styled.li`
     font-size:10px;
     padding:10px 0;
     position:relative;
-    border-bottom:1px solid rgba(0,0,0,0.2);
     >span{
         font-size:10px;
         color:#666;

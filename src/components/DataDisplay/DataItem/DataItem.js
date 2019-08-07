@@ -1,27 +1,27 @@
 import React, { useState } from 'react';
 
-
-
 import * as S from './styledComponents'
 
 
 
-let DataItem = ({ data:{path,groupType,members}, index }) => {
+let DataItem = ({ data: { path, groupType, members },index }) => {
     let [isToggled, setToggled] = useState(false);
     return (
         <>
-            <S.DataItem offset={index} onClick={() => setToggled(!isToggled)}>
-                <S.Header data-type={groupType} type={groupType}>
-                    {path}
-                </S.Header>
-                <S.MembersInfo isToggled={isToggled}>
+            <S.UserInteraction row={index * 2 + 2} onClick={() => setToggled(!isToggled)}/>
+            <S.Header>
+                {path}
+            </S.Header>
+            <S.GroupType groupType={groupType}>
+                <p>{groupType}</p>
+            </S.GroupType>
+            <S.MembersInfo isToggled={isToggled} >
                     <S.Expand />
-                    {members.length}
-                </S.MembersInfo>
-            </S.DataItem>
+                {members.length}
+            </S.MembersInfo>
             {members ?
                 <S.MembersList>
-                    {isToggled && members.map(({description, cn}) => {
+                    {isToggled && members.map(({ description, cn }) => {
                         return <S.Member key={cn}>{description} - {cn}</S.Member>
                     })
 
