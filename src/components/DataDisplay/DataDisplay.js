@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-
+import CheckBox from './Checkbox/Checkbox'
 import DataItem from './DataItem/DataItem'
 import { sortByKey } from '../../logic/functions'
 import * as S from './styledComponents'
@@ -21,6 +21,11 @@ let DataDisplay = React.memo(({ data = [] }) => {
     }
     return (
         <S.DataList>
+            <S.Cell>
+                <CheckBox
+                size={14}
+                />
+            </S.Cell>
             <S.HeaderItem
                 onClick={() => handleSortChange('path')}
                 value={'path'}

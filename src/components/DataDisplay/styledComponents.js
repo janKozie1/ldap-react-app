@@ -1,6 +1,8 @@
 import styled,{css} from 'styled-components'
 import {sizes,colors} from '../cssVariables'
 import {ReactComponent as arrow} from '../../assets/arrow_big.svg' 
+
+
 export let DataList = styled.ul`
     margin:0;
     padding:0;
@@ -9,12 +11,26 @@ export let DataList = styled.ul`
     min-width:50%;
     margin:calc(${sizes.margins.formMargin} * 1) 0;
     display:grid;
-    grid-template-columns:repeat(3,auto);
-    grid-column-gap:2em;
+    grid-template-columns: repeat(4,auto);
+    grid-column-gap:1.5vw;
     position:relative;
 
 `
+export let Cell = styled.div`
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0;
+    font-size:11px;
+    color:${colors.font};
+`
+export let Select = styled.div`
+    height:12px;
+    width:12px;
+    border:2px solid #333;
+    border-radius:2px;
 
+`
 export let DirIndicator = styled(arrow)`
     width:16px;
     height:16px;

@@ -1,5 +1,4 @@
 import React, {useEffect, useRef} from 'react'
-
 import * as S from './styledComponents'
 
 
@@ -20,5 +19,7 @@ let Input = ({value, handleInput, fieldName, type, placeholder}) => {
         />
     )
 }
+
+
 
 export default Input

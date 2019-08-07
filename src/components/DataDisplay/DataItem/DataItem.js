@@ -1,14 +1,23 @@
 import React, { useState } from 'react';
+import CheckBox from '../Checkbox/Checkbox'
+
+import {Cell } from '../styledComponents'
 
 import * as S from './styledComponents'
 
 
 
-let DataItem = ({ data: { path, groupType, members },index }) => {
+let DataItem = ({ data: { path, groupType, members }, index }) => {
     let [isToggled, setToggled] = useState(false);
     return (
         <>
-            <S.UserInteraction row={index * 2 + 2} onClick={() => setToggled(!isToggled)}/>
+            <S.UserInteraction row={index * 2 + 2} onClick={() => setToggled(!isToggled)} />
+            <Cell>
+                <CheckBox
+                
+                size={9}
+                />
+            </Cell>
             <S.Header>
                 {path}
             </S.Header>
@@ -16,7 +25,7 @@ let DataItem = ({ data: { path, groupType, members },index }) => {
                 <p>{groupType}</p>
             </S.GroupType>
             <S.MembersInfo isToggled={isToggled} >
-                    <S.Expand />
+                <S.Expand />
                 {members.length}
             </S.MembersInfo>
             {members ?
@@ -33,5 +42,7 @@ let DataItem = ({ data: { path, groupType, members },index }) => {
 
     )
 }
+
+
 
 export default DataItem;
