@@ -9,9 +9,8 @@ let DataDisplay = React.memo(({ data = [] }) => {
     let [sortKey, setSortKey] = useState('path')
     let [sortDirection, setSortDirection] = useState(1);
     let [rowData, setRowData] = useState(null)
-    let [sortedData,setSortedData] = useState(null);
-
-    useEffect(()=>{
+    let [sortedData, setSortedData] = useState(null);
+    useEffect(() => {
         setRowData(arrToObject(data, { check: false, open: false }, 'ID'))
         setSortedData(sortByKey(data.map(e => {
             return {
@@ -19,10 +18,10 @@ let DataDisplay = React.memo(({ data = [] }) => {
                 members: sortByKey(e.members, 'description', 0)
             }
         }), sortKey, sortDirection))
-    },[data])
-    useEffect(()=>{
+    }, [data])
+    useEffect(() => {
         setSortedData(sortByKey(data, sortKey, sortDirection))
-    },[sortKey,sortDirection])
+    }, [sortKey, sortDirection])
 
 
     let handleSortChange = (key) => {
@@ -41,14 +40,32 @@ let DataDisplay = React.memo(({ data = [] }) => {
 
     let changeAll = (type) => {
         let newRowData = Object.entries(rowData);
-        console.log(newRowData)
-        if(newRowData.map(e=>e[1][type]).filter(e=>!e).length){
-            
-            console.log("at least one false")
-        }else{
-            //no 
-            console.log("no false")
+        if (type === 'check') {
+            if (newRowData.map(e => e[1][type]).filter(e => !e).length) {
+                setRowData(newRowData.map(([key, { open }]) => {
+                    return [key, { open, check: true }]
+                }).reduce((prev, curr) => {
+                    prev[curr[0]] = curr[1];
+                    return prev;
+                }, {}))
+            } else {
+                setRowData(newRowData.map(([key, { open }]) => {
+                    return [key, { open, check: false }]
+                }).reduce((prev, curr) => {
+                    prev[curr[0]] = curr[1];
+                    return prev;
+                }, {}))
+            }
+        } else if (type === 'open') {
+            setRowData(newRowData.map(([key, {check }]) => {
+                return [key, { check,open:check }]
+            }).reduce((prev, curr) => {
+                prev[curr[0]] = curr[1];
+                return prev;
+            }, {}))
         }
+
+        //needs a switch for 'open' so it opens only the checked ones
     }
     return (
         <S.DataList>
@@ -56,7 +73,7 @@ let DataDisplay = React.memo(({ data = [] }) => {
                 <CheckBox
                     size={16}
                     clickHandler={changeAll}
-                    returnData={'check'}
+                    returnData={'open'}
                 />
             </S.Cell>
             <S.HeaderItem
@@ -89,7 +106,7 @@ let DataDisplay = React.memo(({ data = [] }) => {
 
             </S.HeaderItem>
             {
-              sortedData &&  sortedData.map((e, i) => {
+                sortedData && sortedData.map((e, i) => {
                     return <DataItem
                         key={`${i}-${e.group}`}
                         data={e}
