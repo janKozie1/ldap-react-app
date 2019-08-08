@@ -1,9 +1,10 @@
-import React, {useState} from 'react'
+import React, {useState,useLayoutEffect} from 'react'
 
 import Search from './Search/Search'
 import Logo from '../assets/logo.png'
 import DataDisplay from './DataDisplay/DataDisplay'
 
+import {arrToObject} from '../logic/functions'
 
 import {useFetch} from '../logic/hooks'
 
@@ -26,6 +27,7 @@ let App = () => {
     ]
     let [query, setQuery] = useState(null)
     let [result,error,isLoading] = useFetch(query)
+
     let handleFormSubmit = (value,{type,fieldID}) => {
         setQuery({query:value[type].trim(),type:fieldID})
     }
@@ -36,7 +38,7 @@ let App = () => {
             <S.Main>
                 <S.Logo src={Logo}/>
                 <Search handleFormSubmit={handleFormSubmit} modes={modes} isLoading={isLoading}/>
-                {result && <DataDisplay data={result}></DataDisplay>}
+                {result && <DataDisplay data={result} ></DataDisplay>}
             </S.Main>
 
         </>

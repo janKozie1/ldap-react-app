@@ -61,9 +61,10 @@ export let MembersList = styled.ul`
 `
 
 export let Member = styled.li`
-    font-size:10px;
+    font-size:11px;
     padding:10px 0;
     position:relative;
+    color:#666;
     >span{
         font-size:10px;
         color:#666;

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-import { checkResponseStatus } from './functions'
+import { checkResponseStatus, compareFetchedData } from './functions'
 import { fetchDefConfig } from '../constants/defaultVariables'
 
 let { DEF_URL, DEF_PARAMS, DEF_QUERY } = fetchDefConfig;
@@ -12,18 +12,16 @@ export let useFetch = (query = DEF_QUERY, url = DEF_URL, params = DEF_PARAMS) =>
     useEffect(() => {
         let fetchData = (query, url, params) => {
             let timeout;
-            // setResponse(null);
-            //temporary fix !
             setIsLoading(true)
             fetch(url, { ...params, body: JSON.stringify(query) })
                 .then(checkResponseStatus)
                 .then(res => res.json())
                 .then(parsed => {
                     timeout=setTimeout(()=>{
-                        setResponse(parsed);
+                        if(!compareFetchedData(response,parsed))
+                            setResponse(parsed);
                         setIsLoading(false)
                     },300)
-                    
                 })
                 .catch((err)=>{
                     setError(err);

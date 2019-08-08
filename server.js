@@ -18,19 +18,17 @@ let getFolderInfo = (queryCondition) => {
     return new Promise((resolve, reject) => {
         sql.query(connectionString, `select ID, Grupa, Description from dbo.Klucze where ${queryCondition}`, (err, rows) => {
             if (!err) {
-                let uniques = [
-                    ...new Set(
-                        rows.map(({Grupa,Description,ID}) => {
-                            return {
-                                group: Grupa,
-                                groupType: determineGroupType(Grupa),
-                                path: Description,
-                                ID,
-                                members:[]
-                            }
-                        })
-                            .filter(e => e.group && e.path))  //removes the empty ones
-                ]
+                let uniques = 
+                            rows.map(({ Grupa, Description, ID }) => {
+                                return {
+                                    group: Grupa,
+                                    groupType: determineGroupType(Grupa),
+                                    path: Description,
+                                    ID,
+                                    members: []
+                                }
+                            })
+                            .filter(e => e.group && e.path)  //removes the empty ones
                 resolve(uniques);
             }
             resolve(null);
@@ -41,10 +39,32 @@ let getFolderInfo = (queryCondition) => {
 
 let determineGroupType = (name) => {
     let unparsed = name.split("_");
-    if (unparsed[unparsed.length - 1] === 'C' || unparsed[unparsed.length - 1] === 'R'){
+    if (unparsed[unparsed.length - 1] === 'C' || unparsed[unparsed.length - 1] === 'R') {
         return unparsed[unparsed.length - 1];
     }
     return '';
+}
+
+let getGroupOwners = (group) => {
+    return new Promise((resolve, reject) => {
+        sql.query(connectionString, `select Name, [User ID] as cn, Access from dbo.Klucze where Grupa like '${group}'`, (err, rows) => {
+            if (!err) {
+                console.log(rows)
+                let uniques = 
+                    rows.map(({ Name, cn, Access }) => {
+                        return {
+                            description: Name,
+                            cn,
+                            Access
+                        }
+                    })
+                    .filter(e => e.cn && e.description)  //removes the empty ones
+                resolve(uniques);
+            }
+            resolve(null);
+        })
+
+    })
 }
 
 let getGroupMemembers = (group) => {
@@ -81,14 +101,16 @@ app.post('/getUserData', async (req, res) => {
     let folderInfo = await getFolderInfo(getQueryCondition(req.body.query, req.body.type));
     let results = folderInfo.map(async (e) => {
         let members = await getGroupMemembers(e.group);
+        let owners = await getGroupOwners(e.group);
         return {
             ...e,
             members,
-            membersCount:members.length
+            owners,
+            membersCount: members.length
         }
     })
     Promise.all(results).then((data) => {
-        console.log('response', (Date.now() - temp)/1000)
+        console.log('response', (Date.now() - temp) / 1000)
         return res.json(data)
     })
 

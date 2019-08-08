@@ -27,10 +27,14 @@ export let sortByKey = (array, key, dir = 0) => {
 }
 
 export let arrToObject = (arr, obj , key ) => {
-    console.log("?")
     return arr.reduce((prev, curr) => {
         let localObj = {...obj}
         prev[curr[key]]  = localObj;
         return prev;
     }, {})
+}
+
+export let compareFetchedData = (prev, curr) => {
+    console.log(prev,curr)
+    return prev && curr && prev.length === curr.length && JSON.stringify(prev.map(e=>e.ID).sort()) === JSON.stringify(curr.map(e=>e.ID).sort())
 }

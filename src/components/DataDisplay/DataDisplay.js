@@ -10,6 +10,7 @@ let DataDisplay = React.memo(({ data = [] }) => {
     let [sortDirection, setSortDirection] = useState(1);
     let [rowData, setRowData] = useState(null)
     let [sortedData,setSortedData] = useState(null);
+
     useEffect(()=>{
         setRowData(arrToObject(data, { check: false, open: false }, 'ID'))
         setSortedData(sortByKey(data.map(e => {
@@ -20,12 +21,7 @@ let DataDisplay = React.memo(({ data = [] }) => {
         }), sortKey, sortDirection))
     },[data])
     useEffect(()=>{
-        setSortedData(sortByKey(data.map(e => {
-            return {
-                ...e,
-                members: sortByKey(e.members, 'description', 0)
-            }
-        }), sortKey, sortDirection))
+        setSortedData(sortByKey(data, sortKey, sortDirection))
     },[sortKey,sortDirection])
 
 
@@ -47,10 +43,10 @@ let DataDisplay = React.memo(({ data = [] }) => {
         let newRowData = Object.entries(rowData);
         console.log(newRowData)
         if(newRowData.map(e=>e[1][type]).filter(e=>!e).length){
-            //at least one false
+            
             console.log("at least one false")
         }else{
-            //no false
+            //no 
             console.log("no false")
         }
     }
