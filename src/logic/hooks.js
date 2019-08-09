@@ -11,6 +11,7 @@ export let useFetch = (query = DEF_QUERY, url = DEF_URL, params = DEF_PARAMS, mi
     let [isLoading, setIsLoading] = useState(null)
     useEffect(() => {
         let fetchData = (query, url, params) => {
+            setError(null);
             let timeout;
             setIsLoading(true)
             fetch(url, { ...params, body: JSON.stringify(query) })
@@ -24,7 +25,10 @@ export let useFetch = (query = DEF_QUERY, url = DEF_URL, params = DEF_PARAMS, mi
                     }, 300)
                 })
                 .catch((err) => {
-                    setError(err);
+                    console.log(err.message)
+                    if(err.message === 'Failed to fetch'){
+                        setError({msg:'Coś poszło nie tak, spróbuj ponownie za chwilę'})
+                    }
                     setIsLoading(false);
                 })
             return clearTimeout(timeout);

@@ -43,7 +43,7 @@ export let Submit = styled.button`
     cursor:pointer;
     position:relative;
     &:active{
-       box-shadow:  inset 0px 0px 10px 5px rgba(0,0,0,0.35);
+       box-shadow:  inset 0px 0px 8px 5px rgba(0,0,0,0.35);
        
     }
 `

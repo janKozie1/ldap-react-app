@@ -7,7 +7,7 @@ export let Input = styled.input`
     font-family:inherit;
     color:${colors.font};
 
-    border:1px solid rgba(0,0,0,0.5);
+    border:2px solid #333;
     border-right:0;
     border-radius:5px 0 0 5px;
     

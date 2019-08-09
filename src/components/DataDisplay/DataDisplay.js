@@ -5,7 +5,7 @@ import { sortByKey } from '../../logic/functions'
 import * as S from './styledComponents'
 
 
-let DataDisplay = React.memo(({ data = [], handleRowInteraction }) => {
+let DataDisplay = React.memo(({ data = [], handleRowInteraction, toggleFieldAll, userActionButtons }) => {
     let [sortKey, setSortKey] = useState('path')
     let [sortDirection, setSortDirection] = useState(1);
     let handleSortChange = (key) => {
@@ -16,56 +16,69 @@ let DataDisplay = React.memo(({ data = [], handleRowInteraction }) => {
             setSortDirection(sortDirection ? 0 : 1)
         }
     }
+    console.log('rere')
     return (
-        <S.DataList>
-            <S.Cell>
-                <CheckBox
-                    size={16}
-                    clickHandler={console.log}
-                    returnData={'open'}
-                />
-            </S.Cell>
-            <S.HeaderItem
-                onClick={() => handleSortChange('path')}
-                value={'path'}
-                sortKey={sortKey}
-                direction={sortDirection}
-            >
-                Ścieżka
-                <S.DirIndicator />
-            </S.HeaderItem>
-            <S.HeaderItem
-                onClick={() => handleSortChange('groupType')}
-                value={'groupType'}
-                sortKey={sortKey}
-                direction={sortDirection}
-            >
-                Typ gr.
-                <S.DirIndicator />
+ 
 
-            </S.HeaderItem>
-            <S.HeaderItem
-                onClick={() => handleSortChange('membersCount')}
-                value={'membersCount'}
-                sortKey={sortKey}
-                direction={sortDirection}
-            >
-                Członków
-                <S.DirIndicator />
-
-            </S.HeaderItem>
-            {
-                sortByKey(data, sortKey, sortDirection).map((e, i) => {
-
-                    return <DataItem
-                        key={`${i}-${e.group}`}
-                        data={e}
-                        handleRowInteraction={handleRowInteraction}
-                        index={i}
+            <S.DataList>
+                <S.UserInteraction>
+                    {
+                        userActionButtons.map((e,i) => {
+                            return <S.UserButton key={`${i}-button`} onClick={()=>e.func(e.value)}> 
+                                {e.text}
+                            </S.UserButton>
+                        })
+                    }
+                </S.UserInteraction>
+                <S.Cell>
+                    <CheckBox
+                        size={16}
+                        clickHandler={toggleFieldAll}
+                        returnData={'check'}
                     />
-                })
-            }
-        </S.DataList>
+                </S.Cell>
+                <S.HeaderItem
+                    onClick={() => handleSortChange('path')}
+                    value={'path'}
+                    sortKey={sortKey}
+                    direction={sortDirection}
+                >
+                    Ścieżka
+                <S.DirIndicator />
+                </S.HeaderItem>
+                <S.HeaderItem
+                    onClick={() => handleSortChange('groupType')}
+                    value={'groupType'}
+                    sortKey={sortKey}
+                    direction={sortDirection}
+                >
+                    Typ gr.
+                <S.DirIndicator />
+
+                </S.HeaderItem>
+                <S.HeaderItem
+                    onClick={() => handleSortChange('membersCount')}
+                    value={'membersCount'}
+                    sortKey={sortKey}
+                    direction={sortDirection}
+                >
+                    Członków
+                <S.DirIndicator />
+
+                </S.HeaderItem>
+                {
+                    sortByKey(data, sortKey, sortDirection).map((e, i) => {
+
+                        return <DataItem
+                            key={`${i}-${e.group}`}
+                            data={e}
+                            handleRowInteraction={handleRowInteraction}
+                            index={i}
+                        />
+                    })
+                }
+            </S.DataList>
+        
     )
 })
 

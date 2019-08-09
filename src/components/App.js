@@ -29,22 +29,70 @@ let App = () => {
             fieldID: 'fullName'
         }
     ]
+
     let [query, setQuery] = useState(null)
-    let [result, error, isLoading, setResponse] = useFetch(query, DEF_URL, DEF_PARAMS, parseUserList)
+    let [result, error, isLoading, setResult] = useFetch(query, DEF_URL, DEF_PARAMS, parseUserList)
 
     let handleFormSubmit = (value, { type, fieldID }) => {
         setQuery({ query: value[type].trim(), type: fieldID })
     }
 
     let handleRowInteraction = (id, type) => {
-        setResponse(result.map(e => {
+        setResult(result.map(e => {
             return e.ID === id ?
                 { ...e, [type]: !e[type] }
                 :
                 e;
         }))
+    }
+
+    let toggleFieldAll = (field) => {
+        if(result.map(e=>e[field]).filter(e=>!e).length)
+            setResult(result.map(e=>({
+                ...e,
+                [field]:true
+            })))
+        else
+            setResult(result.map(e=>({
+                ...e,
+                [field]:false
+            })))
+    }
+    let openChecked = () =>{
+        setResult(result.map(e=>({
+            ...e,
+            open:e.check
+        })))
+    }
+    let exportChecked = () =>{
 
     }
+    let userActionButtons = [
+        {
+            text:'Zaznacz/odznacz wszystko',
+            func:toggleFieldAll,
+            value:'check',
+            
+        },
+        {
+            text:'Otwórz/zamknij wszystko',
+            func:toggleFieldAll,
+            value:'open',
+            
+        },
+        {
+            text:'Otwórz zaznaczone',
+            func:openChecked,
+            value:'',
+        },
+        {
+            text:'Eksportuj zaznaczone',
+            func:exportChecked,
+            value:'',
+        },
+
+    ]
+
     return (
         <>
             <S.GlobalStyle />
@@ -56,12 +104,20 @@ let App = () => {
                     modes={modes}
                     isLoading={isLoading}
                 />
+                {error &&
+                    <S.Error>
+                        {error.msg}
+                    </S.Error>
+                }
+
                 {
                     result
                     &&
                     <DataDisplay
                         data={result}
                         handleRowInteraction={handleRowInteraction}
+                        toggleFieldAll={toggleFieldAll}
+                        userActionButtons={userActionButtons}
                     />
                 }
             </S.Main>

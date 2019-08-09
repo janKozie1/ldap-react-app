@@ -1,6 +1,28 @@
 import styled,{css} from 'styled-components'
-import {sizes,colors} from '../cssVariables'
+import {sizes,colors, defaults} from '../cssVariables'
 import {ReactComponent as arrow} from '../../assets/arrow_big.svg' 
+
+
+export let UserInteraction = styled.div`
+    grid-column:1/5;
+    display:flex;
+    align-items:center;
+    justify-content:space-around;
+    max-width:100%;
+    width:100%;
+   
+    margin-bottom:${sizes.margins.formMargin}; 
+`
+
+export let UserButton = styled.button`
+    cursor:pointer;
+    background:white;
+    border:2px solid black;
+    font-family:inherit;
+    padding:5px 10px;
+    font-size:10px;
+
+`
 
 
 export let DataList = styled.ul`
@@ -14,7 +36,6 @@ export let DataList = styled.ul`
     grid-template-columns: repeat(4,auto);
     grid-column-gap:1.5vw;
     position:relative;
-
 `
 export let Cell = styled.div`
     display:flex;
@@ -27,7 +48,7 @@ export let Cell = styled.div`
 export let Select = styled.div`
     height:12px;
     width:12px;
-    border:2px solid #333;
+    border:${defaults.border};
     border-radius:2px;
 
 `
@@ -45,6 +66,7 @@ export let DirIndicator = styled(arrow)`
 `
 
 export let HeaderItem = styled.p`
+
     margin:0;
     word-break:break-all;
     font-size:16px;
@@ -55,7 +77,7 @@ export let HeaderItem = styled.p`
     padding:10px 0;
     display:flex;
     align-items:center;
-    border-bottom:2px solid ${colors.font};
+    border-bottom:${defaults.border};
     ${props => props.value === props.sortKey && css`
         >svg{
             >path{

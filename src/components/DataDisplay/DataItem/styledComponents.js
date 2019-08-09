@@ -8,7 +8,7 @@ export let UserInteraction = styled.div`
     cursor:pointer;
     width:100%;
     grid-row:${props => props.row};
-    height:33px;
+    height:36px;
     &:hover{
         background:rgba(50,50,50,0.1);
       

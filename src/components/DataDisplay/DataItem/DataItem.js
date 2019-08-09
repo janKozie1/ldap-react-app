@@ -11,9 +11,10 @@ let DataItem = ({ data: { path, ID, groupType, members, check,open }, index, han
     let handleCheck = (data) => {
         handleRowInteraction(data,'check')
     }
+    console.log('rere')
     return (
         <>
-            <S.UserInteraction row={index * 2 + 2} onClick={() => handleRowInteraction(ID, 'open')} />
+           
             <Cell>
                 <CheckBox 
                     clickHandler={handleCheck}
@@ -22,6 +23,7 @@ let DataItem = ({ data: { path, ID, groupType, members, check,open }, index, han
                     size={12}
                 />
             </Cell>
+            <S.UserInteraction row={index * 2 + 3} onClick={() => handleRowInteraction(ID, 'open')} />
             <S.Header>
                 {path}
             </S.Header>

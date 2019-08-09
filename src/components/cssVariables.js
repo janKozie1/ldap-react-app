@@ -11,5 +11,10 @@ export let colors = {
     main:'#01A8DC',
     darker:'#00546e',
     font:"#333",
-    font_lighter:'#444'
+    font_lighter:'#444',
+    error:'#D50000'
+}
+
+export let defaults = {
+    border:'2px solid #333;'
 }

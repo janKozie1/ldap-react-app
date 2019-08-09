@@ -1,5 +1,5 @@
 import styled, { createGlobalStyle } from 'styled-components'
-import { sizes } from './cssVariables'
+import { sizes, colors } from './cssVariables'
 
 export let GlobalStyle = createGlobalStyle`
     @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap');
@@ -39,4 +39,10 @@ export let Logo = styled.img`
         height:auto;
         width:80%;   
     }
+`
+export let Error = styled.p`
+    color:${colors.error};
+    margin-top:${sizes.margins.formMargin};
+    font-size:11px;
+    font-weight:bolder;
 `
