@@ -49,7 +49,6 @@ let getGroupOwners = (group) => {
     return new Promise((resolve, reject) => {
         sql.query(connectionString, `select Name, [User ID] as cn, Access from dbo.Klucze where Grupa like '${group}'`, (err, rows) => {
             if (!err) {
-                console.log(rows)
                 let uniques = 
                     rows.map(({ Name, cn, Access }) => {
                         return {

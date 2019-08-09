@@ -33,7 +33,7 @@ export let Form = styled.form`
 
 export let Submit = styled.button`
     border:0;
-
+    outline:0;
     background:${colors.main};
     color:white;
     font-family:inherit;

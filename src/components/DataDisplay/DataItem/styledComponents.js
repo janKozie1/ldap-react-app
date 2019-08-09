@@ -7,17 +7,18 @@ export let UserInteraction = styled.div`
     grid-column:2/5;
     cursor:pointer;
     width:100%;
+    z-index:100;
     grid-row:${props => props.row};
-    height:36px;
+    height:44px;
     &:hover{
         background:rgba(50,50,50,0.1);
-      
     }
 `
 
 export let Header = styled(Cell)`
     font-weight:bolder;
-    justify-content:flex-start;
+    justify-content:space-between;
+    align-items:center;
     padding:10px 0px;
     white-space: nowrap; 
     overflow:auto;
@@ -25,6 +26,13 @@ export let Header = styled(Cell)`
         display:none;
     }
 `
+
+export let Owners = styled.div`
+    padding:5px;
+    color:#999;
+    margin-left:50px;
+`
+
 export let GroupType = styled(Cell)`
     font-weight:bolder;
     color:#F44336;
@@ -38,7 +46,7 @@ export let MembersInfo = styled(Cell)`
     justify-content:flex-start;
    ${props => props.isToggled && css`
         svg{
-            transform:rotate(180deg);
+            transform:rotate3d(0,0,1,180deg);
         }
    `} 
 `

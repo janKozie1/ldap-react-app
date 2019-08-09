@@ -7,7 +7,7 @@ export let UserInteraction = styled.div`
     grid-column:1/5;
     display:flex;
     align-items:center;
-    justify-content:space-around;
+    justify-content:center;
     max-width:100%;
     width:100%;
    
@@ -17,10 +17,21 @@ export let UserInteraction = styled.div`
 export let UserButton = styled.button`
     cursor:pointer;
     background:white;
-    border:2px solid black;
+    border:2px solid #333;
+    width:100px;
+    &:not(:last-of-type){
+        border-right:0;
+    }
+    &:first-of-type{
+        border-radius: 3px 0 0 3px;
+    }
+    &:last-of-type{
+        border-radius: 0 3px 3px 0;
+    }
     font-family:inherit;
     padding:5px 10px;
-    font-size:10px;
+    font-size:11px;
+
 
 `
 

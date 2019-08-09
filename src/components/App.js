@@ -47,6 +47,7 @@ let App = () => {
     }
 
     let toggleFieldAll = (field) => {
+        field = field.target ? field.target.value : field;
         if(result.map(e=>e[field]).filter(e=>!e).length)
             setResult(result.map(e=>({
                 ...e,
@@ -61,7 +62,7 @@ let App = () => {
     let openChecked = () =>{
         setResult(result.map(e=>({
             ...e,
-            open:e.check
+            open:(e.check && !e.open)
         })))
     }
     let exportChecked = () =>{
@@ -69,24 +70,18 @@ let App = () => {
     }
     let userActionButtons = [
         {
-            text:'Zaznacz/odznacz wszystko',
+            text:'Zaznacz',
             func:toggleFieldAll,
             value:'check',
             
         },
         {
-            text:'Otwórz/zamknij wszystko',
-            func:toggleFieldAll,
-            value:'open',
-            
-        },
-        {
-            text:'Otwórz zaznaczone',
+            text:'Otwórz',
             func:openChecked,
             value:'',
         },
         {
-            text:'Eksportuj zaznaczone',
+            text:'Eksportuj',
             func:exportChecked,
             value:'',
         },
