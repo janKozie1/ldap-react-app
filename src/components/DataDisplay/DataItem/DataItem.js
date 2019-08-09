@@ -7,7 +7,7 @@ import * as S from './styledComponents'
 
 
 
-let DataItem = ({ data: { path, ID, groupType, members }, index, rowData, handleRowInteraction }) => {
+let DataItem = ({ data: { path, ID, groupType, members, check,open }, index, handleRowInteraction }) => {
     let handleCheck = (data) => {
         handleRowInteraction(data,'check')
     }
@@ -18,7 +18,7 @@ let DataItem = ({ data: { path, ID, groupType, members }, index, rowData, handle
                 <CheckBox 
                     clickHandler={handleCheck}
                     returnData={ID}
-                    checked={rowData.check}
+                    checked={check}
                     size={12}
                 />
             </Cell>
@@ -28,14 +28,14 @@ let DataItem = ({ data: { path, ID, groupType, members }, index, rowData, handle
             <S.GroupType groupType={groupType}>
                 <p>{groupType}</p>
             </S.GroupType>
-            <S.MembersInfo isToggled={rowData.open} >
+            <S.MembersInfo isToggled={open} >
                 <S.Expand />
                 {members.length}
             </S.MembersInfo>
             {members ?
                 <S.MembersList>
                     {
-                        rowData.open && members.map(({ description, cn }) => {
+                        open && members.map(({ description, cn }) => {
                             return <S.Member key={cn}>{description} - {cn}</S.Member>
                         })
                     }

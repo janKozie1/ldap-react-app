@@ -23,18 +23,37 @@ export let sortByKey = (array, key, dir = 0) => {
         }
         return 0;
     }
-    return array.sort(sort);
+    return [...array.sort(sort)];
 }
 
-export let arrToObject = (arr, obj , key ) => {
+export let objectByArrayKey = (arr, obj, key) => {
     return arr.reduce((prev, curr) => {
-        let localObj = {...obj}
-        prev[curr[key]]  = localObj;
+        let localObj = { ...obj }
+        prev[curr[key]] = localObj;
         return prev;
     }, {})
 }
 
+export let updateObject = (arr) =>{
+    return arr.reduce((prev, curr) => {
+        prev[curr[0]] = curr[1];
+        return prev;
+    }, {})
+}
+
+
+
+export let parseUserList = (userList) => {
+    let expandObject = (base,exp) => {
+        return Object.assign({},base,exp)
+    }
+    return userList.map(e=>expandObject(e,{open:false,check:false}))
+}
+
+
 export let compareFetchedData = (prev, curr) => {
-    console.log(prev,curr)
-    return prev && curr && prev.length === curr.length && JSON.stringify(prev.map(e=>e.ID).sort()) === JSON.stringify(curr.map(e=>e.ID).sort())
+    return prev 
+            && curr 
+                && prev.length === curr.length 
+                    && JSON.stringify(prev.map(e => e.ID).sort()) === JSON.stringify(curr.map(e => e.ID).sort())
 }

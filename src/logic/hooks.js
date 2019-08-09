@@ -5,7 +5,7 @@ import { fetchDefConfig } from '../constants/defaultVariables'
 
 let { DEF_URL, DEF_PARAMS, DEF_QUERY } = fetchDefConfig;
 
-export let useFetch = (query = DEF_QUERY, url = DEF_URL, params = DEF_PARAMS) => {
+export let useFetch = (query = DEF_QUERY, url = DEF_URL, params = DEF_PARAMS, middleware) => {
     let [response, setResponse] = useState(null)
     let [error, setError] = useState(null)
     let [isLoading, setIsLoading] = useState(null)
@@ -17,13 +17,13 @@ export let useFetch = (query = DEF_QUERY, url = DEF_URL, params = DEF_PARAMS) =>
                 .then(checkResponseStatus)
                 .then(res => res.json())
                 .then(parsed => {
-                    timeout=setTimeout(()=>{
-                        if(!compareFetchedData(response,parsed))
-                            setResponse(parsed);
+                    timeout = setTimeout(() => {
+                        if (!compareFetchedData(response, parsed))
+                            setResponse(middleware(parsed));
                         setIsLoading(false)
-                    },300)
+                    }, 300)
                 })
-                .catch((err)=>{
+                .catch((err) => {
                     setError(err);
                     setIsLoading(false);
                 })
@@ -32,5 +32,5 @@ export let useFetch = (query = DEF_QUERY, url = DEF_URL, params = DEF_PARAMS) =>
         if (url && query)
             return fetchData(query, url, params)
     }, [query])
-    return [response, error, isLoading]
+    return [response, error, isLoading, setResponse]
 }
