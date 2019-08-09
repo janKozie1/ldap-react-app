@@ -8,6 +8,9 @@ import * as S from './styledComponents'
 let DataDisplay = React.memo(({ data = [], handleRowInteraction, toggleFieldAll, userActionButtons }) => {
     let [sortKey, setSortKey] = useState('path')
     let [sortDirection, setSortDirection] = useState(1);
+    let handleCheck = (data) => {
+        handleRowInteraction(data, 'check')
+    }
     let sortedData = sortByKey(data, sortKey, sortDirection);
     let handleSortChange = (key) => {
         if (sortKey !== key) {
@@ -68,12 +71,24 @@ let DataDisplay = React.memo(({ data = [], handleRowInteraction, toggleFieldAll,
             </S.HeaderItem>
             {
                 sortedData.map((e, i) => {
-                    return <DataItem
-                        key={`${i}-${e.group}`}
-                        data={e}
-                        handleRowInteraction={handleRowInteraction}
-                        index={i}
-                    />
+                    return (
+                        <React.Fragment key={`${i}-${e.group}`}>
+                            <S.Cell>
+                                <CheckBox
+                                    clickHandler={handleCheck}
+                                    returnData={e.ID}
+                                    checked={e.check}
+                                    size={12}
+                                />
+                            </S.Cell>
+                            <DataItem
+                                
+                                data={e}
+                                handleRowInteraction={handleRowInteraction}
+                                index={i}
+                            />
+                        </React.Fragment>
+                    )
                 })
             }
         </S.DataList>

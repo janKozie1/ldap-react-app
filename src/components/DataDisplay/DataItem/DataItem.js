@@ -7,24 +7,13 @@ import * as S from './styledComponents'
 
 
 
-let DataItem =({ data: { path, ID, groupType, members, check, open, owners }, index, handleRowInteraction }) => {
-    let handleCheck = (data) => {
-        handleRowInteraction(data, 'check')
-    }
+let DataItem = React.memo(({ data: { path, ID, groupType, members, open, owners }, index, handleRowInteraction }) => {
+    console.log('rere')
     let handleOpen = () => {
         handleRowInteraction(ID,'open')
     }
     return (
         <>
-
-            <Cell>
-                <CheckBox
-                    clickHandler={handleCheck}
-                    returnData={ID}
-                    checked={check}
-                    size={12}
-                />
-            </Cell>
             <S.UserInteraction row={index * 2 + 3} onClick={handleOpen} />
             <S.Header>
                 {path}
@@ -46,12 +35,12 @@ let DataItem =({ data: { path, ID, groupType, members, check, open, owners }, in
                     })
                 }
             </S.MembersList>
-
-
         </>
 
     )
-}
+},(a,b)=>{
+    return a.data.open === b.data.open;    
+})
 
 
 

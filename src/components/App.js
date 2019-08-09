@@ -36,8 +36,8 @@ let App = () => {
     let handleFormSubmit = (value, { type, fieldID }) => {
         setQuery({ query: value[type].trim(), type: fieldID })
     }
-
     let handleRowInteraction = (id, type) => {
+      
         setResult(result.map(e => {
             return e.ID === id ?
                 { ...e, [type]: !e[type] }
@@ -62,7 +62,7 @@ let App = () => {
     let openChecked = () =>{
         setResult(result.map(e=>({
             ...e,
-            open:(e.check && !e.open)
+            open:(e.check && !e.open || (!e.check && e.open))
         })))
     }
     let exportChecked = () =>{
