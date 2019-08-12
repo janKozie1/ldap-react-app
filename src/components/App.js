@@ -4,34 +4,30 @@ import Search from './Search/Search'
 import Logo from '../assets/logo.png'
 import DataDisplay from './DataDisplay/DataDisplay'
 
-import { parseUserList } from '../logic/functions'
-
-import { useFetch } from '../logic/hooks'
+import { parseUserList,objectByArrayKey } from '../logic/functions'
+import { inputTypes} from '../constants/types'
 
 import * as S from './styledComponents'
 
+import { useFetch } from '../logic/hooks'
 import { fetchDefConfig } from '../constants/defaultVariables'
-
 let { DEF_URL, DEF_PARAMS } = fetchDefConfig;
 
-let App = () => {
-    let modes = [
-        {
-            type: 'id',
-            placeholder: 'ID',
-            text: 'ID',
-            fieldID: 'id'
-        },
-        {
-            type: 'id',
-            placeholder: 'imie nazwisko',
-            text: 'Pełne imię',
-            fieldID: 'fullName'
-        }
-    ]
 
+
+
+
+let App = () => {
+    let handleFetchedData = (data) =>{
+        console.log(objectByArrayKey(data, { check: false, open: false }, 'ID'))
+        let expandObject = (base,exp) => {
+            return Object.assign({},base,exp)
+        }
+        return data.map((e,i)=>expandObject(e,{open:false,check:false}))
+    }
+ 
     let [query, setQuery] = useState(null)
-    let [result, error, isLoading, setResult] = useFetch(query, DEF_URL, DEF_PARAMS, parseUserList)
+    let [result, error, isLoading, setResult] = useFetch(query, DEF_URL, DEF_PARAMS, handleFetchedData)
 
     let handleFormSubmit = (value, { type, fieldID }) => {
         setQuery({ query: value[type].trim(), type: fieldID })
@@ -45,6 +41,8 @@ let App = () => {
                 e;
         }))
     }
+
+    
 
     let toggleFieldAll = (field) => {
         console.log("?")
@@ -69,7 +67,8 @@ let App = () => {
     let exportChecked = () =>{
 
     }
-    let userActionButtons = [
+
+    let buttonTypes = [
         {
             text:'Zaznacz',
             func:toggleFieldAll,
@@ -86,8 +85,10 @@ let App = () => {
             func:exportChecked,
             value:'',
         },
+    
+    ]   
+    
 
-    ]
 
     return (
         <>
@@ -97,7 +98,7 @@ let App = () => {
                 <S.Logo src={Logo} />
                 <Search
                     handleFormSubmit={handleFormSubmit}
-                    modes={modes}
+                    modes={inputTypes}
                     isLoading={isLoading}
                 />
                 {error &&
@@ -113,7 +114,7 @@ let App = () => {
                         data={result}
                         handleRowInteraction={handleRowInteraction}
                         toggleFieldAll={toggleFieldAll}
-                        userActionButtons={userActionButtons}
+                        userActionButtons={buttonTypes}
                     />
                 }
             </S.Main>

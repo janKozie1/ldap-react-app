@@ -53,7 +53,7 @@ export let Cell = styled.div`
     align-items:center;
     justify-content:center;
     margin:0;
-    font-size:11px;
+    font-size:12px;
     color:${colors.font};
 `
 export let Select = styled.div`

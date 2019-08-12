@@ -8,7 +8,7 @@ import * as S from './styledComponents'
 
 
 let DataItem = React.memo(({ data: { path, ID, groupType, members, open, owners }, index, handleRowInteraction }) => {
-    console.log(owners)
+    console.log('Data item render')
     let handleOpen = () => {
         handleRowInteraction(ID, 'open')
     }
@@ -32,14 +32,17 @@ let DataItem = React.memo(({ data: { path, ID, groupType, members, open, owners 
             <S.MembersList>
                 {
                     open && (
-                        <>
+                        <>  
+                            <S.ListTitle>Właściciele:</S.ListTitle>
+                            <S.ListTitle>Członkowie:</S.ListTitle>
                             <S.UserList>
                                 {
                                     owners.map(({ description, cn, Access }) => {
-                                        return <S.Owner key={`${cn}-${Access}-owner`}>{description} - {cn}</S.Owner>
+                                        return <S.Owner key={`${cn}-${Access}-owner`}>{description} - {cn} - {Access} </S.Owner>
                                     })
                                 }
                             </S.UserList>
+                            
                             <S.UserList>
                                 {
                                     members.map(({ description, cn }) => {
@@ -56,7 +59,7 @@ let DataItem = React.memo(({ data: { path, ID, groupType, members, open, owners 
 
     )
 }, (a, b) => {
-    // return a.data.open === b.data.open;    
+    return a.data.open === b.data.open;    
 })
 
 

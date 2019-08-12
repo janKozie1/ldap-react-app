@@ -6,7 +6,7 @@ import * as S from './styledComponents'
 
 
 let DataDisplay = React.memo(({ data = [], handleRowInteraction, toggleFieldAll, userActionButtons }) => {
-    console.log(data)
+    console.log('Data display render')
     let [sortKey, setSortKey] = useState('path')
     let [sortDirection, setSortDirection] = useState(1);
     let handleCheck = (data) => {
@@ -21,7 +21,6 @@ let DataDisplay = React.memo(({ data = [], handleRowInteraction, toggleFieldAll,
             setSortDirection(sortDirection ? 0 : 1)
         }
     }
-    console.log("!")
     return (
 
         <S.DataList>
