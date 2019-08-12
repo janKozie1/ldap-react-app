@@ -19,9 +19,12 @@ export let useFetch = (query = DEF_QUERY, url = DEF_URL, params = DEF_PARAMS, mi
                 .then(res => res.json())
                 .then(parsed => {
                     timeout = setTimeout(() => {
-                        if (!compareFetchedData(response, parsed))
+                        if (!compareFetchedData(response, parsed)){
                             setResponse(middleware(parsed));
-                        setIsLoading(false)
+                            setIsLoading(false)
+                        }
+                            
+                        
                     }, 300)
                 })
                 .catch((err) => {

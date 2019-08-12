@@ -60,24 +60,37 @@ export let Expand = styled(bg)`
 export let MembersList = styled.div`
     grid-column:2/6;
     display:grid;
-    margin-left:40px;
     grid-template-columns:auto 1fr;
-    grid-column-gap:2em;
+    grid-column-gap:4em;
+    margin-left:40px;
     
 `
+
+export let ListTitle = styled.h4`
+    font-weight:normal;
+    padding:0;
+    margin:0;
+    font-size:11px;
+    color:#333;
+    font-weight:bolder;
+    padding:10px 0px;
+`
+
 export let UserList = styled.ul`
     list-style-type:disc;
     padding:0;
     margin:0;
+    margin-left:40px;
+
 `
 export let Owner = styled.li`
     font-size:11px;
     padding:10px 0;
     position:relative;
-    color:#444;
+    color:#333;
     >span{
         font-size:10px;
-        color:#444;
+        color:#333;
     }
 `
 export let Member = styled(Owner)`

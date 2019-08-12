@@ -44,10 +44,7 @@ export let updateObject = (arr) =>{
 
 
 export let parseUserList = (userList) => {
-    let expandObject = (base,exp) => {
-        return Object.assign({},base,exp)
-    }
-    return userList.map((e,i)=>expandObject(e,{open:false,check:false}))
+    return userList.map((e,i)=>({...e,check:false,open:false}))
 }
 
 

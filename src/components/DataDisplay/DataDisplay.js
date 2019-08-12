@@ -5,7 +5,7 @@ import { sortByKey } from '../../logic/functions'
 import * as S from './styledComponents'
 
 
-let DataDisplay = React.memo(({ data = [], handleRowInteraction, toggleFieldAll, userActionButtons }) => {
+let DataDisplay = React.memo(({ data = [], handleRowInteraction, toggleFieldAll, userActionButtons ,selectedCount }) => {
     console.log(data)
     let [sortKey, setSortKey] = useState('path')
     let [sortDirection, setSortDirection] = useState(1);
@@ -21,11 +21,10 @@ let DataDisplay = React.memo(({ data = [], handleRowInteraction, toggleFieldAll,
             setSortDirection(sortDirection ? 0 : 1)
         }
     }
-    console.log("!")
     return (
 
         <S.DataList>
-            <S.UserInteraction>
+            <S.ActionButtons>
                 {
                     userActionButtons.map((e, i) => {
                         return <S.UserButton key={`${i}-button`} value={e.value} onClick={e.func}>
@@ -33,12 +32,13 @@ let DataDisplay = React.memo(({ data = [], handleRowInteraction, toggleFieldAll,
                         </S.UserButton>
                     })
                 }
-            </S.UserInteraction>
+            </S.ActionButtons>
             <S.Cell>
                 <CheckBox
                     size={16}
                     clickHandler={toggleFieldAll}
                     returnData={'check'}
+                    checked={selectedCount===data.length}
                 />
             </S.Cell>
             <S.HeaderItem

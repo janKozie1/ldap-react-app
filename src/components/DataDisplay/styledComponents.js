@@ -3,7 +3,7 @@ import {sizes,colors, defaults} from '../cssVariables'
 import {ReactComponent as arrow} from '../../assets/arrow_big.svg' 
 
 
-export let UserInteraction = styled.div`
+export let ActionButtons = styled.div`
     grid-column:1/6;
     display:flex;
     align-items:center;
@@ -35,7 +35,6 @@ export let UserButton = styled.button`
 
 `
 
-
 export let DataList = styled.ul`
     margin:0;
     padding:0;
@@ -53,7 +52,7 @@ export let Cell = styled.div`
     align-items:center;
     justify-content:center;
     margin:0;
-    font-size:11px;
+    font-size:12px;
     color:${colors.font};
 `
 export let Select = styled.div`
