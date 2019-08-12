@@ -47,7 +47,8 @@ let determineGroupType = (name) => {
 
 let getGroupOwners = (group) => {
     return new Promise((resolve, reject) => {
-        sql.query(connectionString, `select Name, [User ID] as cn, Access from dbo.Klucze where Grupa like '${group}'`, (err, rows) => {
+        sql.query(connectionString, `select Name, [User ID] as cn, Access from dbo.Klucze where Grupa='${group}'`, (err, rows) => {
+            console.log(group,rows)
             if (!err) {
                 let uniques = 
                     rows.map(({ Name, cn, Access }) => {
@@ -105,6 +106,7 @@ app.post('/getUserData', async (req, res) => {
             ...e,
             members,
             owners,
+            ownersCount:owners.length,
             membersCount: members.length
         }
     })
@@ -119,48 +121,3 @@ app.post('/getUserData', async (req, res) => {
 app.listen('8080', () => {
     console.log('started at 8080')
 })
-
-
-
-
-
-
-       // let queryToAD;
-    // console.log(req.body.query,req.body.type)
-    // if (req.body.type === 'id') {
-    //     queryToAD = `cn=${req.body.query}`
-    // } else if (req.body.type === 'fullName') {
-    // let fullName = req.body.query.split(" ")
-    //     queryToAD = `(&(sn=${fullName[1]})(givenName=${fullName[0]}))`
-    // }
-    // ad.find(queryToAD, function (err, results) {
-    //     if(results && results.users){
-    //         results.users.map(e=>{
-    //             console.log(e)
-    //         })
-    //     }
-    // });
-
-
-
-// ad.getUsersForGroup('PLKLCorpSAP_R', function(err, user) {
-//     if (err) {
-//       console.log('ERROR: ' +JSON.stringify(err,null, 2));
-//       return;
-//     }
-
-//     if (! user) console.log('User:  not found.');
-//     else console.log(JSON.stringify(user,null, 2));
-// });
-// ad.findUser('in99037', function(err, groups) {
-//     if (err) {
-//       console.log('ERROR: ' +JSON.stringify(err));
-//       return;
-//     }
-
-//     if (! groups) console.log('User:  not found.');
-//     else console.log(JSON.stringify(groups,null,2));
-//   });
-// ad.find('(&(sn=*Kozieł*)(givenName=*Jan*))', function(err, results) {
-//     console.log(results)
-//   });    

@@ -47,6 +47,7 @@ let App = () => {
     }
 
     let toggleFieldAll = (field) => {
+        console.log("?")
         field = field.target ? field.target.value : field;
         if(result.map(e=>e[field]).filter(e=>!e).length)
             setResult(result.map(e=>({
@@ -62,7 +63,7 @@ let App = () => {
     let openChecked = () =>{
         setResult(result.map(e=>({
             ...e,
-            open:(e.check && !e.open || (!e.check && e.open))
+            open:((e.check && !e.open) || (!e.check && e.open))
         })))
     }
     let exportChecked = () =>{

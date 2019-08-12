@@ -2,14 +2,14 @@ import styled, { css } from 'styled-components'
 import {Cell} from '../styledComponents'
 import { ReactComponent as bg } from '../../../assets/arrow.svg'
 
-export let UserInteraction = styled.div`
+export let RowHighlight = styled.div`
     position:absolute;
-    grid-column:2/5;
+    grid-column:2/6;
     cursor:pointer;
     width:100%;
     z-index:100;
     grid-row:${props => props.row};
-    height:44px;
+    height:36px;
     &:hover{
         background:rgba(50,50,50,0.1);
     }
@@ -27,10 +27,8 @@ export let Header = styled(Cell)`
     }
 `
 
-export let Owners = styled.div`
-    padding:5px;
-    color:#999;
-    margin-left:50px;
+export let Owners = styled(Cell)`
+   
 `
 
 export let GroupType = styled(Cell)`
@@ -59,22 +57,32 @@ export let Expand = styled(bg)`
    
 `
 
-export let MembersList = styled.ul`
-    grid-column:2/5;
-    margin:0;
+export let MembersList = styled.div`
+    grid-column:2/6;
+    display:grid;
     margin-left:40px;
-    padding:0;
-    list-style-type:disc;
+    grid-template-columns:auto 1fr;
+    grid-column-gap:2em;
     
 `
-
-export let Member = styled.li`
+export let UserList = styled.ul`
+    list-style-type:disc;
+    padding:0;
+    margin:0;
+`
+export let Owner = styled.li`
     font-size:11px;
     padding:10px 0;
     position:relative;
-    color:#666;
+    color:#444;
     >span{
         font-size:10px;
+        color:#444;
+    }
+`
+export let Member = styled(Owner)`
+    color:#666;
+    >span{
         color:#666;
     }
 `

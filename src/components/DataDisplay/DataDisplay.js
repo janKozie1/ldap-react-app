@@ -6,6 +6,7 @@ import * as S from './styledComponents'
 
 
 let DataDisplay = React.memo(({ data = [], handleRowInteraction, toggleFieldAll, userActionButtons }) => {
+    console.log(data)
     let [sortKey, setSortKey] = useState('path')
     let [sortDirection, setSortDirection] = useState(1);
     let handleCheck = (data) => {
@@ -20,7 +21,7 @@ let DataDisplay = React.memo(({ data = [], handleRowInteraction, toggleFieldAll,
             setSortDirection(sortDirection ? 0 : 1)
         }
     }
-
+    console.log("!")
     return (
 
         <S.DataList>
@@ -47,6 +48,15 @@ let DataDisplay = React.memo(({ data = [], handleRowInteraction, toggleFieldAll,
                 direction={sortDirection}
             >
                 Ścieżka
+                <S.DirIndicator />
+            </S.HeaderItem>
+            <S.HeaderItem
+                onClick={() => handleSortChange('ownersCount')}
+                value={'ownersCount'}
+                sortKey={sortKey}
+                direction={sortDirection}
+            >
+                Właścicieli
                 <S.DirIndicator />
             </S.HeaderItem>
             <S.HeaderItem

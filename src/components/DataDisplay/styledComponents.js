@@ -4,7 +4,7 @@ import {ReactComponent as arrow} from '../../assets/arrow_big.svg'
 
 
 export let UserInteraction = styled.div`
-    grid-column:1/5;
+    grid-column:1/6;
     display:flex;
     align-items:center;
     justify-content:center;
@@ -44,7 +44,7 @@ export let DataList = styled.ul`
     min-width:50%;
     margin:calc(${sizes.margins.formMargin} * 1) 0;
     display:grid;
-    grid-template-columns: repeat(4,auto);
+    grid-template-columns: repeat(5,auto);
     grid-column-gap:1.5vw;
     position:relative;
 `
