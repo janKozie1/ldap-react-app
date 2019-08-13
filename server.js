@@ -45,10 +45,9 @@ let determineGroupType = (name) => {
     return '';
 }
 
-let getGroupOwners = (group) => {
+let getGroupOwners = (group,path) => {
     return new Promise((resolve, reject) => {
-        sql.query(connectionString, `select Name, [User ID] as cn, Access from dbo.Klucze where Grupa='${group}'`, (err, rows) => {
-            console.log(group,rows)
+        sql.query(connectionString, `select Name, [User ID] as cn, Access from dbo.Klucze where Grupa='${group}' AND Description='${path}'`, (err, rows) => {
             if (!err) {
                 let uniques = 
                     rows.map(({ Name, cn, Access }) => {
@@ -101,7 +100,7 @@ app.post('/getUserData', async (req, res) => {
     let folderInfo = await getFolderInfo(getQueryCondition(req.body.query, req.body.type));
     let results = folderInfo.map(async (e) => {
         let members = await getGroupMemembers(e.group);
-        let owners = await getGroupOwners(e.group);
+        let owners = await getGroupOwners(e.group,e.path);
         return {
             ...e,
             members,

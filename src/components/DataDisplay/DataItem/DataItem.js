@@ -15,17 +15,17 @@ let DataItem = React.memo(({ data: { path, ID, groupType, members, open, owners 
     return (
         <>
             <S.RowHighlight row={index * 2 + 3} onClick={handleOpen} />
-            <S.Header>
+            <S.Header onClick={handleOpen}>
                 {path}
 
             </S.Header>
-            <S.Owners>
+            <S.Owners onClick={handleOpen}>
                 {owners.length}
-            </S.Owners>
-            <S.GroupType groupType={groupType}>
+            </S.Owners >
+            <S.GroupType groupType={groupType} onClick={handleOpen}>
                 <p>{groupType}</p>
             </S.GroupType>
-            <S.MembersInfo isToggled={open} >
+            <S.MembersInfo isToggled={open} onClick={handleOpen} >
                 <S.Expand />
                 {members.length}
             </S.MembersInfo>
@@ -59,7 +59,7 @@ let DataItem = React.memo(({ data: { path, ID, groupType, members, open, owners 
 
     )
 }, (a, b) => {
-   // return a.data.open === b.data.open;    
+   return a.data.open === b.data.open;    
 })
 
 

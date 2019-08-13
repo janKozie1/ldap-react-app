@@ -37,20 +37,19 @@ let App = () => {
         setQuery({ query: value[type].trim(), type: fieldID })
     }
     let handleRowInteraction = (id, type) => {
-        let temp = 0;
-        setResult(result.map(e => {
-            if (type === 'check') {
-                if ((e.check && (e.ID !== id)) || (!e.check && (e.ID === id)))
-                    temp++
+        setResult(result => result.map(e => {
+            if (type === 'check' && e.ID === id) {
+                if (e.check) {
+                    setSelectedCount(selectedCount - 1)
+                }else{
+                    setSelectedCount(selectedCount + 1)
+                }
             }
-
             return e.ID === id ?
                 { ...e, [type]: !e[type] }
                 :
                 e;
         }))
-        if (type === 'check')
-            setSelectedCount(temp)
     }
     let toggleFieldAll = (field) => {
         field = field.target ? field.target.value : field;
@@ -59,7 +58,7 @@ let App = () => {
                 setSelectedCount(result.length)
             }
 
-            setResult(result.map(e => ({
+            setResult(result => result.map(e => ({
                 ...e,
                 [field]: true
             })))
@@ -67,7 +66,7 @@ let App = () => {
         else {
             if (field === 'check')
                 setSelectedCount(0)
-            setResult(result.map(e => ({
+            setResult(result => result.map(e => ({
                 ...e,
                 [field]: false
             })))
@@ -76,13 +75,13 @@ let App = () => {
 
     }
     let openChecked = () => {
-        setResult(result.map(e => ({
+        setResult(result => result.map(e => ({
             ...e,
             open: ((e.check && !e.open) || (!e.check && e.open))
         })))
     }
     let exportChecked = () => {
-
+        console.log(result.filter(e => e.check))
     }
     let userActionButtons = [
         {

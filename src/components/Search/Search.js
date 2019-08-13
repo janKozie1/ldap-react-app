@@ -9,7 +9,7 @@ import * as S from './styledComponents'
 let Search = ({ handleFormSubmit, modes, isLoading }) => {
     let [mode, setMode] = useState(0)
     let { type, placeholder } = modes[mode];
-    let [userInput, setUserInput] = useState(Object.fromEntries(modes.map(e => [e.type, 'E13226'])))
+    let [userInput, setUserInput] = useState(Object.fromEntries(modes.map(e => [e.type, 'E14064'])))
     let handleInput = (value, fieldName) => {
         let newInput = { ...userInput }
         newInput[fieldName] = value;

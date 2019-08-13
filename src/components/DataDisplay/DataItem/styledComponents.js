@@ -9,7 +9,8 @@ export let RowHighlight = styled.div`
     width:100%;
     z-index:100;
     grid-row:${props => props.row};
-    height:36px;
+    z-index:1;
+    height:39px;
     &:hover{
         background:rgba(50,50,50,0.1);
     }

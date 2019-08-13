@@ -45,6 +45,7 @@ export let DataList = styled.ul`
     display:grid;
     grid-template-columns: repeat(5,auto);
     grid-column-gap:1.5vw;
+    grid-auto-rows:39px auto;
     position:relative;
 `
 export let Cell = styled.div`
