@@ -21,9 +21,9 @@ export let useFetch = (query = DEF_QUERY, url = DEF_URL, params = DEF_PARAMS, mi
                     timeout = setTimeout(() => {
                         if (!compareFetchedData(response, parsed)){
                             setResponse(middleware(parsed));
-                            setIsLoading(false)
-                        }
                             
+                        }
+                        setIsLoading(false)
                         
                     }, 300)
                 })

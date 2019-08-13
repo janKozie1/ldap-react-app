@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 
 import Search from './Search/Search'
 import Logo from '../assets/logo.png'
 import DataDisplay from './DataDisplay/DataDisplay'
 
-import { parseUserList } from '../logic/functions'
+import { parseUserList, sortByKey, createCSVTable } from '../logic/functions'
 
 import { useFetch } from '../logic/hooks'
 
@@ -15,24 +15,6 @@ import { fetchDefConfig } from '../constants/defaultVariables'
 let { DEF_URL, DEF_PARAMS } = fetchDefConfig;
 
 let App = () => {
-    let modes = [
-        {
-            type: 'id',
-            placeholder: 'ID',
-            text: 'ID',
-            fieldID: 'id'
-        },
-        {
-            type: 'id',
-            placeholder: 'imie nazwisko',
-            text: 'Pełne imię',
-            fieldID: 'fullName'
-        }
-    ]
-    let [selectedCount, setSelectedCount] = useState(0)
-    let [query, setQuery] = useState(null)
-    let [result, error, isLoading, setResult] = useFetch(query, DEF_URL, DEF_PARAMS, parseUserList)
-
     let handleFormSubmit = (value, { type, fieldID }) => {
         setQuery({ query: value[type].trim(), type: fieldID })
     }
@@ -41,7 +23,7 @@ let App = () => {
             if (type === 'check' && e.ID === id) {
                 if (e.check) {
                     setSelectedCount(selectedCount - 1)
-                }else{
+                } else {
                     setSelectedCount(selectedCount + 1)
                 }
             }
@@ -81,8 +63,32 @@ let App = () => {
         })))
     }
     let exportChecked = () => {
-        console.log(result.filter(e => e.check))
+        let csvData = createCSVTable(result.filter(e => e.check))
+        let blob = new Blob([csvData], { type: 'text/csv' })
+        let csvURL = window.URL.createObjectURL(blob)
+        let tempLink = document.createElement('a')
+        tempLink.href = csvURL
+        tempLink.setAttribute('download', 'eksport.csv')
+        tempLink.click()
+
     }
+    let parseData = (data) => {
+        return parseUserList(data.map(e => ({ ...e, members: sortByKey(e.members, 'description'), owners: sortByKey(e.owners, 'description') })))
+    }
+    let modes = [
+        {
+            type: 'id',
+            placeholder: 'ID',
+            text: 'ID',
+            fieldID: 'id'
+        },
+        {
+            type: 'id',
+            placeholder: 'imie nazwisko',
+            text: 'Pełne imię',
+            fieldID: 'fullName'
+        }
+    ]
     let userActionButtons = [
         {
             text: 'Zaznacz',
@@ -102,6 +108,10 @@ let App = () => {
         },
 
     ]
+
+    let [selectedCount, setSelectedCount] = useState(0)
+    let [query, setQuery] = useState(null)
+    let [result, error, isLoading, setResult] = useFetch(query, DEF_URL, DEF_PARAMS, parseData)
 
     return (
         <>

@@ -54,3 +54,33 @@ export let compareFetchedData = (prev, curr) => {
                 && prev.length === curr.length 
                     && JSON.stringify(prev.map(e => e.ID).sort()) === JSON.stringify(curr.map(e => e.ID).sort())
 }
+
+export let createCSVTable = (data) => {
+    let createDataRow = (args) => {
+        return args.map(e => e ? `"${e}"`: '').join(";") + '\n';
+    }
+    let getUserString = (user) => {
+        return user ? `${user.description} - ${user.cn}` : '';
+    }
+    return (data.filter(e => e.check).reduce((prev, {path,members,owners}) => {
+        let longer = owners.length >= members.length ? owners : members;
+        return prev + createDataRow(
+                [
+                    path,
+                    getUserString(members[0]),
+                    getUserString(owners[0])
+                ]
+                ).concat (longer.map((e,i)=>{
+                        return createDataRow(
+                            [
+                                '',
+                                getUserString(owners[i]),
+                                getUserString(members[i])
+                            ]
+                            )
+                        }).join(""),
+                            '"";"";""\n'
+                        );
+       
+    }, 'Sciezka;Wlasciciele;Czlonkowie\n'))
+}
