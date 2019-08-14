@@ -63,14 +63,15 @@ let App = () => {
         })))
     }
     let exportChecked = () => {
-        let csvData = createCSVTable(result.filter(e => e.check))
-        let blob = new Blob([csvData], { type: 'text/csv' })
-        let csvURL = window.URL.createObjectURL(blob)
-        let tempLink = document.createElement('a')
-        tempLink.href = csvURL
-        tempLink.setAttribute('download', 'eksport.csv')
-        tempLink.click()
-
+        if(selectedCount){
+            let csvData = '\uFEFF'+ createCSVTable(result.filter(e => e.check))
+            let blob = new Blob([csvData], { type: 'text/csv',charset:'utf-8' })
+            let csvURL = window.URL.createObjectURL(blob)
+            let tempLink = document.createElement('a')
+            tempLink.href = csvURL
+            tempLink.setAttribute('download', 'eksport.csv')
+            tempLink.click()
+        }
     }
     let parseData = (data) => {
         return parseUserList(data.map(e => ({ ...e, members: sortByKey(e.members, 'description'), owners: sortByKey(e.owners, 'description') })))
