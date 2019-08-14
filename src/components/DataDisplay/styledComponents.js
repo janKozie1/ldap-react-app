@@ -10,8 +10,7 @@ export let ActionButtons = styled.div`
     justify-content:center;
     max-width:100%;
     width:100%;
-   
-    margin-bottom:${sizes.margins.formMargin}; 
+    margin-top:${sizes.margins.formMargin}; 
 `
 
 export let UserButton = styled.button`
@@ -45,7 +44,7 @@ export let DataList = styled.ul`
     display:grid;
     grid-template-columns: repeat(5,auto);
     grid-column-gap:1.5vw;
-    grid-auto-rows:39px auto;
+    grid-auto-rows:auto 39px ;
     position:relative;
 `
 export let Cell = styled.div`

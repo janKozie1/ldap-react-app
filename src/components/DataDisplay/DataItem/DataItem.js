@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
-import CheckBox from '../Checkbox/Checkbox'
+import React from 'react';
 
-import { Cell } from '../styledComponents'
 
 import * as S from './styledComponents'
 
@@ -14,7 +12,7 @@ let DataItem = React.memo(({ data: { path, ID, groupType, members, open, owners 
     }
     return (
         <>
-            <S.RowHighlight row={index * 2 + 3} onClick={handleOpen} />
+            <S.RowHighlight row={index * 2 + 2} onClick={handleOpen} />
             <S.Header onClick={handleOpen}>
                 {path}
 

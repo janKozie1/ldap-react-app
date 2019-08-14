@@ -34,7 +34,7 @@ export let objectByArrayKey = (arr, obj, key) => {
     }, {})
 }
 
-export let updateObject = (arr) =>{
+export let updateObject = (arr) => {
     return arr.reduce((prev, curr) => {
         prev[curr[0]] = curr[1];
         return prev;
@@ -44,43 +44,45 @@ export let updateObject = (arr) =>{
 
 
 export let parseUserList = (userList) => {
-    return userList.map((e,i)=>({...e,check:false,open:false}))
+    return userList.map((e, i) => ({ ...e, check: false, open: false }))
 }
 
 
 export let compareFetchedData = (prev, curr) => {
-    return prev 
-            && curr 
-                && prev.length === curr.length 
-                    && JSON.stringify(prev.map(e => e.ID).sort()) === JSON.stringify(curr.map(e => e.ID).sort())
+    return prev
+        && curr
+        && prev.length === curr.length
+        && JSON.stringify(prev.map(e => e.ID).sort()) === JSON.stringify(curr.map(e => e.ID).sort())
 }
 
 export let createCSVTable = (data) => {
     let createDataRow = (args) => {
-        return args.map(e => e ? `"${e}"`: '').join(";") + '\n';
+        return args.map(e => e ? `"${e}"` : '').join(";") + '\n';
     }
     let getUserString = (user) => {
         return user ? `${user.description} - ${user.cn}` : '';
     }
-    return (data.filter(e => e.check).reduce((prev, {path,members,owners}) => {
+    return (data.filter(e => e.check).reduce((prev, { path, members, owners }) => {
         let longer = owners.length >= members.length ? owners : members;
-        return prev + createDataRow(
+        return prev.concat(longer.map((e, i) => {
+            return createDataRow(
                 [
-                    path,
-                    getUserString(members[0]),
-                    getUserString(owners[0])
+                    !i ? path : '',
+                    getUserString(owners[i]),
+                    getUserString(members[i])
                 ]
-                ).concat (longer.map((e,i)=>{
-                        return createDataRow(
-                            [
-                                '',
-                                getUserString(owners[i]),
-                                getUserString(members[i])
-                            ]
-                            )
-                        }).join(""),
-                            '"";"";""\n'
-                        );
-       
-    }, 'Sciezka;Wlasciciele;Czlonkowie\n'))
+            )
+        }).join(""),
+            '"";"";""\n'
+        );
+
+    }, '\uFEFF'+'Sciezka;Wlasciciele;Czlonkowie\n'))
+}
+
+export let downloadObject = (blob) => {
+    let csvURL = window.URL.createObjectURL(blob)
+    let tempLink = document.createElement('a')
+    tempLink.href = csvURL
+    tempLink.setAttribute('download', 'eksport.csv')
+    tempLink.click()
 }

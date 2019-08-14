@@ -37,6 +37,7 @@ export let useFetch = (query = DEF_QUERY, url = DEF_URL, params = DEF_PARAMS, mi
         }
         if (url && query)
             return fetchData(query, url, params)
+    // eslint-disable-next-line
     }, [query])
     return [response, error, isLoading, setResponse]
 }

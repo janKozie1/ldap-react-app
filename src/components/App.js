@@ -4,13 +4,11 @@ import Search from './Search/Search'
 import Logo from '../assets/logo.png'
 import DataDisplay from './DataDisplay/DataDisplay'
 
-import { parseUserList, sortByKey, createCSVTable } from '../logic/functions'
-
+import { parseUserList, sortByKey, createCSVTable, downloadObject } from '../logic/functions'
 import { useFetch } from '../logic/hooks'
+import { fetchDefConfig } from '../constants/defaultVariables'
 
 import * as S from './styledComponents'
-
-import { fetchDefConfig } from '../constants/defaultVariables'
 
 let { DEF_URL, DEF_PARAMS } = fetchDefConfig;
 
@@ -39,7 +37,6 @@ let App = () => {
             if (field === 'check') {
                 setSelectedCount(result.length)
             }
-
             setResult(result => result.map(e => ({
                 ...e,
                 [field]: true
@@ -53,29 +50,29 @@ let App = () => {
                 [field]: false
             })))
         }
-
-
     }
     let openChecked = () => {
-        setResult(result => result.map(e => ({
-            ...e,
-            open: ((e.check && !e.open) || (!e.check && e.open))
-        })))
+        if(result.map(e => e.open).filter(e => !e).length){
+            toggleFieldAll('open')
+        }else{
+            setResult(result => result.map(e => ({
+                ...e,
+                open: ((e.check && !e.open) || (!e.check && e.open))
+            })))
+        }
+       
     }
     let exportChecked = () => {
-        if(selectedCount){
-            let csvData = '\uFEFF'+ createCSVTable(result.filter(e => e.check))
-            let blob = new Blob([csvData], { type: 'text/csv',charset:'utf-8' })
-            let csvURL = window.URL.createObjectURL(blob)
-            let tempLink = document.createElement('a')
-            tempLink.href = csvURL
-            tempLink.setAttribute('download', 'eksport.csv')
-            tempLink.click()
+        if (selectedCount) {
+            let csvData = createCSVTable(result.filter(e => e.check))
+            let blob = new Blob([csvData], { type: 'text/csv', charset: 'utf-8' })
+            downloadObject(blob);
         }
     }
     let parseData = (data) => {
         return parseUserList(data.map(e => ({ ...e, members: sortByKey(e.members, 'description'), owners: sortByKey(e.owners, 'description') })))
     }
+
     let modes = [
         {
             type: 'id',
@@ -114,10 +111,26 @@ let App = () => {
     let [query, setQuery] = useState(null)
     let [result, error, isLoading, setResult] = useFetch(query, DEF_URL, DEF_PARAMS, parseData)
 
+
+    let getOutput = () => {
+        if (result) {
+            if (result.length) {
+                return <DataDisplay
+                    data={result}
+                    handleRowInteraction={handleRowInteraction}
+                    toggleFieldAll={toggleFieldAll}
+                    userActionButtons={userActionButtons}
+                    selectedCount={selectedCount}
+                />
+            } else if(!isLoading) {
+                return <S.Message>Brak wyników</S.Message>
+            }
+        }
+    }
+
     return (
         <>
             <S.GlobalStyle />
-
             <S.Main>
                 <S.Logo src={Logo} />
                 <Search
@@ -131,16 +144,9 @@ let App = () => {
                     </S.Error>
                 }
 
-                {
-                    result
+                {result
                     &&
-                    <DataDisplay
-                        data={result}
-                        handleRowInteraction={handleRowInteraction}
-                        toggleFieldAll={toggleFieldAll}
-                        userActionButtons={userActionButtons}
-                        selectedCount={selectedCount}
-                    />
+                    getOutput()
                 }
             </S.Main>
 

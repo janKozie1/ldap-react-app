@@ -10,9 +10,7 @@ app.use(cors({ origin: '*' }))
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
 let ad = new ActiveDirectory(config.AD);
-
 let getFolderInfoFromDB = async (pool, query, type) => {
     let response = [];
     let baseQuery = 'select ID, Grupa, Description  from dbo.Klucze where' 
@@ -24,7 +22,7 @@ let getFolderInfoFromDB = async (pool, query, type) => {
         response = await pool.request()
             .input('name',sql.NVarChar(255),query)
             .input('reversedName',sql.NVarChar(255),query.split(" ").reverse().join(" "))
-            .query(`${baseQuery} Name = @name or Name = @reversedName`)
+            .query(`${baseQuery} Name LIKE @name or Name LIKE @reversedName`)
     }
     return response.recordset.length ? 
                 response.recordset.map(({ Grupa, Description, ID }) => {
@@ -118,10 +116,6 @@ app.post('/getUserData', async (req, res) => {
     } catch (err) {
         console.log(err)
     }
-
-
-
-
 })
 
 

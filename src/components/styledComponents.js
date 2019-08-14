@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle } from 'styled-components'
+import styled, { createGlobalStyle, keyframes } from 'styled-components'
 import { sizes, colors } from './cssVariables'
 
 export let GlobalStyle = createGlobalStyle`
@@ -45,4 +45,33 @@ export let Error = styled.p`
     margin-top:${sizes.margins.formMargin};
     font-size:11px;
     font-weight:bolder;
+    animation: ${shake()} 0.5s ease-in-out;
 `
+
+export let Message = styled(Error)`
+    color:${colors.font};
+`
+
+function shake() {
+    return keyframes`
+        0%{
+            transform:translateX(0)
+        }
+
+        50%{
+            transform:translateX(20%)
+        }
+        75%{
+            transform:translateX(-18.5%)
+        }
+        87.5%{
+            transform:translateX(12.5%);
+        }
+        95%{
+            transform:translateX(-6%);
+        }
+        100%{
+            transform:translateX(0)
+        }
+    `
+}
