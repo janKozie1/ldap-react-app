@@ -37,7 +37,7 @@ export let ToggleIndicator = styled.div`
 
     width:50px;
     height:20px;
-    border:1px solid rgba(0,0,0,0.4);
+    border:1px solid rgba(0,0,0,0.3);
     border-radius:15px;
     position:relative;
     cursor:pointer;

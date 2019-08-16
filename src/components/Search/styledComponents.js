@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 import {sizes,colors} from '../cssVariables'
+import {ReactComponent as Magnify} from '../../assets/find.svg'
 
 export let Search = styled.section`
     width:${sizes.breakpoints.mobile};
@@ -42,12 +43,16 @@ export let Submit = styled.button`
     border-radius: 0 5px 5px 0;
     cursor:pointer;
     position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
     &:active{
-       box-shadow:  inset 0px 0px 8px 5px rgba(0,0,0,0.35);
-       
+       box-shadow:  inset 0px 0px 4px 4px rgba(0,0,0,0.25);
     }
 `
 
 export let SpinnerContainer = styled.div`
-
+    width:30px;
+    height:30px;
 `
+

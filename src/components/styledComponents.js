@@ -45,7 +45,7 @@ export let Error = styled.p`
     margin-top:${sizes.margins.formMargin};
     font-size:11px;
     font-weight:bolder;
-    animation: ${shake()} 0.5s ease-in-out;
+    animation: ${shake()} 0.5s ease-in-out 0.2s;
 `
 
 export let Message = styled(Error)`
@@ -57,7 +57,6 @@ function shake() {
         0%{
             transform:translateX(0)
         }
-
         50%{
             transform:translateX(20%)
         }
