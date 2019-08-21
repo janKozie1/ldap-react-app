@@ -3,6 +3,7 @@ let ActiveDirectory = require('activedirectory')
 let express = require('express')
 let cors = require('cors')
 let app = express();
+let fs = require('fs')
 let { config } = require('./config')
 const sql = require('mssql')
 
@@ -86,42 +87,43 @@ let getGroupMemembers = (group) => {
         })
     })
 }
-
-let getQueryCondition = (query, type) => {
-    switch (type) {
-        default:
-        case 'id':
-            return `UPPER([User ID])=UPPER('${query}')`
-        case 'fullName':
-            return `UPPER(Name)=UPPER('${query}') OR UPPER(Name) LIKE '${query.split(" ")[1]} ${query.split(" ")[0]}'`
-
-    }
-}
-
+fs.readFileAsync = (filename) => {
+    return new Promise((resolve, reject)  =>{
+        fs.readFile(filename,'utf8', (err, data) => {
+            if (err) 
+                reject(err); 
+            else 
+                resolve(data);
+        });
+    });
+};
 app.post('/getUserData', async (req, res) => {
-    try {
-        let temp = Date.now();
-        let pool = await sql.connect(config.DB)
-        let folderInfo = await getFolderInfoFromDB(pool, req.body.query, req.body.type);
-        let results = folderInfo.map(async (e) => {
-            let members = await getGroupMemembers(e.group);
-            let owners = await getGroupOwnersFromDB(pool,e.group, e.path);
-            return {
-                ...e,
-                members,
-                owners,
-                ownersCount: owners.length,
-                membersCount: members.length
-            }
-        })
-        Promise.all(results).then((data) => {
-            sql.close();
-            console.log('response', (Date.now() - temp) / 1000)
-            return res.json(data)
-        })
-    } catch (err) {
-        console.log(err)
-    }
+    if(req.body.query && req.body.type)
+        try {
+            let temp = Date.now();
+            let server = await fs.readFileAsync('./db_ip.txt')
+            let pool = await sql.connect({...config.DB,server})
+            let folderInfo = await getFolderInfoFromDB(pool, req.body.query, req.body.type);
+            let results = folderInfo.map(async (e) => {
+                let members = await getGroupMemembers(e.group);
+                let owners = await getGroupOwnersFromDB(pool,e.group, e.path);
+                return {
+                    ...e,
+                    members,
+                    owners,
+                    ownersCount: owners.length,
+                    membersCount: members.length
+                }
+            })
+            Promise.all(results).then((data) => {
+                sql.close();
+                console.log('response', (Date.now() - temp) / 1000)
+                return res.json(data)
+            })
+        } catch (err) {
+            console.log(err)
+        }
+    else return res.status(400).send('Invalid query')
 })
 
 
