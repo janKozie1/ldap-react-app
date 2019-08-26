@@ -4,16 +4,21 @@ import DataItem from './DataItem/DataItem'
 import { sortByKey } from '../../logic/functions'
 import * as S from './styledComponents'
 
-
-let DataDisplay = ({ data = [], handleRowInteraction, toggleFieldAll, userActionButtons, selectedCount }) => {
+let DataDisplay = ({
+    data = [],
+    handleRowInteraction,
+    toggleCheckAll,
+    userActionButtons,
+    selectedCount
+}) => {
     console.log(data)
     let [sortKey, setSortKey] = useState('path')
-    let [sortDirection, setSortDirection] = useState(1);
-    let handleCheck = (data) => {
+    let [sortDirection, setSortDirection] = useState(1)
+    let handleCheck = data => {
         handleRowInteraction(data, 'check')
     }
-    let sortedData = sortByKey(data, sortKey, sortDirection);
-    let handleSortChange = (key) => {
+    let sortedData = sortByKey(data, sortKey, sortDirection)
+    let handleSortChange = key => {
         if (sortKey !== key) {
             setSortKey(key)
             setSortDirection(0)
@@ -24,20 +29,22 @@ let DataDisplay = ({ data = [], handleRowInteraction, toggleFieldAll, userAction
     return (
         <>
             <S.ActionButtons>
-                {
-                    userActionButtons.map((e, i) => {
-                        return <S.UserButton key={`${i}-button`} value={e.value} onClick={e.func}>
+                {userActionButtons.map((e, i) => {
+                    return (
+                        <S.UserButton
+                            key={`${i}-button`}
+                            value={e.value}
+                            onClick={e.func}>
                             {e.text}
                         </S.UserButton>
-                    })
-                }
+                    )
+                })}
             </S.ActionButtons>
             <S.DataList>
-
                 <S.Cell>
                     <CheckBox
                         size={16}
-                        clickHandler={toggleFieldAll}
+                        clickHandler={toggleCheckAll}
                         returnData={'check'}
                         checked={selectedCount === data.length}
                     />
@@ -46,65 +53,56 @@ let DataDisplay = ({ data = [], handleRowInteraction, toggleFieldAll, userAction
                     onClick={() => handleSortChange('path')}
                     value={'path'}
                     sortKey={sortKey}
-                    direction={sortDirection}
-                >
+                    direction={sortDirection}>
                     Ścieżka
-                <S.DirIndicator />
+                    <S.DirIndicator />
                 </S.HeaderItem>
                 <S.HeaderItem
                     onClick={() => handleSortChange('ownersCount')}
                     value={'ownersCount'}
                     sortKey={sortKey}
-                    direction={sortDirection}
-                >
+                    direction={sortDirection}>
                     Właścicieli
-                <S.DirIndicator />
+                    <S.DirIndicator />
                 </S.HeaderItem>
                 <S.HeaderItem
                     onClick={() => handleSortChange('groupType')}
                     value={'groupType'}
                     sortKey={sortKey}
-                    direction={sortDirection}
-                >
+                    direction={sortDirection}>
                     Typ gr.
-                <S.DirIndicator />
-
+                    <S.DirIndicator />
                 </S.HeaderItem>
                 <S.HeaderItem
                     onClick={() => handleSortChange('membersCount')}
                     value={'membersCount'}
                     sortKey={sortKey}
-                    direction={sortDirection}
-                >
+                    direction={sortDirection}>
                     Członków
-                <S.DirIndicator />
-
+                    <S.DirIndicator />
                 </S.HeaderItem>
-                {
-                    sortedData.map((e, i) => {
-                        return (
-                            <React.Fragment key={`${i}-${e.group}`}>
-                                <S.Cell>
-                                    <CheckBox
-                                        clickHandler={handleCheck}
-                                        returnData={e.ID}
-                                        checked={e.check}
-                                        size={12}
-                                    />
-                                </S.Cell>
-                                <DataItem
-
-                                    data={e}
-                                    handleRowInteraction={handleRowInteraction}
-                                    index={i}
+                {sortedData.map((e, i) => {
+                    return (
+                        <React.Fragment key={`${i}-${e.group}`}>
+                            <S.Cell>
+                                <CheckBox
+                                    clickHandler={handleCheck}
+                                    returnData={e.ID}
+                                    checked={e.check}
+                                    size={12}
                                 />
-                            </React.Fragment>
-                        )
-                    })
-                }
+                            </S.Cell>
+                            <DataItem
+                                data={e}
+                                handleRowInteraction={handleRowInteraction}
+                                index={i}
+                            />
+                        </React.Fragment>
+                    )
+                })}
             </S.DataList>
         </>
     )
 }
 
-export default DataDisplay;
+export default DataDisplay
