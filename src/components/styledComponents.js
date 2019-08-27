@@ -25,31 +25,31 @@ export let GlobalStyle = createGlobalStyle`
 `
 
 export let Main = styled.main`
-    width:100%;
-    margin-top:${sizes.margins.formMargin};
-    display:flex;
-    align-items:center;
-    justify-content:flex-start;
-    flex-direction:column;
+    width: 100%;
+    margin-top: ${sizes.margins.formMargin};
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
 `
 
 export let Logo = styled.img`
-    width:${sizes.breakpoints.mobile};
-    @media screen and (max-width:${sizes.breakpoints.mobile}) {
-        height:auto;
-        width:80%;   
+    width: ${sizes.breakpoints.mobile};
+    @media screen and (max-width: ${sizes.breakpoints.mobile}) {
+        height: auto;
+        width: 80%;
     }
 `
 export let Error = styled.p`
-    color:${colors.error};
-    margin-top:${sizes.margins.formMargin};
-    font-size:11px;
-    font-weight:bolder;
+    color: ${colors.error};
+    margin-top: ${sizes.margins.formMargin};
+    font-size: 11px;
+    font-weight: bolder;
     animation: ${shake()} 0.5s ease-in-out 0.2s;
 `
 
 export let Message = styled(Error)`
-    color:${colors.font};
+    color: ${colors.font};
 `
 
 function shake() {
@@ -57,16 +57,16 @@ function shake() {
         0%{
             transform:translateX(0)
         }
-        50%{
-            transform:translateX(20%)
+        20%{
+            transform:translateX(16%)
         }
-        75%{
-            transform:translateX(-18.5%)
+        40%{
+            transform:translateX(-14%)
         }
-        87.5%{
-            transform:translateX(12.5%);
+        60%{
+            transform:translateX(10%);
         }
-        95%{
+        80%{
             transform:translateX(-6%);
         }
         100%{

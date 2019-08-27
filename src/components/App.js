@@ -138,6 +138,7 @@ let App = () => {
     )
 
     let getOutput = () => {
+        console.log(JSON.stringify(result))
         if (result) {
             if (result.length) {
                 return (

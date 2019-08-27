@@ -1,19 +1,15 @@
 let express = require('express')
 let cors = require('cors')
 let app = express()
-
-const users = require('./routes/Users')
-
+let { data } = require('./data')
 app.use(cors({ origin: '*' }))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(express.static('../build'))
-app.use('/users', users)
 
-app.get('/', (req, res) => {
-    res.sendFile('index.html')
+app.post('/users/data', (req, res) => {
+    console.log(Object.keys(data))
+    res.json(data[req.body.query])
 })
-
 app.listen('8080', async () => {
     console.log('start')
 })
