@@ -3,4 +3,13 @@ import ReactDOM from 'react-dom'
 
 import App from './components/App'
 
-ReactDOM.render(<App />, document.getElementById('root'))
+import StoreProvider from './logic/store'
+
+import RootReducer from './logic/reducers/index'
+
+ReactDOM.render(
+    <StoreProvider reducer={RootReducer} defaultState={{ token: 'xd' }}>
+        <App />
+    </StoreProvider>,
+    document.getElementById('root')
+)

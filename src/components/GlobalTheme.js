@@ -27,16 +27,15 @@ let GlobalStyle = createGlobalStyle`
         }
 `
 
-const GlobalTheme = ({ children }) => {
-    console.log(children)
+const withGlobalTheme = Component => () => {
     return (
         <ThemeProvider theme={theme}>
             <>
                 <GlobalStyle />
-                {children}
+                <Component />
             </>
         </ThemeProvider>
     )
 }
 
-export default GlobalTheme
+export default withGlobalTheme

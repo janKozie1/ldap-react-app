@@ -8,7 +8,6 @@ const DataItem = React.memo(
         index,
         handleRowInteraction
     }) => {
-        console.log('Data item render')
         let handleOpen = () => {
             handleRowInteraction(ID, 'open')
         }

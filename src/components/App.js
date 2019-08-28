@@ -1,17 +1,16 @@
 import React from 'react'
 
-import { Link, BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Home from './Routes/Home'
-
-import GlobalTheme from './GlobalTheme'
+import Login from './Routes/Login'
+import withGlobalTheme from './GlobalTheme'
 
 const App = () => {
     return (
-        <GlobalTheme>
-            <Router>
-                <Route path='/' exact component={Home} />
-            </Router>
-        </GlobalTheme>
+        <Router>
+            <Route path='/' exact component={Home} />
+            <Route path='/login' exact component={Login} />
+        </Router>
     )
 }
-export default App
+export default withGlobalTheme(App)

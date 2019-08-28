@@ -32,4 +32,17 @@ router.post('/', async (req, res) => {
     }
 })
 
+router.post('/auth', async (req, res) => {
+    const token = req.header('x-auth-token')
+    console.log(token)
+    if (!token) return res.status(401).json({ authorized: true })
+    try {
+        const isValid = jwt.verify(token, config.PRIVATE_KEY)
+        console.log(isValid)
+        return res.json({ authorized: true })
+    } catch (err) {
+        return res.status(401).json({ authorized: false })
+    }
+})
+
 module.exports = router

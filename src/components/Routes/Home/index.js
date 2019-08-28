@@ -1,15 +1,14 @@
 import React, { useState } from 'react'
 
-import Search from '../../Shared/Search/Search'
+import Search from '../../Shared/Search'
 import Logo from '../../../assets/logo.png'
-import DataDisplay from '../../Shared/DataDisplay/DataDisplay'
+import DataDisplay from '../../Shared/DataDisplay'
 
+import { parseUserList, sortByKey } from '../../../logic/functions/parsing'
 import {
-    parseUserList,
-    sortByKey,
     createCSVTable,
     downloadObject
-} from '../../../logic/functions'
+} from '../../../logic/functions/exporting'
 
 import { useFetch } from '../../../logic/hooks'
 import { fetchDefConfig } from '../../../constants/defaultVariables'
@@ -154,7 +153,6 @@ const App = () => {
             }
         }
     }
-
     return (
         <S.Main>
             <S.Logo src={Logo} />

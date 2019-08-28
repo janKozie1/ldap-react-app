@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
-import CheckBox from './Checkbox/Checkbox'
-import DataItem from './DataItem/DataItem'
-import { sortByKey } from '../../../logic/functions'
+
+import CheckBox from './Checkbox'
+import DataItem from './DataItem'
+
+import { sortByKey } from '../../../logic/functions/parsing'
+
 import * as S from './styledComponents'
 
 const DataDisplay = ({

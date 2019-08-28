@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 
-import Input from './Input/Input'
-import Toggle from '../Toggle/Toggle'
-import Spinner from '../Spinner/Spinner'
+import Input from './Input'
+import Toggle from '../Toggle'
+import Spinner from '../Spinner'
 
 import * as S from './styledComponents'
 

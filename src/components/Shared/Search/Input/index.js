@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react'
+
 import * as S from './styledComponents'
 
 const Input = ({ value, handleInput, fieldName, type, placeholder }) => {
