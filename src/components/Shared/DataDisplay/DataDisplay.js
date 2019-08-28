@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import CheckBox from './Checkbox/Checkbox'
 import DataItem from './DataItem/DataItem'
-import { sortByKey } from '../../logic/functions'
+import { sortByKey } from '../../../logic/functions'
 import * as S from './styledComponents'
 
-let DataDisplay = ({
+const DataDisplay = ({
     data = [],
     handleRowInteraction,
     toggleCheckAll,

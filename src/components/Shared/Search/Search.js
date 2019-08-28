@@ -6,7 +6,7 @@ import Spinner from '../Spinner/Spinner'
 
 import * as S from './styledComponents'
 
-let Search = ({ handleFormSubmit, modes, isLoading }) => {
+const Search = ({ handleFormSubmit, modes, isLoading }) => {
     let [mode, setMode] = useState(0)
     let { type, placeholder } = modes[mode]
     let [userInput, setUserInput] = useState(

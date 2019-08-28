@@ -40,7 +40,7 @@ export let updateObject = arr => {
 }
 
 export let parseUserList = userList => {
-    return userList.map((e, i) => ({ ...e, check: false, open: false }))
+    return userList.map(e => ({ ...e, check: false, open: false }))
 }
 
 export let compareFetchedData = (prev, curr) => {

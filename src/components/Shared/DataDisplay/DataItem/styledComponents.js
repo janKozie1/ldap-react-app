@@ -1,8 +1,8 @@
 import styled, { css } from 'styled-components'
 import { Cell } from '../styledComponents'
-import { ReactComponent as bg } from '../../../assets/arrow.svg'
+import { ReactComponent as bg } from '../../../../assets/arrow.svg'
 
-export let RowHighlight = styled.div`
+export const RowHighlight = styled.div`
     position: absolute;
     grid-column: 2/6;
     cursor: pointer;
@@ -16,7 +16,7 @@ export let RowHighlight = styled.div`
     }
 `
 
-export let Header = styled(Cell)`
+export const Header = styled(Cell)`
     font-weight: bolder;
     justify-content: space-between;
     align-items: center;
@@ -28,9 +28,9 @@ export let Header = styled(Cell)`
     }
 `
 
-export let Owners = styled(Cell)``
+export const Owners = styled(Cell)``
 
-export let GroupType = styled(Cell)`
+export const GroupType = styled(Cell)`
     font-weight: bolder;
     color: #4caf50;
     ${props =>
@@ -40,7 +40,7 @@ export let GroupType = styled(Cell)`
         `}
 `
 
-export let MembersInfo = styled(Cell)`
+export const MembersInfo = styled(Cell)`
     cursor: pointer;
     justify-content: flex-start;
     ${props =>
@@ -52,14 +52,14 @@ export let MembersInfo = styled(Cell)`
         `}
 `
 
-export let Expand = styled(bg)`
+export const Expand = styled(bg)`
     width: 18px;
     height: 18px;
     fill: #333;
     transition: transform 0.5s ease;
 `
 
-export let MembersList = styled.div`
+export const MembersList = styled.div`
     grid-column: 2/6;
     display: grid;
     grid-template-columns: auto 1fr;
@@ -67,7 +67,7 @@ export let MembersList = styled.div`
     margin-left: 40px;
 `
 
-export let ListTitle = styled.h4`
+export const ListTitle = styled.h4`
     font-weight: normal;
     padding: 0;
     margin: 0;
@@ -77,13 +77,13 @@ export let ListTitle = styled.h4`
     padding: 10px 0px;
 `
 
-export let UserList = styled.ul`
+export const UserList = styled.ul`
     list-style-type: disc;
     padding: 0;
     margin: 0;
     margin-left: 40px;
 `
-export let Owner = styled.li`
+export const Owner = styled.li`
     font-size: 11px;
     padding: 10px 0;
     position: relative;
@@ -93,7 +93,7 @@ export let Owner = styled.li`
         color: #333;
     }
 `
-export let Member = styled(Owner)`
+export const Member = styled(Owner)`
     color: #666;
     > span {
         color: #666;
