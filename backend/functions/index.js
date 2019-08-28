@@ -1,6 +1,5 @@
 const fs = require('fs')
-const ActiveDirectory = require('activedirectory')
-const { config } = require('../../config')
+const { ad } = require('../isntances')
 const sql = require('mssql')
 
 let parsePolish = string => {
@@ -23,44 +22,46 @@ let parsePolish = string => {
 }
 
 let getFolderInfoFromDB = async (pool, query, type) => {
-    let response = []
-    let baseQuery = 'select ID, Grupa, Description  from dbo.Klucze where'
-    if (type === 'id') {
-        response = await pool
-            .request()
-            .input('userID', sql.NVarChar(255), query)
-            .query(`${baseQuery} [User ID] = @userID`)
-    } else if ((type = 'fullName')) {
-        response = await pool
-            .request()
-            .input('name', sql.NVarChar(255), parsePolish(query))
-            .input(
-                'reversedName',
-                sql.NVarChar(255),
-                parsePolish(
-                    query
-                        .split(' ')
-                        .reverse()
-                        .join(' ')
+    try {
+        let response = []
+        let baseQuery = 'select ID, Grupa, Description  from dbo.Klucze where'
+        if (type === 'id') {
+            response = await pool
+                .request()
+                .input('userID', sql.NVarChar(255), query)
+                .query(`${baseQuery} [User ID] = @userID`)
+        } else if ((type = 'fullName')) {
+            response = await pool
+                .request()
+                .input('name', sql.NVarChar(255), parsePolish(query))
+                .input(
+                    'reversedName',
+                    sql.NVarChar(255),
+                    parsePolish(
+                        query
+                            .split(' ')
+                            .reverse()
+                            .join(' ')
+                    )
                 )
-            )
-            .query(
-                `${baseQuery} dbo.parse(Name) LIKE @name or  dbo.parse(Name) LIKE @reversedName`
-            )
+                .query(
+                    `${baseQuery} dbo.parse(Name) LIKE @name or  dbo.parse(Name) LIKE @reversedName`
+                )
+        }
+        return response.recordset
+            .map(({ Grupa, Description, ID }) => {
+                return {
+                    group: Grupa,
+                    groupType: determineGroupType(Grupa),
+                    path: Description,
+                    ID,
+                    members: []
+                }
+            })
+            .filter(e => e.group && e.path)
+    } catch (err) {
+        return err
     }
-    return response.recordset.length
-        ? response.recordset
-              .map(({ Grupa, Description, ID }) => {
-                  return {
-                      group: Grupa,
-                      groupType: determineGroupType(Grupa),
-                      path: Description,
-                      ID,
-                      members: []
-                  }
-              })
-              .filter(e => e.group && e.path)
-        : []
 }
 
 let determineGroupType = name => {
@@ -83,23 +84,21 @@ let getGroupOwnersFromDB = async (pool, group, path) => {
         .query(
             'select Name, [User ID] as cn, Access from dbo.Klucze where Grupa=@group AND Description=@path'
         )
-    return response.recordset.length
-        ? response.recordset
-              .map(({ Name, cn, Access }) => {
-                  return {
-                      description: Name,
-                      cn,
-                      Access
-                  }
-              })
-              .filter(e => e.cn && e.description)
-        : []
+    return response.recordset
+        .map(({ Name, cn, Access }) => {
+            return {
+                description: Name,
+                cn,
+                Access
+            }
+        })
+        .filter(e => e.cn && e.description)
 }
 
 let getGroupMemembers = group => {
-    let ad = new ActiveDirectory(config.AD)
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
         ad.getUsersForGroup(group, (err, res) => {
+            if (err) reject(err)
             let parsed = res
                 ? res.map(({ cn, displayName, description }) => {
                       return {
@@ -123,8 +122,28 @@ let readFileAsync = filename => {
     })
 }
 
+let isGroupMemberAsync = (username, group) => {
+    return new Promise((resolve, reject) => {
+        ad.isUserMemberOf(username, group, (err, isMember) => {
+            if (err) reject('Błąd servera')
+            resolve(isMember)
+        })
+    })
+}
+
+let authenticateAdAsync = (username, password) => {
+    return new Promise(resolve => {
+        ad.authenticate(username, password, (err, auth) => {
+            if (err) resolve(false)
+            resolve(auth)
+        })
+    })
+}
+
 module.exports.readFileAsync = readFileAsync
 module.exports.getGroupMemembers = getGroupMemembers
 module.exports.getGroupOwnersFromDB = getGroupOwnersFromDB
 module.exports.determineGroupType = determineGroupType
 module.exports.getFolderInfoFromDB = getFolderInfoFromDB
+module.exports.isGroupMemberAsync = isGroupMemberAsync
+module.exports.authenticateAdAsync = authenticateAdAsync
