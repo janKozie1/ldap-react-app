@@ -35,7 +35,7 @@ router.post('/', async (req, res) => {
 router.post('/auth', async (req, res) => {
     const token = req.header('x-auth-token')
     console.log(token)
-    if (!token) return res.status(401).json({ authorized: true })
+    if (!token) return res.status(401).json({ authorized: false })
     try {
         const isValid = jwt.verify(token, config.PRIVATE_KEY)
         console.log(isValid)
