@@ -1,12 +1,10 @@
 import React from 'react'
-
 import withProtectedRoute from '../../HOC/ProtectedRoute'
-
-const Login = () => {
-    return <div>Login</div>
+let Admin = () => {
+    return <p>Admin</p>
 }
 
 export default withProtectedRoute({
-    protectedRoute: false,
-    redirectTo: '/admin'
-})(Login)
+    protectedRoute: true,
+    redirectTo: '/login'
+})(Admin)

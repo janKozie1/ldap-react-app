@@ -20,17 +20,16 @@ export let checkResponseStatus = res => {
 
 export let checkIfAuthorized = async token => {
     try {
-        console.log(token)
         let res = await fetch(`${fetchDefConfig.BASE_URL}/admin/auth`, {
             method: 'POST',
             headers: {
                 'x-auth-token': token
             }
         })
+        if (!res.ok) throw Error
         let parsed = await res.json()
         return parsed.authorized
     } catch (err) {
-        console.log(err)
         return false
     }
 }
