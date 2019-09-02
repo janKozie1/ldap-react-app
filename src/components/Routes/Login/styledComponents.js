@@ -15,13 +15,13 @@ export let Container = styled.div`
     flex-direction: column;
     width: 350px;
     height: 500px;
-    padding: 10px 40px;
+    padding: 40px 40px;
     border: 2px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 5px 5px 10px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, 0.08);
 `
 export let Header = styled.h3`
     margin: 0;
-    margin-top: 40px;
+
     font-size: 1.7rem;
 `
 
@@ -38,15 +38,15 @@ export let Form = styled.form`
 
 export let Label = styled.label`
     display: flex;
-    flex-direction:column
-    position:relative;
-    margin-bottom:20px;
-    width:100%;
+    flex-direction: column;
+    position: relative;
+    margin-bottom: 20px;
+    width: 100%;
     > p {
-        position:absolute;
+        position: absolute;
         margin: 0;
-        left:15px;
-        bottom:10px;
+        left: 15px;
+        bottom: 10px;
     }
 `
 
@@ -66,7 +66,7 @@ export let Button = styled.button`
     cursor: pointer;
     position: relative;
     margin-top: auto;
-    margin-bottom: 40px;
+    margin-bottom: 0px;
     &::after {
         content: '';
         height: 2px;
@@ -78,7 +78,9 @@ export let Button = styled.button`
         transform: translateX(-50%) scaleX(0);
         transition: transform 0.3s;
     }
-    &:hover {
+    &:hover,
+    &:active,
+    &:focus {
         &::after {
             transform: translateX(-50%) scaleX(1);
         }

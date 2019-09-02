@@ -8,7 +8,7 @@ router.post('/', async (req, res) => {
     let { username, password } = req.body
     try {
         let isMember = await isGroupMemberAsync(username, 'IT_ShareApp_Admin')
-
+        console.log(username, password)
         if (!isMember)
             return res
                 .status(400)
@@ -25,7 +25,7 @@ router.post('/', async (req, res) => {
                 .json([{ err: 'Niepoprawny login lub hasło' }])
 
         let token = await jwt.sign({ user: username }, config.PRIVATE_KEY)
-        return res.send(token)
+        return res.json({ token })
     } catch (err) {
         console.error(err)
         return res.status(500).json([{ err: 'Błąd serwera' }])

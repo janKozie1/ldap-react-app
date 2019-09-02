@@ -1,5 +1,4 @@
 import { fetchDefConfig } from '../../../constants/defaultVariables'
-
 export let compareFetchedData = (prev, curr) => {
     return (
         prev &&
