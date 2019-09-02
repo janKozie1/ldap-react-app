@@ -6,18 +6,18 @@ const withProtectedRoute = ({
     protectedRoute,
     redirectTo
 }) => Wrapped => props => {
-    let [verified, setVerified] = useState(false)
+    let [isAuthorized, setIsAuthorized] = useState(false)
     let [{ token }] = useStateValue()
     useEffect(() => {
         let checkToken = async token => {
             let res = await checkIfAuthorized(token)
             if ((res && !protectedRoute) || (!res && protectedRoute))
                 props.history.push(redirectTo)
-            else setVerified(true)
+            else setIsAuthorized(true)
         }
         checkToken(token)
     }, [])
-    return verified && <Wrapped {...props} />
+    return isAuthorized && <Wrapped {...props} />
 }
 
 export default withProtectedRoute

@@ -18,6 +18,7 @@ export let useFetch = (
         let fetchData = (query, url, params) => {
             setError(null)
             let timeout
+
             setIsLoading(true)
             fetch(url, { ...params, body: JSON.stringify(query) })
                 .then(checkResponseStatus)
