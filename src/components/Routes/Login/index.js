@@ -38,6 +38,7 @@ const Login = props => {
                     setIsLoading(false)
                     props.history.push('/admin')
                 } else {
+                    setIsLoading(false)
                     setError(body[0].err)
                 }
             }, 300)

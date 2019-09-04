@@ -116,7 +116,7 @@ const App = () => {
             value: 'check'
         },
         {
-            text: 'Otwórz',
+            text: 'Rozwiń',
             func: openChecked,
             value: ''
         },

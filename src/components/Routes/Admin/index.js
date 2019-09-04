@@ -1,10 +1,27 @@
 import React from 'react'
+
 import withProtectedRoute from '../../HOC/ProtectedRoute'
+import { useStateValue } from '../../../logic/store'
+
+import * as S from './styledComponents.js'
 let Admin = props => {
+    let [, dispatch] = useStateValue()
+    let handleSignOut = () => {
+        dispatch({ type: 'UPDATE_TOKEN', token: '' })
+        localStorage.clear()
+        props.history.push('/')
+    }
     return (
-        <p>
-            <button onClick={() => props.history.push('/login')}>a</button>
-        </p>
+        <S.Main>
+            <S.Header>
+                <S.Title>Panel administratora</S.Title>
+                <S.Nav>
+                    <S.Link>Przeglądaj wpisy</S.Link>
+                    <S.Link>Historia zmian</S.Link>
+                </S.Nav>
+                <S.Logout onClick={() => handleSignOut()}>Wyloguj</S.Logout>
+            </S.Header>
+        </S.Main>
     )
 }
 

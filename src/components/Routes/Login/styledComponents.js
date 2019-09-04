@@ -60,6 +60,8 @@ export let MessageBox = styled.div`
     position: relative;
     margin-top: auto;
     margin-bottom: auto;
+    color: ${({ theme: { colors } }) => colors.error};
+    font-size: 0.8rem;
 `
 export let Button = styled.button`
     background: white;
