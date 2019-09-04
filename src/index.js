@@ -8,7 +8,9 @@ import StoreProvider from './logic/store'
 import RootReducer from './logic/reducers/index'
 
 ReactDOM.render(
-    <StoreProvider reducer={RootReducer} defaultState={{ token: '' }}>
+    <StoreProvider
+        reducer={RootReducer}
+        defaultState={{ token: localStorage.getItem('token') }}>
         <App />
     </StoreProvider>,
     document.getElementById('root')

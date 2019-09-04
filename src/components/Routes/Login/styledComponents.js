@@ -56,6 +56,11 @@ export let Input = styled.input`
     border: 2px solid #333;
 `
 
+export let MessageBox = styled.div`
+    position: relative;
+    margin-top: auto;
+    margin-bottom: auto;
+`
 export let Button = styled.button`
     background: white;
     border: 0;

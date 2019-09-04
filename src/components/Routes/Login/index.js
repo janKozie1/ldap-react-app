@@ -1,13 +1,17 @@
 import React, { useState } from 'react'
 
 import Input from './Input'
+import Spinner from '../../Shared/Spinner'
 import withProtectedRoute from '../../HOC/ProtectedRoute'
 
-import { useFetch } from '../../../logic/hooks'
+import { useStateValue } from '../../../logic/store'
 import { fetchDefConfig } from '../../../constants/defaultVariables'
+
 import * as S from './styledComponents'
-const { BASE_URL, DEF_PARAMS } = fetchDefConfig
-const Login = () => {
+const { BASE_URL } = fetchDefConfig
+const Login = props => {
+    let [, dispatch] = useStateValue()
+    let [error, setError] = useState('')
     let [userData, setUserData] = useState({ username: '', password: '' })
     let [isLoading, setIsLoading] = useState(false)
     let handleInput = (id, value) => {
@@ -16,15 +20,33 @@ const Login = () => {
 
     let onForumSubmit = async e => {
         e.preventDefault()
-        let res = await fetch(`${BASE_URL}/admin`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(userData)
-        })
-        let body = await res.json()
-        console.log(body)
+        if (!isLoading) {
+            setIsLoading(true)
+            let res = await fetch(`${BASE_URL}/admin`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userData)
+            })
+            let body = await res.json()
+            setTimeout(() => {
+                if (res.ok) {
+                    let { token } = body
+                    dispatch({ type: 'UPDATE_TOKEN', payload: token })
+                    localStorage.setItem('token', token)
+                    setIsLoading(false)
+                    props.history.push('/admin')
+                } else {
+                    setError(body[0].err)
+                }
+            }, 300)
+        }
+    }
+    let getMessageContent = () => {
+        if (isLoading) return <Spinner size={4} color={'#333'} />
+
+        return error || null
     }
     return (
         <S.Page>
@@ -45,6 +67,9 @@ const Login = () => {
                         updateFunc={handleInput}
                         type='password'
                     />
+
+                    <S.MessageBox>{getMessageContent()}</S.MessageBox>
+
                     <S.Button>Zaloguj</S.Button>
                 </S.Form>
             </S.Container>
