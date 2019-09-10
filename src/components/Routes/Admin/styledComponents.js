@@ -1,4 +1,4 @@
-import styled, { css, keyframes } from 'styled-components'
+import styled from 'styled-components'
 import { NavLink as link } from 'react-router-dom'
 import { ReactComponent as f } from '../../../assets/find.svg'
 import { ReactComponent as h } from '../../../assets/history.svg'
@@ -57,6 +57,15 @@ export let Link = styled(link)`
             transform: translate(-50%, 50%) scaleX(1);
         }
     }
+    &.active {
+        color: ${({ theme: { colors } }) => colors.main};
+        &::after {
+            transform: translate(-50%, 50%) scaleX(1);
+        }
+        svg path {
+            fill: ${({ theme: { colors } }) => colors.main};
+        }
+    }
 `
 export let SearchIcon = styled(f)`
     height: 18px;
@@ -92,40 +101,6 @@ export let Logout = styled.button`
         background: white;
     }
 `
-export let Error = styled.p`
-    color: ${({ theme: { colors } }) => colors.error};
-    margin-top: ${({ theme: { sizes } }) => sizes.margins.formMargin};
-    font-size: 11px;
-    font-weight: bolder;
-    animation: ${shake()} 0.5s ease-in-out 0.2s;
-`
-
-export let Message = styled(Error)`
-    color: ${({ theme: { colors } }) => colors.font};
-`
-
-function shake() {
-    return keyframes`
-        0%{
-            transform:translateX(0)
-        }
-        20%{
-            transform:translateX(16%)
-        }
-        40%{
-            transform:translateX(-14%)
-        }
-        60%{
-            transform:translateX(10%);
-        }
-        80%{
-            transform:translateX(-6%);
-        }
-        100%{
-            transform:translateX(0)
-        }
-    `
-}
 export let Content = styled.div`
     width: 100%;
     display: flex;

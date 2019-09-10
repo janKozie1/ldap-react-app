@@ -4,11 +4,7 @@ import Search from '../../Shared/Search'
 import Logo from '../../../assets/logo.png'
 import DataDisplay from '../../Shared/DataDisplay'
 
-import {
-    parseUserList,
-    sortByKey,
-    sortData
-} from '../../../logic/functions/parsing'
+import { sortData } from '../../../logic/functions/parsing'
 import {
     createCSVTable,
     downloadObject

@@ -51,12 +51,12 @@ let getFolderInfoFromDB = async (pool, query, type) => {
             response = await pool
                 .request()
                 .input('path', sql.NVarChar(255), `%${query}%`)
-                .query(`${baseQuery} Description LIKE @path`)
+                .query(`${baseQuery} Description LIKE @path and ROW_NUMBER=1`)
         } else if (type === 'group') {
             response = await pool
                 .request()
                 .input('group', sql.NVarChar(255), `%${query}%`)
-                .query(`${baseQuery} Grupa LIKE @group`)
+                .query(`${baseQuery} Grupa LIKE @group and ROW_NUMBER=1`)
         }
         return response.recordset
             .map(({ Grupa, Description, ID }) => {

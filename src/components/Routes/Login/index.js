@@ -80,5 +80,5 @@ const Login = props => {
 
 export default withProtectedRoute({
     protectedRoute: false,
-    redirectTo: '/admin'
+    redirectTo: '/admin/browse'
 })(Login)

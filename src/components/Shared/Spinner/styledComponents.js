@@ -18,7 +18,7 @@ export const Spinner = styled.div`
     background: transparent;
     border-radius: 50%;
     border: 0px solid rgba(0, 0, 0, 0.1);
-    border-width: ${props => (props.size ? props.size / 4 + 'px' : '2px')};
+    border-width: ${props => (props.size ? props.size / 6 + 'px' : '2px')};
     border-right-color: ${props => (props.color ? props.color : 'white')};
     animation: ${spin} 1s linear infinite;
 `
