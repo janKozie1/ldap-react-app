@@ -4,7 +4,7 @@ import { ReactComponent as find } from '../../../../assets/find.svg'
 
 export const Form = styled.form`
     margin-top: ${({ theme: { sizes } }) => css`
-       calc(${sizes.margins.formMargin} * 2);
+       calc(${sizes.margins.formMargin} );
     `};
     display: grid;
     grid-auto-flow: column;
@@ -58,6 +58,15 @@ export const ExpandIcon = styled(expand)`
     margin-left: auto;
     margin-right: 0;
     transition: transform 0.3s;
+`
+
+export let Submit = styled.button`
+    background: transparent;
+    border: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
 `
 
 export let FindIcon = styled(find)`

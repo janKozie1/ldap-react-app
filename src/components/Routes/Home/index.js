@@ -4,7 +4,11 @@ import Search from '../../Shared/Search'
 import Logo from '../../../assets/logo.png'
 import DataDisplay from '../../Shared/DataDisplay'
 
-import { parseUserList, sortByKey } from '../../../logic/functions/parsing'
+import {
+    parseUserList,
+    sortByKey,
+    sortData
+} from '../../../logic/functions/parsing'
 import {
     createCSVTable,
     downloadObject
@@ -85,15 +89,6 @@ const App = () => {
             downloadObject(blob)
         }
     }
-    let parseData = data => {
-        return parseUserList(
-            data.map(e => ({
-                ...e,
-                members: sortByKey(e.members, 'description'),
-                owners: sortByKey(e.owners, 'description')
-            }))
-        )
-    }
 
     let modes = [
         {
@@ -133,7 +128,7 @@ const App = () => {
         query,
         DEF_URL,
         DEF_PARAMS,
-        parseData
+        sortData
     )
 
     let getOutput = () => {

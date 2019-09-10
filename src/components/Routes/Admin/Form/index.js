@@ -22,7 +22,7 @@ const OPTIONS = [
     }
 ]
 
-const Form = () => {
+const Form = ({ handleRequest }) => {
     let [expanded, setExpanded] = useState(false)
     let [current, setCurrent] = useState(OPTIONS[0])
     let [userInput, setUserInput] = useState('')
@@ -33,8 +33,12 @@ const Form = () => {
     let fetchData = async => {
         console.log(current._id, userInput)
     }
+    let onFormSubmit = e => {
+        e.preventDefault()
+        handleRequest({ type: current._id, query: userInput })
+    }
     return (
-        <S.Form>
+        <S.Form onSubmit={onFormSubmit}>
             <S.Select expanded={expanded}>
                 <S.Option onClick={() => setExpanded(expanded => !expanded)}>
                     {current.text}
@@ -57,7 +61,9 @@ const Form = () => {
                     onChange={({ target: { value } }) =>
                         setUserInput(value)
                     }></S.Input>
-                <S.FindIcon onClick={() => fetchData()} />
+                <S.Submit>
+                    <S.FindIcon onClick={() => fetchData()} />
+                </S.Submit>
             </S.InputContainer>
         </S.Form>
     )

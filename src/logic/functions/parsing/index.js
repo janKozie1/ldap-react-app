@@ -34,3 +34,13 @@ export let updateObject = arr => {
 export let parseUserList = userList => {
     return userList.map(e => ({ ...e, check: false, open: false }))
 }
+
+export let sortData = data => {
+    return parseUserList(
+        data.map(e => ({
+            ...e,
+            members: sortByKey(e.members, 'description'),
+            owners: sortByKey(e.owners, 'description')
+        }))
+    )
+}

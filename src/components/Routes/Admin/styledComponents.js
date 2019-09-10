@@ -14,6 +14,7 @@ export let Header = styled.header`
     height: 50px;
     display: flex;
     align-items: center;
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
 `
 
 export let Title = styled.h2`

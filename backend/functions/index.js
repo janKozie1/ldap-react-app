@@ -30,7 +30,7 @@ let getFolderInfoFromDB = async (pool, query, type) => {
                 .request()
                 .input('userID', sql.NVarChar(255), query)
                 .query(`${baseQuery} [User ID] = @userID`)
-        } else if ((type = 'fullName')) {
+        } else if (type === 'fullName') {
             response = await pool
                 .request()
                 .input('name', sql.NVarChar(255), parsePolish(query))
@@ -47,6 +47,16 @@ let getFolderInfoFromDB = async (pool, query, type) => {
                 .query(
                     `${baseQuery} dbo.parse(Name) LIKE @name or  dbo.parse(Name) LIKE @reversedName`
                 )
+        } else if (type === 'path') {
+            response = await pool
+                .request()
+                .input('path', sql.NVarChar(255), query)
+                .query(`${baseQuery} Description LIKE @path`)
+        } else if (type === 'group') {
+            response = await pool
+                .request()
+                .input('group', sql.NVarChar(255), query)
+                .query(`${baseQuery} Grupa LIKE @group`)
         }
         return response.recordset
             .map(({ Grupa, Description, ID }) => {
