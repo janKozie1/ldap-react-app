@@ -37,7 +37,7 @@ const Search = ({ handleFormSubmit, modes, isLoading }) => {
 
                 <S.Submit type='submit'>
                     {isLoading ? (
-                        <Spinner color={'white'} size={3} />
+                        <Spinner color={'white'} size={22} />
                     ) : (
                         'Szukaj'
                     )}

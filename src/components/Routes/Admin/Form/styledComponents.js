@@ -4,22 +4,23 @@ import { ReactComponent as find } from '../../../../assets/find.svg'
 
 export const Form = styled.form`
     margin-top: ${({ theme: { sizes } }) => css`
-       calc(${sizes.margins.formMargin} );
+       calc(${sizes.margins.formMargin} * 2);
     `};
     display: grid;
     grid-auto-flow: column;
 `
+
 export const Select = styled.div`
     display: grid;
     grid-auto-rows: 30px;
     height: 30px;
     width: 110px;
-    overflow: hidden;
+    position: relative;
     margin-right: 10px;
+    z-index: 10;
     ${({ expanded }) =>
         expanded &&
         css`
-            height: max-content;
             svg {
                 transform: rotate(180deg);
             }
@@ -39,18 +40,36 @@ export const Option = styled.div`
     border: 1px solid #ddd;
     border-top-width: 0px;
     border-bottom-width: 0;
+    z-index: 12;
     &:last-child {
         border-bottom-width: 1px;
     }
     &:hover {
         background: rgba(0, 0, 0, 0.1);
     }
-    &:first-child {
-        &:hover {
-            background: white;
-        }
-        border: 2px solid black;
-    }
+    ${({ main }) =>
+        main &&
+        css`
+            &:hover {
+                background: white;
+            }
+            border: 2px solid black;
+        `}
+`
+export const OtherOptions = styled.div`
+    z-index: 11;
+    display: grid;
+    grid-auto-rows: 30px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    visibility: hidden;
+    ${({ expanded }) =>
+        expanded &&
+        css`
+            visibility: visible;
+        `}
 `
 export const ExpandIcon = styled(expand)`
     width: 20px;
@@ -67,6 +86,8 @@ export let Submit = styled.button`
     align-items: center;
     justify-content: center;
     height: 100%;
+    position: relative;
+    width: 40px;
 `
 
 export let FindIcon = styled(find)`
@@ -87,4 +108,5 @@ export const Input = styled.input`
     flex: 1;
     border: 0;
     font-family: inherit;
+    width: 300px;
 `

@@ -158,7 +158,7 @@ const App = () => {
             />
             {error && <S.Error>{error.msg}</S.Error>}
 
-            {result && getOutput()}
+            {getOutput()}
         </S.Main>
     )
 }

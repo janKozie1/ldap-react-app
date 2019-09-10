@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 import * as S from './styledComponents'
-import { userInfo } from 'os'
+import Spinner from '../../../Shared/Spinner'
 
 const OPTIONS = [
     {
@@ -10,7 +10,7 @@ const OPTIONS = [
     },
     {
         text: 'imię',
-        _id: 'name'
+        _id: 'fullName'
     },
     {
         text: 'grupa',
@@ -22,16 +22,13 @@ const OPTIONS = [
     }
 ]
 
-const Form = ({ handleRequest }) => {
+const Form = ({ handleRequest, isLoading }) => {
     let [expanded, setExpanded] = useState(false)
     let [current, setCurrent] = useState(OPTIONS[0])
     let [userInput, setUserInput] = useState('')
     let changeOption = _id => {
         setCurrent(OPTIONS.find(e => e._id === _id))
         setExpanded(false)
-    }
-    let fetchData = async => {
-        console.log(current._id, userInput)
     }
     let onFormSubmit = e => {
         e.preventDefault()
@@ -40,19 +37,23 @@ const Form = ({ handleRequest }) => {
     return (
         <S.Form onSubmit={onFormSubmit}>
             <S.Select expanded={expanded}>
-                <S.Option onClick={() => setExpanded(expanded => !expanded)}>
+                <S.Option
+                    main
+                    onClick={() => setExpanded(expanded => !expanded)}>
                     {current.text}
                     <S.ExpandIcon />
                 </S.Option>
-                {OPTIONS.map(e => {
-                    return (
-                        <S.Option
-                            key={e._id}
-                            onClick={() => changeOption(e._id)}>
-                            {e.text}
-                        </S.Option>
-                    )
-                })}
+                <S.OtherOptions expanded={expanded}>
+                    {OPTIONS.map(e => {
+                        return (
+                            <S.Option
+                                key={e._id}
+                                onClick={() => changeOption(e._id)}>
+                                {e.text}
+                            </S.Option>
+                        )
+                    })}
+                </S.OtherOptions>
             </S.Select>
             <S.InputContainer>
                 <S.Input
@@ -62,7 +63,11 @@ const Form = ({ handleRequest }) => {
                         setUserInput(value)
                     }></S.Input>
                 <S.Submit>
-                    <S.FindIcon onClick={() => fetchData()} />
+                    {isLoading ? (
+                        <Spinner color={'black'} size={16} />
+                    ) : (
+                        <S.FindIcon />
+                    )}
                 </S.Submit>
             </S.InputContainer>
         </S.Form>

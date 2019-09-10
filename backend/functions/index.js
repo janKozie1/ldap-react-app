@@ -50,12 +50,12 @@ let getFolderInfoFromDB = async (pool, query, type) => {
         } else if (type === 'path') {
             response = await pool
                 .request()
-                .input('path', sql.NVarChar(255), query)
+                .input('path', sql.NVarChar(255), `%${query}%`)
                 .query(`${baseQuery} Description LIKE @path`)
         } else if (type === 'group') {
             response = await pool
                 .request()
-                .input('group', sql.NVarChar(255), query)
+                .input('group', sql.NVarChar(255), `%${query}%`)
                 .query(`${baseQuery} Grupa LIKE @group`)
         }
         return response.recordset
@@ -106,7 +106,7 @@ let getGroupOwnersFromDB = async (pool, group, path) => {
 }
 
 let getGroupMemembers = group => {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
         ad.getUsersForGroup(group, (err, res) => {
             if (err) reject(err)
             let parsed = res

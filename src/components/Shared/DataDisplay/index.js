@@ -14,7 +14,7 @@ const DataDisplay = ({
     userActionButtons,
     selectedCount
 }) => {
-    console.log(data)
+    console.log(JSON.stringify(data))
     let [sortKey, setSortKey] = useState('path')
     let [sortDirection, setSortDirection] = useState(1)
     let handleCheck = data => {

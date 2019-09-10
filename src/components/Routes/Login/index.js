@@ -45,7 +45,7 @@ const Login = props => {
         }
     }
     let getMessageContent = () => {
-        if (isLoading) return <Spinner size={4} color={'#333'} />
+        if (isLoading) return <Spinner size={22} color={'#333'} />
 
         return error || null
     }

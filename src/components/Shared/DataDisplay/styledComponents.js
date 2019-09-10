@@ -36,9 +36,10 @@ export const DataList = styled.ul`
     list-style-type: none;
     max-width: 80%;
     min-width: 50%;
+    width: 80%;
     margin: ${({ theme: { sizes } }) => sizes.margins.formMargin} 0;
     display: grid;
-    grid-template-columns: repeat(5, auto);
+    grid-template-columns: 20px 1fr repeat(3, auto);
     grid-column-gap: 1.5vw;
     grid-auto-rows: auto 39px;
     position: relative;
