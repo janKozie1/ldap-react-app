@@ -17,9 +17,9 @@ import * as S from './styledComponents'
 
 let { DEF_URL, DEF_PARAMS } = fetchDefConfig
 
-const App = () => {
-    let handleFormSubmit = (value, { type, fieldID }) => {
-        setQuery({ query: value[type].trim(), type: fieldID })
+const Home = () => {
+    let handleRequest = query => {
+        setQuery(query)
     }
     let handleRowInteraction = (id, type) => {
         setResult(result =>
@@ -85,21 +85,6 @@ const App = () => {
             downloadObject(blob)
         }
     }
-
-    let modes = [
-        {
-            type: 'id',
-            placeholder: 'ID',
-            text: 'ID',
-            fieldID: 'id'
-        },
-        {
-            type: 'id',
-            placeholder: 'imie nazwisko',
-            text: 'Pełne imię',
-            fieldID: 'fullName'
-        }
-    ]
     let userActionButtons = [
         {
             text: 'Zaznacz',
@@ -147,15 +132,11 @@ const App = () => {
     return (
         <S.Main>
             <S.Logo src={Logo} />
-            <Search
-                handleFormSubmit={handleFormSubmit}
-                modes={modes}
-                isLoading={isLoading}
-            />
+            <Search handleRequest={handleRequest} isLoading={isLoading} />
             {error && <S.Error>{error.msg}</S.Error>}
 
             {getOutput()}
         </S.Main>
     )
 }
-export default App
+export default Home

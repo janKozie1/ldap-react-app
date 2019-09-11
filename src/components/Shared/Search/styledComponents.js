@@ -1,56 +1,112 @@
 import styled, { css } from 'styled-components'
-
-export const Search = styled.section`
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    transition: width 0.5s ease;
-    text-align: center;
-    ${({ theme: { sizes } }) => css`
-        width: ${sizes.breakpoints.mobile};
-        margin-top: calc(${sizes.margins.formMargin} * 2);
-        @media screen and (max-width: ${sizes.breakpoints.mobile}) {
-            width: 80%;
-        }
-    `}
-`
-export const FormTitle = styled.h2`
-    margin: 0;
-    color: ${({ theme: { colors } }) => colors.font};
-`
+import { ReactComponent as expand } from '../../../assets/arrow.svg'
+import { ReactComponent as find } from '../../../assets/find.svg'
 
 export const Form = styled.form`
-    width: 80%;
+    margin-top: ${({ theme: { sizes } }) => css`
+       calc(${sizes.margins.formMargin} * 2);
+    `};
     display: grid;
-    grid-template-columns: 5fr 1fr;
-    align-content: center;
-    justify-items: center;
-    ${({ theme: { sizes } }) => css`
-        margin-top: ${sizes.margins.formMargin};
-        grid-row-gap: ${sizes.margins.formMargin};
-    `}
+    grid-auto-flow: column;
 `
 
-export const Submit = styled.button`
-    border: 0;
-    outline: 0;
-    background: ${({ theme: { colors } }) => colors.main};
-    color: white;
-    font-family: inherit;
-    font-size: 0.8rem;
-    width: 100%;
-    border-radius: 0 5px 5px 0;
-    cursor: pointer;
+export const Select = styled.div`
+    display: grid;
+    grid-auto-rows: 30px;
+    height: 30px;
+    width: 110px;
     position: relative;
+    margin-right: 10px;
+    z-index: 10;
+    ${({ expanded }) =>
+        expanded &&
+        css`
+            svg {
+                transform: rotate(180deg);
+            }
+        `}
+`
+
+export const Option = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 10px;
+    cursor: pointer;
+    color: #666;
+    text-transform: lowercase;
+    border: 1px solid #ddd;
+    border-top-width: 0px;
+    border-bottom-width: 0;
+    z-index: 12;
+    &:last-child {
+        border-bottom-width: 1px;
+    }
+    &:hover {
+        background: rgba(0, 0, 0, 0.1);
+    }
+    ${({ main }) =>
+        main &&
+        css`
+            &:hover {
+                background: white;
+            }
+            border: 2px solid black;
+        `}
+`
+export const OtherOptions = styled.div`
+    z-index: 11;
+    display: grid;
+    grid-auto-rows: 30px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    visibility: hidden;
+    ${({ expanded }) =>
+        expanded &&
+        css`
+            visibility: visible;
+        `}
+`
+export const ExpandIcon = styled(expand)`
+    width: 20px;
+    height: 20px;
+    margin-left: auto;
+    margin-right: 0;
+    transition: transform 0.3s;
+`
+
+export let Submit = styled.button`
+    background: transparent;
+    border: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    &:active {
-        box-shadow: inset 0px 0px 4px 4px rgba(0, 0, 0, 0.25);
-    }
+    height: 100%;
+    position: relative;
+    width: 40px;
 `
 
-export const SpinnerContainer = styled.div`
-    width: 30px;
+export let FindIcon = styled(find)`
+    height: 80%;
+    padding: 0 10px;
+`
+
+export let InputContainer = styled.div`
     height: 30px;
+    border: 2px solid black;
+    display: flex;
+    align-items: center;
+`
+export const Input = styled.input`
+    height: 100%;
+    padding: 5px 0 5px 10px;
+    outline: none;
+    flex: 1;
+    border: 0;
+    font-family: inherit;
+    width: 300px;
 `

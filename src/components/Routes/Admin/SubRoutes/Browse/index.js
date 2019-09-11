@@ -6,7 +6,7 @@ import { fetchDefConfig } from '../../../../../constants/defaultVariables'
 
 import withProtectedRoute from '../../../../HOC/ProtectedRoute'
 
-import Form from '../../Form'
+import Search from '../../../../Shared/Search'
 import DataDisplay from '../../../../Shared/DataDisplay'
 
 import * as S from './styledComponents'
@@ -18,7 +18,6 @@ let Browse = () => {
         setQuery(query)
     }
 
-    console.log('?')
     let [selectedCount, setSelectedCount] = useState(0)
     let [query, setQuery] = useState(null)
     let [result, error, isLoading, setResult] = useFetch(
@@ -81,7 +80,7 @@ let Browse = () => {
     }
     return (
         <>
-            <Form handleRequest={handleRequest} isLoading={isLoading} />
+            <Search handleRequest={handleRequest} isLoading={isLoading} />
             {getOutput()}
         </>
     )

@@ -1,50 +1,77 @@
 import React, { useState } from 'react'
 
-import Input from './Input'
-import Toggle from '../Toggle'
+import * as S from './styledComponents'
 import Spinner from '../Spinner'
 
-import * as S from './styledComponents'
-
-const Search = ({ handleFormSubmit, modes, isLoading }) => {
-    let [mode, setMode] = useState(0)
-    let { type, placeholder } = modes[mode]
-    let [userInput, setUserInput] = useState(
-        Object.fromEntries(modes.map(e => [e.type, '']))
-    )
-    let handleInput = (value, fieldName) => {
-        let newInput = { ...userInput }
-        newInput[fieldName] = value
-        setUserInput({ ...newInput })
+const OPTIONS = [
+    {
+        text: 'id',
+        _id: 'id'
+    },
+    {
+        text: 'imię',
+        _id: 'fullName'
+    },
+    {
+        text: 'grupa',
+        _id: 'group'
+    },
+    {
+        text: 'scieżka',
+        _id: 'path'
     }
+]
 
-    let onFormSubmit = event => {
-        event.preventDefault()
-        if (userInput[modes[mode].type] && !isLoading)
-            handleFormSubmit(userInput, modes[mode])
+const Form = ({ handleRequest, isLoading }) => {
+    let [expanded, setExpanded] = useState(false)
+    let [current, setCurrent] = useState(OPTIONS[0])
+    let [userInput, setUserInput] = useState('')
+    let changeOption = _id => {
+        setCurrent(OPTIONS.find(e => e._id === _id))
+        setExpanded(false)
+    }
+    let onFormSubmit = e => {
+        e.preventDefault()
+        handleRequest({ type: current._id, query: userInput })
     }
     return (
-        <S.Search>
-            <S.FormTitle>Właściciel folderu i członkowie grup</S.FormTitle>
-            <S.Form onSubmit={e => onFormSubmit(e)}>
-                <Toggle values={modes} updateFunction={setMode} mode={mode} />
-                <Input
-                    value={userInput[type]}
-                    handleInput={handleInput}
-                    fieldName={type}
-                    placeholder={placeholder}
-                />
-
-                <S.Submit type='submit'>
+        <S.Form onSubmit={onFormSubmit}>
+            <S.Select expanded={expanded}>
+                <S.Option
+                    main
+                    onClick={() => setExpanded(expanded => !expanded)}>
+                    {current.text}
+                    <S.ExpandIcon />
+                </S.Option>
+                <S.OtherOptions expanded={expanded}>
+                    {OPTIONS.map(e => {
+                        return (
+                            <S.Option
+                                key={e._id}
+                                onClick={() => changeOption(e._id)}>
+                                {e.text}
+                            </S.Option>
+                        )
+                    })}
+                </S.OtherOptions>
+            </S.Select>
+            <S.InputContainer>
+                <S.Input
+                    placeholder={'Szukana fraza'}
+                    value={userInput}
+                    onChange={({ target: { value } }) =>
+                        setUserInput(value)
+                    }></S.Input>
+                <S.Submit>
                     {isLoading ? (
-                        <Spinner color={'white'} size={22} />
+                        <Spinner color={'black'} size={16} />
                     ) : (
-                        'Szukaj'
+                        <S.FindIcon />
                     )}
                 </S.Submit>
-            </S.Form>
-        </S.Search>
+            </S.InputContainer>
+        </S.Form>
     )
 }
 
-export default Search
+export default Form
