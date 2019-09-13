@@ -3,7 +3,6 @@ const { ad } = require('../isntances')
 const sql = require('mssql')
 
 const getFolderOwners = async (pool, path) => {
-    console.log(path)
     let response = await pool.request().input('path', sql.NVarChar(255), path)
         .query(`select distinct
                     u.UserFullName,
@@ -16,7 +15,6 @@ const getFolderOwners = async (pool, path) => {
                         f.Folder_ID = r.Folder_ID
                     where 
                         f.FolderPath = @path`)
-    console.log(response.recordset)
     return response.recordset
 }
 

@@ -1,7 +1,7 @@
 const { ad } = require('../isntances')
 const sql = require('mssql')
-
-const BASE_GROUP_QUERY = `
+const { parsePolish } = require('../functions')
+const BASE_GROUP_QUERY_PATH_OR_GROUP = `
     select distinct
         g.GroupName,
         g.Group_ID,
@@ -11,10 +11,26 @@ const BASE_GROUP_QUERY = `
             f.Folder_ID = g.Folder_ID 
         where
 `
+
+const BASE_GROUP_QUERY_NAME_OR_ID = `
+    select distinct
+        g.GroupName, 
+        g.Group_ID, 
+        f.FolderPath 
+    from Groups g 
+        join Folders f on 
+            f.Folder_ID = g.Folder_ID 
+        join Roles r on 
+            r.Folder_ID = g.Folder_ID 
+        join Users u on 
+            r.User_ID = u.User_ID 
+        where 
+`
 const getGroupMembers = group => {
     return new Promise((resolve, reject) => {
         ad.getUsersForGroup(group, (err, res) => {
             if (err) reject(err)
+
             let parsed = res
                 ? res.map(({ cn, displayName, description }) => {
                       return {
@@ -48,7 +64,7 @@ const getGroupsForPath = async (pool, query) => {
     let response = await pool
         .request()
         .input('path', sql.NVarChar(255), `%${query}%`)
-        .query(`${BASE_GROUP_QUERY} f.FolderPath like @path`)
+        .query(`${BASE_GROUP_QUERY_PATH_OR_GROUP} f.FolderPath like @path`)
 
     return parseGroupResults(response.recordset)
 }
@@ -57,9 +73,39 @@ const getMatchingGroups = async (pool, query) => {
     let response = await pool
         .request()
         .input('group', sql.NVarChar(255), `%${query}%`)
-        .query(`${BASE_GROUP_QUERY} g.GroupName like @group`)
+        .query(`${BASE_GROUP_QUERY_PATH_OR_GROUP} g.GroupName like @group`)
+    return parseGroupResults(response.recordset)
+}
+
+const getGroupsByUserID = async (pool, query) => {
+    let response = await pool
+        .request()
+        .input('id', sql.NVarChar(255), query.toUpperCase())
+        .query(`${BASE_GROUP_QUERY_NAME_OR_ID} u.User_ID = @id`)
+    return parseGroupResults(response.recordset)
+}
+
+const getGroupsByUserFullName = async (pool, query) => {
+    let response = await pool
+        .request()
+        .input('name', sql.NVarChar(255), parsePolish(query))
+        .input(
+            'reversedName',
+            sql.NVarChar(255),
+            parsePolish(
+                query
+                    .split(' ')
+                    .reverse()
+                    .join(' ')
+            )
+        )
+        .query(
+            `${BASE_GROUP_QUERY_NAME_OR_ID} dbo.parse(u.UserFullName) = @name or dbo.parse(u.UserFullName) = @reversedName`
+        )
     return parseGroupResults(response.recordset)
 }
 
 module.exports.getGroupsForPath = getGroupsForPath
 module.exports.getMatchingGroups = getMatchingGroups
+module.exports.getGroupsByUserID = getGroupsByUserID
+module.exports.getGroupsByUserFullName = getGroupsByUserFullName

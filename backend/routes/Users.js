@@ -12,7 +12,9 @@ const {
 
 const {
     getGroupsForPath,
-    getMatchingGroups
+    getMatchingGroups,
+    getGroupsByUserID,
+    getGroupsByUserFullName
 } = require('../queryFunctions/groups')
 const { getFolderOwners } = require('../queryFunctions/folders')
 
@@ -110,7 +112,67 @@ router.post('/data/group', async (req, res) => {
                 return res.json(data)
             })
         } catch (err) {
-            console.error(err)
+            res.send(err)
+        }
+    } else return res.status(400).send('Invalid query')
+})
+
+//  /users/data/id
+//  PUBLIC
+//  Get groupName,folderPath,members,owners by full or by user's id
+
+router.post('/data/id', async (req, res) => {
+    if (req.body.query) {
+        try {
+            sql.close()
+            let temp = Date.now()
+            let server = await readFileAsync('../db_ip.txt')
+            let pool = await sql.connect({ ...config.DB, server })
+            let groups = await getGroupsByUserID(pool, req.body.query)
+            let groupsAndOwners = groups.map(async e => {
+                let owners = await getFolderOwners(pool, e.folderPath)
+                return {
+                    ...e,
+                    groupType: determineGroupType(e.groupName),
+                    owners,
+                    ownersCount: owners.length
+                }
+            })
+            Promise.all(groupsAndOwners).then(data => {
+                sql.close()
+                console.log('response', (Date.now() - temp) / 1000)
+                return res.json(data)
+            })
+        } catch (err) {
+            res.send(err)
+        }
+    } else return res.status(400).send('Invalid query')
+})
+
+router.post('/data/name', async (req, res) => {
+    if (req.body.query) {
+        try {
+            sql.close()
+            let temp = Date.now()
+            let server = await readFileAsync('../db_ip.txt')
+            let pool = await sql.connect({ ...config.DB, server })
+            let groups = await getGroupsByUserFullName(pool, req.body.query)
+            let groupsAndOwners = groups.map(async e => {
+                let owners = await getFolderOwners(pool, e.folderPath)
+                return {
+                    ...e,
+                    groupType: determineGroupType(e.groupName),
+                    owners,
+                    ownersCount: owners.length
+                }
+            })
+            Promise.all(groupsAndOwners).then(data => {
+                sql.close()
+                console.log('response', (Date.now() - temp) / 1000)
+                return res.json(data)
+            })
+        } catch (err) {
+            res.send(err)
         }
     } else return res.status(400).send('Invalid query')
 })
