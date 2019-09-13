@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 import { Cell } from '../styledComponents'
-import { ReactComponent as bg } from '../../../../assets/arrow.svg'
+import { ReactComponent as bg } from 'assets/arrow.svg'
 
 export const RowHighlight = styled.div`
     position: absolute;

@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 
 import Input from './Input'
-import Spinner from '../../Shared/Spinner'
-import withProtectedRoute from '../../HOC/ProtectedRoute'
+import Spinner from 'components/Shared/Spinner'
+import withProtectedRoute from 'components/HOC/ProtectedRoute'
 
-import { useStateValue } from '../../../logic/store'
-import { fetchDefConfig } from '../../../constants/defaultVariables'
+import { useStateValue } from 'logic/store'
+import { fetchDefConfig } from 'constants/defaultVariables'
 
 import * as S from './styledComponents'
 const { BASE_URL } = fetchDefConfig

@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import CheckBox from './Checkbox'
 import DataItem from './DataItem'
 
-import { sortByKey } from '../../../logic/functions/parsing'
+import { sortByKey } from 'logic/functions/parsing'
 
 import * as S from './styledComponents'
 

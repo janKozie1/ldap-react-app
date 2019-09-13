@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 
-import { useFetch } from '../../../../../logic/hooks'
-import { sortData } from '../../../../../logic/functions/parsing'
-import { fetchDefConfig } from '../../../../../constants/defaultVariables'
+import { useFetch } from 'logic/hooks'
+import { sortData } from 'logic/functions/parsing'
+import { fetchDefConfig } from 'constants/defaultVariables'
 
-import withProtectedRoute from '../../../../HOC/ProtectedRoute'
+import withProtectedRoute from 'components/HOC/ProtectedRoute'
 
-import Search from '../../../../Shared/Search'
-import DataDisplay from '../../../../Shared/DataDisplay'
+import Search from 'components/Shared/Search'
+import DataDisplay from 'components/Shared/DataDisplay'
 
 import * as S from './styledComponents'
 
@@ -18,14 +18,6 @@ let Browse = () => {
         setQuery(query)
     }
 
-    let [selectedCount, setSelectedCount] = useState(0)
-    let [query, setQuery] = useState(null)
-    let [result, error, isLoading, setResult] = useFetch(
-        query,
-        DEF_URL,
-        DEF_PARAMS,
-        sortData
-    )
     let handleRowInteraction = (id, type) => {
         setResult(result =>
             result.map(e => {
@@ -59,6 +51,14 @@ let Browse = () => {
             )
         }
     }
+    let [selectedCount, setSelectedCount] = useState(0)
+    let [query, setQuery] = useState(null)
+    let [result, error, isLoading, setResult] = useFetch(
+        query,
+        DEF_URL,
+        DEF_PARAMS,
+        sortData
+    )
     let getOutput = () => {
         if (result) {
             if (result.length) {

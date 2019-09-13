@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
-import { ReactComponent as expand } from '../../../assets/arrow.svg'
-import { ReactComponent as find } from '../../../assets/find.svg'
+import { ReactComponent as expand } from 'assets/arrow.svg'
+import { ReactComponent as find } from 'assets/find.svg'
 
 export const Form = styled.form`
     margin-top: ${({ theme: { sizes } }) => css`

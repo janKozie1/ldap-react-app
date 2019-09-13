@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { useStateValue } from '../../logic/store'
-import { checkIfAuthorized } from '../../logic/functions/network'
+import { useStateValue } from 'logic/store'
+import { checkIfAuthorized } from 'logic/functions/network'
 
 const withProtectedRoute = ({
     protectedRoute,

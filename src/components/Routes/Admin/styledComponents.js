@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 import { NavLink as link } from 'react-router-dom'
-import { ReactComponent as f } from '../../../assets/find.svg'
-import { ReactComponent as h } from '../../../assets/history.svg'
-import { ReactComponent as a } from '../../../assets/add.svg'
+import { ReactComponent as f } from 'assets/find.svg'
+import { ReactComponent as h } from 'assets/history.svg'
+import { ReactComponent as a } from 'assets/add.svg'
 export let Main = styled.main`
     height: 100vh;
     width: 100%;

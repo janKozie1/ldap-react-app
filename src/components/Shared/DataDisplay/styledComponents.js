@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { ReactComponent as arrow } from '../../../assets/arrow_big.svg'
+import { ReactComponent as arrow } from 'assets/arrow_big.svg'
 
 export const ActionButtons = styled.div`
     grid-column: 1/6;

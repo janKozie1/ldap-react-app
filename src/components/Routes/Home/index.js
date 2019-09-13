@@ -1,17 +1,14 @@
 import React, { useState } from 'react'
 
-import Search from '../../Shared/Search'
-import Logo from '../../../assets/logo.png'
-import DataDisplay from '../../Shared/DataDisplay'
+import Search from 'components/Shared/Search'
+import Logo from 'assets/logo.png'
+import DataDisplay from 'components/Shared/DataDisplay'
 
-import { sortData } from '../../../logic/functions/parsing'
-import {
-    createCSVTable,
-    downloadObject
-} from '../../../logic/functions/exporting'
+import { sortData } from 'logic/functions/parsing'
+import { createCSVTable, downloadObject } from 'logic/functions/exporting'
 
-import { useFetch } from '../../../logic/hooks'
-import { fetchDefConfig } from '../../../constants/defaultVariables'
+import { useFetch } from 'logic/hooks'
+import { fetchDefConfig } from 'constants/defaultVariables'
 
 import * as S from './styledComponents'
 

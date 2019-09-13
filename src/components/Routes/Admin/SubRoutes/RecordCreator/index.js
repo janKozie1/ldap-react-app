@@ -1,6 +1,6 @@
 import React from 'react'
 
-import withProtectedRoute from '../../../../HOC/ProtectedRoute'
+import withProtectedRoute from 'components/HOC/ProtectedRoute'
 
 import * as S from './styledComponents'
 
