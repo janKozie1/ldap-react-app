@@ -3,17 +3,21 @@ export let createCSVTable = data => {
         return args.map(e => (e ? `"${e}"` : '')).join(';') + '\n'
     }
     let getUserString = user => {
-        return user ? `${user.description} - ${user.cn}` : ''
+        return user
+            ? `${user.userFullName || user.description} - ${user.user_ID ||
+                  user.cn}`
+            : ''
     }
+    console.log(data)
     return data
         .filter(e => e.check)
-        .reduce((prev, { path, members, owners }) => {
+        .reduce((prev, { folderPath, members, owners }) => {
             let longer = owners.length >= members.length ? owners : members
             return prev.concat(
                 longer
                     .map((e, i) => {
                         return createDataRow([
-                            !i ? path : '',
+                            !i ? folderPath : '',
                             getUserString(owners[i]),
                             getUserString(members[i])
                         ])

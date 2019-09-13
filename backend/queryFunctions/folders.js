@@ -1,5 +1,3 @@
-const fs = require('fs')
-const { ad } = require('../isntances')
 const sql = require('mssql')
 
 const getFolderOwners = async (pool, path) => {
@@ -15,7 +13,11 @@ const getFolderOwners = async (pool, path) => {
                         f.Folder_ID = r.Folder_ID
                     where 
                         f.FolderPath = @path`)
-    return response.recordset
+    return response.recordset.map(({ UserFullName, User_ID, RoleType }) => ({
+        userFullName: UserFullName,
+        user_ID: User_ID,
+        roleType: RoleType
+    }))
 }
 
 module.exports.getFolderOwners = getFolderOwners

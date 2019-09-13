@@ -14,8 +14,7 @@ const DataDisplay = ({
     userActionButtons,
     selectedCount
 }) => {
-    console.log(JSON.stringify(data))
-    let [sortKey, setSortKey] = useState('path')
+    let [sortKey, setSortKey] = useState('folderPath')
     let [sortDirection, setSortDirection] = useState(1)
     let handleCheck = data => {
         handleRowInteraction(data, 'check')
@@ -53,8 +52,8 @@ const DataDisplay = ({
                     />
                 </S.Cell>
                 <S.HeaderItem
-                    onClick={() => handleSortChange('path')}
-                    value={'path'}
+                    onClick={() => handleSortChange('folderPath')}
+                    value={'folderPath'}
                     sortKey={sortKey}
                     direction={sortDirection}>
                     Ścieżka
@@ -86,11 +85,11 @@ const DataDisplay = ({
                 </S.HeaderItem>
                 {sortedData.map((e, i) => {
                     return (
-                        <React.Fragment key={`${i}-${e.group}`}>
+                        <React.Fragment key={`${e.group_ID}`}>
                             <S.Cell>
                                 <CheckBox
                                     clickHandler={handleCheck}
-                                    returnData={e.ID}
+                                    returnData={e.group_ID}
                                     checked={e.check}
                                     size={12}
                                 />

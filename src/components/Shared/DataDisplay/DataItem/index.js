@@ -4,17 +4,17 @@ import * as S from './styledComponents'
 
 const DataItem = React.memo(
     ({
-        data: { path, ID, groupType, members, open, owners },
+        data: { folderPath, group_ID, groupType, members, open, owners },
         index,
         handleRowInteraction
     }) => {
         let handleOpen = () => {
-            handleRowInteraction(ID, 'open')
+            handleRowInteraction(group_ID, 'open')
         }
         return (
             <>
                 <S.RowHighlight row={index * 2 + 2} onClick={handleOpen} />
-                <S.Header onClick={handleOpen}>{path}</S.Header>
+                <S.Header onClick={handleOpen}>{folderPath}</S.Header>
                 <S.Owners onClick={handleOpen}>{owners.length}</S.Owners>
                 <S.GroupType groupType={groupType} onClick={handleOpen}>
                     <p>{groupType}</p>
@@ -29,14 +29,17 @@ const DataItem = React.memo(
                             <S.ListTitle>Właściciele:</S.ListTitle>
                             <S.ListTitle>Członkowie:</S.ListTitle>
                             <S.UserList>
-                                {owners.map(({ description, cn, Access }) => {
-                                    return (
-                                        <S.Owner
-                                            key={`${cn}-${Access}-owner-${ID}`}>
-                                            {description} - {cn} - {Access}{' '}
-                                        </S.Owner>
-                                    )
-                                })}
+                                {owners.map(
+                                    ({ userFullName, user_ID, roleType }) => {
+                                        return (
+                                            <S.Owner
+                                                key={`${user_ID}-${roleType}-${group_ID}`}>
+                                                {userFullName} - {user_ID} -{' '}
+                                                {roleType}{' '}
+                                            </S.Owner>
+                                        )
+                                    }
+                                )}
                             </S.UserList>
 
                             <S.UserList>
@@ -55,7 +58,7 @@ const DataItem = React.memo(
         )
     },
     (a, b) => {
-        return a.data.open === b.data.open
+        return a.data.open === b.data.open && a.index === b.index
     }
 )
 

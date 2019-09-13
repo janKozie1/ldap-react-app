@@ -24,14 +24,14 @@ const Home = () => {
     let handleRowInteraction = (id, type) => {
         setResult(result =>
             result.map(e => {
-                if (type === 'check' && e.ID === id) {
+                if (type === 'check' && e.group_ID === id) {
                     if (e.check) {
                         setSelectedCount(selectedCount - 1)
                     } else {
                         setSelectedCount(selectedCount + 1)
                     }
                 }
-                return e.ID === id ? { ...e, [type]: !e[type] } : e
+                return e.group_ID === id ? { ...e, [type]: !e[type] } : e
             })
         )
     }

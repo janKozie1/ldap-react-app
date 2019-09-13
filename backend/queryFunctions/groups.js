@@ -56,7 +56,7 @@ const parseGroupResults = groups => {
                 group_ID: Group_ID,
                 folderPath: FolderPath,
                 members,
-                memberCount: members.length
+                membersCount: members.length
             }
         })
     ).then(data => data)
