@@ -132,6 +132,7 @@ const Home = () => {
     return (
         <S.Main>
             <S.Logo src={Logo} />
+            <S.Title>Właściciele folderów i członkowie grup</S.Title>
             <Search handleRequest={handleRequest} isLoading={isLoading} />
             {error && <S.Error>{error.msg}</S.Error>}
 

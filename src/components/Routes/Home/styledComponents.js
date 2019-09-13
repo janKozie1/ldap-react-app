@@ -18,6 +18,13 @@ export let Logo = styled.img`
         }
     `}
 `
+
+export let Title = styled.h3`
+    margin-top: ${({ theme: { sizes } }) => css`
+        calc(${sizes.margins.formMargin} * 2)
+    `};
+    font-size: 1.5rem;
+`
 export let Error = styled.p`
     color: ${({ theme: { colors } }) => colors.error};
     margin-top: ${({ theme: { sizes } }) => sizes.margins.formMargin};
