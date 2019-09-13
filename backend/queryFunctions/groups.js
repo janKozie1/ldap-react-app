@@ -1,6 +1,7 @@
 const { ad } = require('../isntances')
 const sql = require('mssql')
 const { parsePolish } = require('../functions')
+
 const BASE_GROUP_QUERY_PATH_OR_GROUP = `
     select distinct
         g.GroupName,
@@ -26,6 +27,7 @@ const BASE_GROUP_QUERY_NAME_OR_ID = `
             r.User_ID = u.User_ID 
         where 
 `
+
 const getGroupMembers = group => {
     return new Promise((resolve, reject) => {
         ad.getUsersForGroup(group, (err, res) => {
@@ -81,7 +83,7 @@ const getGroupsByUserID = async (pool, query) => {
     let response = await pool
         .request()
         .input('id', sql.NVarChar(255), query.toUpperCase())
-        .query(`${BASE_GROUP_QUERY_NAME_OR_ID} u.User_ID = @id`)
+        .query(`${BASE_GROUP_QUERY_NAME_OR_ID} u.User_ID like @id`)
     return parseGroupResults(response.recordset)
 }
 
@@ -100,7 +102,7 @@ const getGroupsByUserFullName = async (pool, query) => {
             )
         )
         .query(
-            `${BASE_GROUP_QUERY_NAME_OR_ID} dbo.parse(u.UserFullName) = @name or dbo.parse(u.UserFullName) = @reversedName`
+            `${BASE_GROUP_QUERY_NAME_OR_ID} dbo.parse(u.UserFullName) like @name or dbo.parse(u.UserFullName) like @reversedName`
         )
     return parseGroupResults(response.recordset)
 }

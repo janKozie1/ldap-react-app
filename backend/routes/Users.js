@@ -30,7 +30,6 @@ router.post('/data', async (req, res) => {
                 req.body.query,
                 req.body.type
             )
-            console.log(folderInfo)
             let results = folderInfo.map(async e => {
                 let members = await getGroupMemembers(e.group)
                 let owners = await getGroupOwnersFromDB(pool, e.group, e.path)

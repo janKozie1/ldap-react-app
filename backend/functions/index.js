@@ -15,6 +15,7 @@ let parsePolish = string => {
         ['ś', 's'],
         ['ł', 'l']
     ])
+    console.log(string)
     return string
         .split('')
         .map(e => pl.get(e) || e)
@@ -151,6 +152,7 @@ let authenticateAdAsync = (username, password) => {
 }
 
 module.exports.readFileAsync = readFileAsync
+module.exports.parsePolish = parsePolish
 module.exports.getGroupMemembers = getGroupMemembers
 module.exports.getGroupOwnersFromDB = getGroupOwnersFromDB
 module.exports.determineGroupType = determineGroupType
