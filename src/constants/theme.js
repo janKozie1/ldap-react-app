@@ -12,7 +12,8 @@ let colors = {
     darker: '#00546e',
     font: '#333',
     font_lighter: '#444',
-    error: '#D50000'
+    error: '#D50000',
+    green: '#4caf50'
 }
 
 let defaults = {

@@ -1,5 +1,8 @@
 import styled, { css } from 'styled-components'
 import { ReactComponent as close } from 'assets/close.svg'
+import { ReactComponent as delete_icon } from 'assets/delete.svg'
+import { ReactComponent as arrow } from 'assets/arrow.svg'
+
 export const Form = styled.form`
     width: 100%;
     padding: 20px 40px;
@@ -18,10 +21,8 @@ export const Header = styled.h2`
 export const CloseIcon = styled(close)`
     height: 30px;
     width: 30px;
-    position: absolute;
-    right: 10px;
-    top: 15px;
     padding: 5px;
+    margin-right: -30px;
     cursor: pointer;
     > path {
         fill: ${({ theme: { colors } }) => colors.error};
@@ -33,6 +34,10 @@ export const Label = styled.label`
     display: flex;
     justify-content: space-between;
     flex-direction: row;
+    flex-wrap: wrap;
+    &:last-of-type {
+        margin-bottom: 40px;
+    }
 `
 
 export const LabelTitle = styled.p`
@@ -53,22 +58,79 @@ export const Input = styled.input`
 
 export let Table = styled.div`
     display: grid;
-    grid-template-columns: repeat(3, auto);
-    grid-auto-rows: 36px;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-auto-rows: 34px;
     width: 400px;
     grid-auto-flow: row;
     align-items: center;
     font-size: 0.8rem;
-    border: 1px solid #333;
-    * {
-        margin: 0;
-    }
+    border: 1px solid black;
     p {
-        border: 1px solid #333;
         height: 100%;
         width: 100%;
+        margin: 0;
         display: flex;
+        border: 1px solid #333;
         align-items: center;
         justify-content: center;
     }
+`
+
+export let Delete = styled(delete_icon)`
+    height: 34px;
+    width: 34px;
+    padding: 7px;
+    position: absolute;
+    right: 8px;
+    cursor: pointer;
+    > path {
+        fill: #ccc;
+        transition: fill 0.3s;
+    }
+    &:hover {
+        path {
+            fill: #333;
+        }
+    }
+`
+
+export let Submit = styled.button`
+    background: ${({ theme: { colors } }) => colors.green};
+    border: 0;
+    height: 30px;
+    width: 80px;
+    font-family: inherit;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-end;
+    cursor: pointer;
+`
+
+export let Users = styled.div`
+    grid-column: 1/3;
+    height: 100%;
+    width: 100%;
+    border: 1px solid #333;
+    position: relative;
+`
+
+export let Expand = styled(arrow)`
+    height: 30px;
+    width: 30px;
+    padding: 5px;
+    position: absolute;
+    right: 0;
+    > path {
+        fill: #333;
+    }
+`
+
+export let RoleType = styled.input`
+    height: 100%;
+    width: 100%;
+    border: 1px solid #333;
+    text-align: center;
+    font-family: inherit;
 `
