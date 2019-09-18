@@ -12,7 +12,9 @@ const DataDisplay = ({
     handleRowInteraction,
     toggleCheckAll,
     userActionButtons,
-    selectedCount
+    selectedCount,
+    editable,
+    editFunction
 }) => {
     let [sortKey, setSortKey] = useState('folderPath')
     let [sortDirection, setSortDirection] = useState(1)
@@ -27,6 +29,12 @@ const DataDisplay = ({
         } else {
             setSortDirection(sortDirection ? 0 : 1)
         }
+    }
+    let handleEdit = (group_ID, folder_ID) => {
+        console.log(data)
+        editFunction(
+            data.find(e => e.group_ID === group_ID && folder_ID === e.folder_ID)
+        )
     }
     return (
         <>
@@ -83,6 +91,7 @@ const DataDisplay = ({
                     Członków
                     <S.DirIndicator />
                 </S.HeaderItem>
+                <S.Cell />
                 {sortedData.map((e, i) => {
                     return (
                         <React.Fragment key={`${e.group_ID}`}>
@@ -98,6 +107,8 @@ const DataDisplay = ({
                                 data={e}
                                 handleRowInteraction={handleRowInteraction}
                                 index={i}
+                                editable={editable}
+                                handleEdit={handleEdit}
                             />
                         </React.Fragment>
                     )

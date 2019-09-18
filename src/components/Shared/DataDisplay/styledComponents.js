@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components'
 import { ReactComponent as arrow } from 'assets/arrow_big.svg'
 
 export const ActionButtons = styled.div`
-    grid-column: 1/6;
+    grid-column: 1/7;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -34,12 +34,10 @@ export const DataList = styled.ul`
     margin: 0;
     padding: 0;
     list-style-type: none;
-    max-width: 80%;
-    min-width: 50%;
     width: 80%;
     margin: ${({ theme: { sizes } }) => sizes.margins.formMargin} 0;
     display: grid;
-    grid-template-columns: 20px 1fr repeat(3, auto);
+    grid-template-columns: 20px 1fr repeat(4, auto);
     grid-column-gap: 1.5vw;
     grid-auto-rows: auto 39px;
     position: relative;

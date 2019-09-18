@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components'
 import { Cell } from '../styledComponents'
 import { ReactComponent as bg } from 'assets/arrow.svg'
+import { ReactComponent as edit_icon } from 'assets/edit.svg'
 
 export const RowHighlight = styled.div`
     position: absolute;
@@ -60,11 +61,29 @@ export const Expand = styled(bg)`
 `
 
 export const MembersList = styled.div`
-    grid-column: 2/6;
+    grid-column: 2/7;
     display: grid;
     grid-template-columns: auto 1fr;
     grid-column-gap: 4em;
     margin-left: 40px;
+`
+export const Edit = styled(Cell)`
+    cursor: pointer;
+    padding: 0 10px;
+    margin-left: -1.5vw;
+    &:hover {
+        svg > path {
+            fill: #333;
+        }
+    }
+`
+export const EditIcon = styled(edit_icon)`
+    height: 18px;
+    width: 18px;
+    > path {
+        fill: #ccc;
+        transition: fill 0.3s;
+    }
 `
 
 export const ListTitle = styled.h4`

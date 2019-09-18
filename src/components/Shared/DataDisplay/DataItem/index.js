@@ -4,13 +4,24 @@ import * as S from './styledComponents'
 
 const DataItem = React.memo(
     ({
-        data: { folderPath, group_ID, groupType, members, open, owners },
+        data: {
+            folderPath,
+            group_ID,
+            groupType,
+            members,
+            open,
+            owners,
+            folder_ID
+        },
         index,
-        handleRowInteraction
+        editable,
+        handleRowInteraction,
+        handleEdit
     }) => {
         let handleOpen = () => {
             handleRowInteraction(group_ID, 'open')
         }
+
         return (
             <>
                 <S.RowHighlight row={index * 2 + 2} onClick={handleOpen} />
@@ -23,6 +34,14 @@ const DataItem = React.memo(
                     <S.Expand />
                     {members.length}
                 </S.MembersInfo>
+                {editable ? (
+                    <S.Edit onClick={() => handleEdit(group_ID, folder_ID)}>
+                        {editable && <S.EditIcon />}
+                    </S.Edit>
+                ) : (
+                    <div></div>
+                )}
+
                 <S.MembersList>
                     {open && (
                         <>

@@ -6,6 +6,7 @@ const BASE_GROUP_QUERY_PATH_OR_GROUP = `
     select distinct
         g.GroupName,
         g.Group_ID,
+        f.Folder_ID,
         f.FolderPath
     from Groups g 
         join Folders f on 
@@ -16,7 +17,8 @@ const BASE_GROUP_QUERY_PATH_OR_GROUP = `
 const BASE_GROUP_QUERY_NAME_OR_ID = `
     select distinct
         g.GroupName, 
-        g.Group_ID, 
+        g.Group_ID,
+        f.Folder_ID, 
         f.FolderPath 
     from Groups g 
         join Folders f on 
@@ -49,12 +51,13 @@ const getGroupMembers = group => {
 
 const parseGroupResults = groups => {
     return Promise.all(
-        groups.map(async ({ GroupName, Group_ID, FolderPath }) => {
+        groups.map(async ({ GroupName, Group_ID, FolderPath, Folder_ID }) => {
             let members = await getGroupMembers(GroupName)
             return {
                 groupName: GroupName,
                 group_ID: Group_ID,
                 folderPath: FolderPath,
+                folder_ID: Folder_ID,
                 members,
                 membersCount: members.length
             }

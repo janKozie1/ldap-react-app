@@ -119,6 +119,7 @@ const Home = () => {
                         toggleCheckAll={toggleCheckAll}
                         userActionButtons={userActionButtons}
                         selectedCount={selectedCount}
+                        editable={false}
                     />
                 )
             } else if (!isLoading) {

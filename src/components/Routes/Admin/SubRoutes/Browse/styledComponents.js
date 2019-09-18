@@ -1,4 +1,29 @@
-import styled, { keyframes } from 'styled-components'
+import styled, { keyframes, css } from 'styled-components'
+
+export let Container = styled.div`
+    transform: translateX(25%);
+    transition: transform 0.5s;
+    ${({ isEditing }) =>
+        isEditing &&
+        css`
+            transform: translateX(-25%);
+        `}
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 100vw 100vw;
+`
+export let Data = styled.div`
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+`
+export let EditPanel = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`
 
 export let Error = styled.p`
     color: ${({ theme: { colors } }) => colors.error};

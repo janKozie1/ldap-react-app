@@ -8,6 +8,7 @@ let GlobalStyle = createGlobalStyle`
     html{   
         width:100%;
         overflow-y: auto;
+        overflow-x:hidden;
 
     }
     body{
