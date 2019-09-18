@@ -31,7 +31,6 @@ const DataDisplay = ({
         }
     }
     let handleEdit = (group_ID, folder_ID) => {
-        console.log(data)
         editFunction(
             data.find(e => e.group_ID === group_ID && folder_ID === e.folder_ID)
         )

@@ -18,11 +18,27 @@ export let Data = styled.div`
     align-items: center;
     flex-direction: column;
 `
-export let EditPanel = styled.div`
+
+export let Cover = styled.div`
+    position: fixed;
     width: 100%;
+    height: 100%;
+    z-index: 5;
+    left: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`
+
+export let EditPanel = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
+    z-index: 6;
+    background: white;
 `
 
 export let Error = styled.p`

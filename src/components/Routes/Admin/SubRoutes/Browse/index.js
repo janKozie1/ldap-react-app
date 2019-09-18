@@ -55,7 +55,7 @@ let Browse = () => {
     let [selectedCount, setSelectedCount] = useState(0)
     let [isEditing, setIsEditing] = useState(false)
     let [query, setQuery] = useState(null)
-    let [recordToEdit, setRecordToEdit] = useState({})
+    let [recordToEdit, setRecordToEdit] = useState(null)
     let [result, error, isLoading, setResult] = useFetch(
         query,
         DEF_URL,
@@ -65,6 +65,10 @@ let Browse = () => {
     let editRecord = data => {
         setRecordToEdit(data)
         setIsEditing(true)
+    }
+    let stopEditing = () => {
+        setIsEditing(false)
+        setRecordToEdit(null)
     }
     let getOutput = () => {
         if (result) {
@@ -91,12 +95,18 @@ let Browse = () => {
     return (
         <>
             <Search handleRequest={handleRequest} isLoading={isLoading} />
-            <S.Container isEditing={isEditing}>
-                <S.Data>{getOutput()}</S.Data>
-                <S.EditPanel>
-                    <EditForm data={recordToEdit} />
-                </S.EditPanel>
-            </S.Container>
+
+            <S.Data>{getOutput()}</S.Data>
+            {recordToEdit && (
+                <S.Cover onClick={stopEditing}>
+                    <S.EditPanel>
+                        <EditForm
+                            data={recordToEdit}
+                            stopEditing={stopEditing}
+                        />
+                    </S.EditPanel>
+                </S.Cover>
+            )}
         </>
     )
 }

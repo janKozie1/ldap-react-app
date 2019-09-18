@@ -17,7 +17,7 @@ export const Select = styled.div`
     width: 110px;
     position: relative;
     margin-right: 10px;
-    z-index: 10;
+    z-index: 5;
     ${({ expanded }) =>
         expanded &&
         css`

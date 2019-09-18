@@ -9,6 +9,7 @@ let GlobalStyle = createGlobalStyle`
         width:100%;
         overflow-y: auto;
         overflow-x:hidden;
+        -webkit-font-smoothing: antialiased;
 
     }
     body{
