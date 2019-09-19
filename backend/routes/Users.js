@@ -11,6 +11,8 @@ const {
     getGroupsByUserFullName
 } = require('../queryFunctions/groups')
 
+const { getAllUsers } = require('../queryFunctions/users')
+
 const { getFolderOwners } = require('../queryFunctions/folders')
 
 router.post('/data', async (req, res) => {
@@ -53,5 +55,10 @@ router.post('/data', async (req, res) => {
         }
     } else return res.status(400).send('Invalid query')
 })
-
+router.post('/allUsers', async (req, res) => {
+    let server = await readFileAsync('../db_ip.txt')
+    let pool = await sql.connect({ ...config.DB, server })
+    let users = await getAllUsers(pool)
+    res.json(users)
+})
 module.exports = router

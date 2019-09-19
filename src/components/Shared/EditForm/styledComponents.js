@@ -28,16 +28,17 @@ export const CloseIcon = styled(close)`
         fill: ${({ theme: { colors } }) => colors.error};
     }
 `
+
 export const Label = styled.label`
     margin-bottom: 20px;
-
     display: flex;
     justify-content: space-between;
     flex-direction: row;
     flex-wrap: wrap;
-    &:last-of-type {
-        margin-bottom: 40px;
-    }
+`
+
+export const SelectLabel = styled(Label)`
+    margin-bottom: 40px;
 `
 
 export const LabelTitle = styled.p`

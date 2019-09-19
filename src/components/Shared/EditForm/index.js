@@ -1,13 +1,18 @@
 import React, { useState } from 'react'
 
 import * as S from './styledComponents'
+import Select from '../Select'
+
+const options = [{ text: 'lola', _id: 1 }, { text: 'lola2', _id: 2 }]
 
 const EditForm = ({ data, stopEditing }) => {
     let [path, setPath] = useState(data.folderPath)
     let [groupName, setGroupName] = useState(data.groupName)
     let [owners, setOwners] = useState(data.owners)
-    console.log(owners)
-    console.log(path, groupName)
+    let [current, setCurrent] = useState(options[0])
+    let handleSelect = obj => {
+        setCurrent(obj)
+    }
     return (
         <S.Form onClick={e => e.stopPropagation()}>
             <S.Header>
@@ -30,9 +35,8 @@ const EditForm = ({ data, stopEditing }) => {
                     onChange={({ target: { value } }) => setGroupName(value)}
                 />
             </S.Label>
-            <S.Label>
+            <S.SelectLabel as='div'>
                 <S.LabelTitle>Właśc.</S.LabelTitle>
-
                 <S.Table>
                     {owners.map(e => {
                         return (
@@ -46,11 +50,18 @@ const EditForm = ({ data, stopEditing }) => {
                         )
                     })}
                     <S.Users>
-                        <S.Expand />
+                        <Select
+                            options={options}
+                            current={current}
+                            selectFunction={handleSelect}
+                            width='100%'
+                            height='34px'
+                            border='0'
+                        />
                     </S.Users>
                     <S.RoleType></S.RoleType>
                 </S.Table>
-            </S.Label>
+            </S.SelectLabel>
             <S.Submit>Zapisz</S.Submit>
         </S.Form>
     )
