@@ -66,15 +66,22 @@ export let Table = styled.div`
     align-items: center;
     font-size: 0.8rem;
     border: 1px solid black;
-    p {
-        height: 100%;
-        width: 100%;
-        margin: 0;
-        display: flex;
-        border: 1px solid #333;
-        align-items: center;
-        justify-content: center;
-    }
+`
+
+export let Cell = styled.p`
+    padding: 8px 15px;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    display: flex;
+    border: 1px solid #333;
+    align-items: center;
+    justify-content: center;
+    ${({ main }) =>
+        main &&
+        css`
+            justify-content: flex-start;
+        `}
 `
 
 export let Delete = styled(delete_icon)`

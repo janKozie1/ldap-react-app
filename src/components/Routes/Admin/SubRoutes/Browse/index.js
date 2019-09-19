@@ -95,7 +95,6 @@ let Browse = () => {
     return (
         <>
             <Search handleRequest={handleRequest} isLoading={isLoading} />
-
             <S.Data>{getOutput()}</S.Data>
             {recordToEdit && (
                 <S.Cover onClick={stopEditing}>

@@ -1,20 +1,32 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import * as S from './styledComponents'
-import Select from '../Select'
-
-const options = [{ text: 'lola', _id: 1 }, { text: 'lola2', _id: 2 }]
-
+import Autocomplete from '../Autocomplete'
+import { fetchDefConfig } from 'constants/defaultVariables'
+const { BASE_URL, DEF_PARAMS } = fetchDefConfig
 const EditForm = ({ data, stopEditing }) => {
+    let [users, setUsers] = useState([])
+    useEffect(() => {
+        let getUsers = async () => {
+            let res = await fetch(`${BASE_URL}/users/allUsers`, DEF_PARAMS)
+            let body = await res.json()
+            return body
+        }
+        getUsers().then(setUsers)
+    }, [])
     let [path, setPath] = useState(data.folderPath)
     let [groupName, setGroupName] = useState(data.groupName)
     let [owners, setOwners] = useState(data.owners)
-    let [current, setCurrent] = useState(options[0])
-    let handleSelect = obj => {
-        setCurrent(obj)
+    let handleNewOwner = obj => {
+        console.log(obj)
+        setOwners(owners => [...owners, obj])
+    }
+    let handleFormSubmit = e => {
+        e.stopPropagation()
+        e.preventDefault()
     }
     return (
-        <S.Form onClick={e => e.stopPropagation()}>
+        <S.Form onClick={handleFormSubmit}>
             <S.Header>
                 Edytuj
                 <S.CloseIcon onClick={stopEditing} />
@@ -41,22 +53,22 @@ const EditForm = ({ data, stopEditing }) => {
                     {owners.map(e => {
                         return (
                             <React.Fragment key={`${e.user_ID}-${e.roleType}`}>
-                                <p>{e.userFullName}</p>
-                                <p>{e.user_ID}</p>
-                                <p>
+                                <S.Cell main>{e.userFullName}</S.Cell>
+                                <S.Cell>{e.user_ID}</S.Cell>
+                                <S.Cell>
                                     {e.roleType} <S.Delete />
-                                </p>
+                                </S.Cell>
                             </React.Fragment>
                         )
                     })}
                     <S.Users>
-                        <Select
-                            options={options}
-                            current={current}
-                            selectFunction={handleSelect}
-                            width='100%'
-                            height='34px'
-                            border='0'
+                        <Autocomplete
+                            handleAdd={handleNewOwner}
+                            options={users}
+                            matchBy={'userFullName'}
+                            display={'userFullName'}
+                            maxRows={10}
+                            uniqueKey={'user_ID'}
                         />
                     </S.Users>
                     <S.RoleType></S.RoleType>
