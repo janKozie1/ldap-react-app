@@ -1,32 +1,33 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 
 import * as S from './styledComponents'
 import Autocomplete from '../Autocomplete'
-import { fetchDefConfig } from 'constants/defaultVariables'
-const { BASE_URL, DEF_PARAMS } = fetchDefConfig
-const EditForm = ({ data, stopEditing }) => {
-    let [users, setUsers] = useState([])
-    useEffect(() => {
-        let getUsers = async () => {
-            let res = await fetch(`${BASE_URL}/users/allUsers`, DEF_PARAMS)
-            let body = await res.json()
-            return body
-        }
-        getUsers().then(setUsers)
-    }, [])
+import Spinner from '../Spinner'
+
+const EditForm = ({ data, stopEditing, users, submitEdit }) => {
     let [path, setPath] = useState(data.folderPath)
     let [groupName, setGroupName] = useState(data.groupName)
     let [owners, setOwners] = useState(data.owners)
+    let [isLoading, setIsLoading] = useState(false)
+    let [newOwnerType, setNewOwnerType] = useState('')
     let handleNewOwner = obj => {
-        console.log(obj)
-        setOwners(owners => [...owners, obj])
+        setOwners(owners => [...owners, { ...obj, roleType: '' }])
     }
-    let handleFormSubmit = e => {
-        e.stopPropagation()
+    let handleFormSubmit = async e => {
         e.preventDefault()
+        setIsLoading(true)
+        submitEdit(data)
+    }
+    let handleRemove = id => {
+        setOwners(owners => owners.filter(e => e.user_ID !== id))
+    }
+    let updateRole = (id, value) => {
+        setOwners(owners =>
+            owners.map(e => (e.user_ID === id ? { ...e, roleType: value } : e))
+        )
     }
     return (
-        <S.Form onClick={handleFormSubmit}>
+        <S.Form onClick={e => e.stopPropagation()} onSubmit={handleFormSubmit}>
             <S.Header>
                 Edytuj
                 <S.CloseIcon onClick={stopEditing} />
@@ -36,6 +37,7 @@ const EditForm = ({ data, stopEditing }) => {
                 <S.Input
                     type='text'
                     value={path}
+                    readOnly
                     onChange={({ target: { value } }) => setPath(value)}
                 />
             </S.Label>
@@ -44,6 +46,7 @@ const EditForm = ({ data, stopEditing }) => {
                 <S.Input
                     type='text'
                     value={groupName}
+                    readOnly
                     onChange={({ target: { value } }) => setGroupName(value)}
                 />
             </S.Label>
@@ -52,12 +55,19 @@ const EditForm = ({ data, stopEditing }) => {
                 <S.Table>
                     {owners.map(e => {
                         return (
-                            <React.Fragment key={`${e.user_ID}-${e.roleType}`}>
+                            <React.Fragment key={`${e.user_ID}`}>
                                 <S.Cell main>{e.userFullName}</S.Cell>
                                 <S.Cell>{e.user_ID}</S.Cell>
-                                <S.Cell>
-                                    {e.roleType} <S.Delete />
-                                </S.Cell>
+                                <S.RoleType
+                                    value={e.roleType}
+                                    type='text'
+                                    onChange={({ target: { value } }) =>
+                                        updateRole(e.user_ID, value)
+                                    }
+                                />
+                                <S.Delete
+                                    onClick={() => handleRemove(e.user_ID)}
+                                />
                             </React.Fragment>
                         )
                     })}
@@ -68,13 +78,22 @@ const EditForm = ({ data, stopEditing }) => {
                             matchBy={'userFullName'}
                             display={'userFullName'}
                             maxRows={10}
+                            exclude={owners}
                             uniqueKey={'user_ID'}
                         />
                     </S.Users>
-                    <S.RoleType></S.RoleType>
+                    <S.RoleType
+                        type='text'
+                        value={newOwnerType}
+                        onChange={({ target: { value } }) =>
+                            setNewOwnerType(value)
+                        }
+                    />
                 </S.Table>
             </S.SelectLabel>
-            <S.Submit>Zapisz</S.Submit>
+            <S.Submit>
+                {isLoading ? <Spinner size={20} color={'white'} /> : 'Zapisz'}
+            </S.Submit>
         </S.Form>
     )
 }

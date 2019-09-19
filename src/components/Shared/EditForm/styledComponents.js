@@ -114,6 +114,7 @@ export let Submit = styled.button`
     justify-content: center;
     align-self: flex-end;
     cursor: pointer;
+    position: relative;
 `
 
 export let Users = styled.div`

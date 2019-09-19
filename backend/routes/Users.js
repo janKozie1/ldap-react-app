@@ -57,6 +57,7 @@ router.post('/data', async (req, res) => {
 })
 router.post('/allUsers', async (req, res) => {
     let server = await readFileAsync('../db_ip.txt')
+    sql.close()
     let pool = await sql.connect({ ...config.DB, server })
     let users = await getAllUsers(pool)
     res.json(users)

@@ -9,6 +9,7 @@ const Autocomplete = ({
     maxRows,
     uniqueKey,
     display,
+    exclude,
     handleAdd
 }) => {
     let [value, setValue] = useState(defValue)
@@ -19,6 +20,7 @@ const Autocomplete = ({
             value &&
             toCheck &&
             value !== toCheck &&
+            !exclude.filter(ex => ex[matchBy] === toCheck).length &&
             (r.test(toCheck.toLowerCase()) ||
                 r.test(
                     toCheck
