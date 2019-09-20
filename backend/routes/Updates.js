@@ -32,21 +32,19 @@ router.put('/', auth, async (req, res) => {
 router.post('/add/user', auth, async (req, res) => {
     try {
         console.log(req.body)
-        const { userID, userName, userOffice } = req.body
-        const fullName = `${capitalize(userName.surname)} ${capitalize(
-            userName.firstName
-        )}`
+        const { userID, firstName, surname, office } = req.body
+        const fullName = `${capitalize(surname)} ${capitalize(firstName)}`
         sql.close()
 
         if (!/^[a-zA-Z]{1,2}\d{5,7}$/.test(userID))
             return res.status(400).json({ ok: false, msg: 'Niepoprawne ID' })
-        if (!/[a-zA-Z]{3,}/.test(userName.firstName))
+        if (!/[a-zA-Z]{3,}/.test(firstName))
             return res.status(400).json({ ok: false, msg: 'Niepoprawne imię' })
-        if (!/[a-zA-Z]{3,}/.test(userName.surname))
+        if (!/[a-zA-Z]{3,}/.test(surname))
             return res
                 .status(400)
                 .json({ ok: false, msg: 'Niepoprawne nazwisko' })
-        if (!/[a-zA-Z]{5,}/.test(userOffice))
+        if (!/[a-zA-Z]{5,}/.test(office))
             return res.status(400).json({ ok: false, msg: 'Niepoprawne biuro' })
 
         let server = await readFileAsync('../db_ip.txt')
@@ -59,7 +57,7 @@ router.post('/add/user', auth, async (req, res) => {
         let ok = await addNewUser(pool, {
             userID: userID.toUpperCase(),
             fullName,
-            userOffice: userOffice.toLowerCase()
+            userOffice: office.toLowerCase()
         })
         if (ok) return res.json({ ok: true, msg: 'Użytkownik dodany' })
         return res.status(500).json({ ok: false })

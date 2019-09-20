@@ -4,7 +4,7 @@ import withProtectedRoute from 'components/HOC/ProtectedRoute'
 import { useStateValue } from 'logic/store'
 
 import Select from 'components/Shared/Select'
-import UserCreator from './UserCreator'
+import UserCreator from './GroupCreator'
 
 import { fetchDefConfig } from 'constants/defaultVariables'
 
@@ -17,38 +17,57 @@ const OPTIONS = [
         _id: 'user'
     },
     {
-        text: 'imię',
-        _id: 'fullName'
+        text: 'Folder',
+        _id: 'folder'
     },
     {
-        text: 'grupa',
+        text: 'Grupa',
         _id: 'group'
     },
     {
-        text: 'scieżka',
-        _id: 'path'
+        text: 'Relacja',
+        _id: 'group'
     }
 ]
+const fields = {
+    user: [
+        {
+            text: 'ID',
+            id: 'userID'
+        },
+        {
+            text: 'Imię',
+            id: 'firstName'
+        },
+        {
+            text: 'Nazwisko',
+            id: 'surname'
+        },
+        {
+            text: 'Biuro',
+            id: 'office'
+        }
+    ],
+    folder: [
+        {
+            text: 'Ścieżka',
+            id: 'path'
+        },
+        {
+            text: 'Lokalizacja',
+            id: 'location'
+        }
+    ]
+}
 
 const RecordCreator = () => {
     let [{ token }] = useStateValue()
     let [current, setCurrent] = useState(OPTIONS[0])
     let [loading, setLoading] = useState(false)
     let [response, setResponse] = useState({})
-    let getCreator = () => {
-        let props = {
-            loading,
-            response,
-            onSubmit: handleSubmit,
-            isLoading: loading
-        }
-        switch (current._id) {
-            case 'user':
-                return <UserCreator {...props} />
-        }
-    }
-    let handleSubmit = async data => {
+    let onSubmit = async data => {
         setLoading(true)
+        console.log(data)
         let res = await fetch(`${BASE_URL}/update/add/${current._id}`, {
             ...DEF_PARAMS,
             method: 'POST',
@@ -75,7 +94,12 @@ const RecordCreator = () => {
                     width={'150px'}
                 />
             </S.Type>
-            {getCreator()}
+            <UserCreator
+                loading={loading}
+                response={response}
+                onSubmit={onSubmit}
+                fields={fields[current._id]}
+            />
         </S.Container>
     )
 }
