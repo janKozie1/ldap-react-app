@@ -8,7 +8,6 @@ export let createCSVTable = data => {
                   user.cn}`
             : ''
     }
-    console.log(data)
     return data
         .filter(e => e.check)
         .reduce((prev, { folderPath, members, owners }) => {

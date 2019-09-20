@@ -4,7 +4,14 @@ import * as S from './styledComponents'
 import Autocomplete from '../Autocomplete'
 import Spinner from '../Spinner'
 
-const EditForm = ({ data, stopEditing, users, submitEdit, querySubmiting }) => {
+const EditForm = ({
+    data,
+    stopEditing,
+    users,
+    submitEdit,
+    querySubmiting,
+    updateResult
+}) => {
     let [path, setPath] = useState(data.folderPath)
     let [groupName, setGroupName] = useState(data.groupName)
     let [owners, setOwners] = useState(data.owners)
@@ -18,8 +25,7 @@ const EditForm = ({ data, stopEditing, users, submitEdit, querySubmiting }) => {
             group_ID,
             folder_ID
         }))(data)
-
-        submitEdit({ ...req, owners, path, groupName })
+        if (!querySubmiting) submitEdit({ ...req, owners, path, groupName })
     }
     let handleRemove = id => {
         setOwners(owners => owners.filter(e => e.user_ID !== id))
@@ -59,8 +65,10 @@ const EditForm = ({ data, stopEditing, users, submitEdit, querySubmiting }) => {
                     {owners.map((e, i) => {
                         return (
                             <React.Fragment key={`${e.user_ID}`}>
-                                <S.Cell main>{e.userFullName}</S.Cell>
-                                <S.Cell>{e.user_ID}</S.Cell>
+                                <S.Cell main readonly>
+                                    {e.userFullName}
+                                </S.Cell>
+                                <S.Cell readonly>{e.user_ID}</S.Cell>
                                 <S.RoleType
                                     value={e.roleType}
                                     type='text'
@@ -95,13 +103,16 @@ const EditForm = ({ data, stopEditing, users, submitEdit, querySubmiting }) => {
                     />
                 </S.Table>
             </S.SelectLabel>
-            <S.Submit>
-                {querySubmiting ? (
-                    <Spinner size={20} color={'white'} />
-                ) : (
-                    'Zapisz'
-                )}
-            </S.Submit>
+            <S.Footer>
+                <S.Message ok={updateResult.ok}>{updateResult.msg}</S.Message>
+                <S.Submit>
+                    {querySubmiting ? (
+                        <Spinner size={20} color={'white'} />
+                    ) : (
+                        'Zapisz'
+                    )}
+                </S.Submit>
+            </S.Footer>
         </S.Form>
     )
 }

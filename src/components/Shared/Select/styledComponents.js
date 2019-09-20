@@ -32,11 +32,12 @@ export const Option = styled.div`
     border-top-width: 0px;
     border-bottom-width: 0;
     z-index: 12;
+    background: white;
     &:last-child {
         border-bottom-width: 1px;
     }
     &:hover {
-        background: rgba(0, 0, 0, 0.1);
+        background: #e5e5e5;
     }
     ${({ main }) =>
         main &&
@@ -66,6 +67,7 @@ export const ExpandIcon = styled(expand)`
     width: 20px;
     height: 20px;
     margin-left: auto;
+
     margin-right: 0;
     transition: transform 0.3s;
 `

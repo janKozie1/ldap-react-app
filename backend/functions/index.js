@@ -58,9 +58,11 @@ let authenticateAdAsync = (username, password) => {
         })
     })
 }
+let capitalize = string => string[0].toUpperCase() + string.slice(1)
 
 module.exports.readFileAsync = readFileAsync
 module.exports.parsePolish = parsePolish
 module.exports.determineGroupType = determineGroupType
 module.exports.isGroupMemberAsync = isGroupMemberAsync
 module.exports.authenticateAdAsync = authenticateAdAsync
+module.exports.capitalize = capitalize

@@ -1,3 +1,5 @@
+const sql = require('mssql')
+
 const getAllUsers = async pool => {
     let response = await pool
         .request()
@@ -7,4 +9,14 @@ const getAllUsers = async pool => {
     return response.recordset
 }
 
+const checkUserExists = async (pool, userID) => {
+    let response = await pool
+        .request()
+        .input('user_id', sql.VarChar(15), userID)
+        .query(`select * from dbo.Users where User_ID = @user_id`)
+    console.log(response.recordset)
+    return Boolean(response.recordset.length)
+}
+
 module.exports.getAllUsers = getAllUsers
+module.exports.checkUserExists = checkUserExists

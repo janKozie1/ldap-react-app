@@ -1,5 +1,5 @@
 const sql = require('mssql')
-
+const { capitalize } = require('../functions')
 const updateOwners = async (pool, data) => {
     try {
         await pool
@@ -23,4 +23,22 @@ const updateOwners = async (pool, data) => {
     }
 }
 
+const addNewUser = async (pool, user) => {
+    try {
+        await pool
+            .request()
+            .input('user_ID', sql.VarChar(15), user.userID)
+            .input('name', sql.NVarChar(255), user.fullName)
+            .input('office', sql.NVarChar(40), user.userOffice)
+            .query(
+                `insert into dbo.Users (User_ID,UserFullName,UserOffice) values (@user_ID,@name,@office)`
+            )
+        return true
+    } catch (err) {
+        console.log(err)
+        return false
+    }
+}
+
 module.exports.updateOwners = updateOwners
+module.exports.addNewUser = addNewUser

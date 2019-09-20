@@ -83,6 +83,11 @@ export let Cell = styled.p`
         css`
             justify-content: flex-start;
         `}
+    ${({ readonly }) =>
+        readonly &&
+        css`
+            color: #999;
+        `}
 `
 
 export let Delete = styled(delete_icon)`
@@ -105,10 +110,17 @@ export let Delete = styled(delete_icon)`
     }
 `
 
+export let Footer = styled.div`
+    height: 30px;
+    display: flex;
+    align-items: center;
+    align-self: flex-end;
+`
+
 export let Submit = styled.button`
     background: ${({ theme: { colors } }) => colors.green};
     border: 0;
-    height: 30px;
+    height: 100%;
     width: 80px;
     font-family: inherit;
     color: white;
@@ -118,6 +130,13 @@ export let Submit = styled.button`
     align-self: flex-end;
     cursor: pointer;
     position: relative;
+`
+
+export let Message = styled.p`
+    margin: 0;
+    margin-right: 20px;
+    font-size: 0.8rem;
+    color: ${({ theme: { colors }, ok }) => (ok ? colors.green : colors.error)};
 `
 
 export let Users = styled.div`

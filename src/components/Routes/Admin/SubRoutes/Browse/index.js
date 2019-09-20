@@ -59,6 +59,7 @@ let Browse = () => {
     let [recordToEdit, setRecordToEdit] = useState(null)
     let [users, setUsers] = useState([])
     let [querySubmiting, setQuerySubmiting] = useState(false)
+    let [updateResult, setUpdateResult] = useState({})
     let [result, error, isLoading, setResult] = useFetch(
         query,
         DEF_URL,
@@ -72,6 +73,7 @@ let Browse = () => {
     let stopEditing = () => {
         setIsEditing(false)
         setRecordToEdit(null)
+        setUpdateResult({})
     }
     let submitEdit = async data => {
         setQuerySubmiting(true)
@@ -84,20 +86,25 @@ let Browse = () => {
             },
             body: JSON.stringify(data)
         })
-        let body = await res.json()
-        if (body.ok) {
-            setQuerySubmiting(false)
-            setResult(result =>
-                result.map(e => {
-                    return e.group_ID === data.group_ID
-                        ? {
-                              ...e,
-                              owners: [...data.owners],
-                              ownersCount: data.owners.length
-                          }
-                        : e
-                })
-            )
+        let { ok, msg } = await res.json()
+        if (ok) {
+            setTimeout(() => {
+                setQuerySubmiting(false)
+                setResult(result =>
+                    result.map(e => {
+                        return e.group_ID === data.group_ID
+                            ? {
+                                  ...e,
+                                  owners: [...data.owners],
+                                  ownersCount: data.owners.length
+                              }
+                            : e
+                    })
+                )
+                setUpdateResult({ ok, msg })
+            }, 300)
+        } else {
+            setUpdateResult({ ok, msg })
         }
     }
     let getOutput = () => {
@@ -143,6 +150,7 @@ let Browse = () => {
                             users={users}
                             submitEdit={submitEdit}
                             querySubmiting={querySubmiting}
+                            updateResult={updateResult}
                         />
                     </S.EditPanel>
                 </S.Cover>
