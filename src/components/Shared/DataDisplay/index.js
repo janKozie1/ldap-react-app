@@ -16,6 +16,7 @@ const DataDisplay = ({
     editable,
     editFunction
 }) => {
+    console.log(data)
     let [sortKey, setSortKey] = useState('folderPath')
     let [sortDirection, setSortDirection] = useState(1)
     let handleCheck = data => {

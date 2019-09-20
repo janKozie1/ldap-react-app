@@ -8,7 +8,6 @@ router.post('/', async (req, res) => {
     let { username, password } = req.body
     try {
         let isMember = await isGroupMemberAsync(username, 'IT_ShareApp_Admin')
-        console.log(username, password)
         if (!isMember)
             return res
                 .status(400)

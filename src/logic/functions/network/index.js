@@ -19,6 +19,7 @@ export let checkResponseStatus = res => {
 
 export let checkIfAuthorized = async token => {
     try {
+        console.log('?')
         let res = await fetch(`${fetchDefConfig.BASE_URL}/admin/auth`, {
             method: 'POST',
             headers: {

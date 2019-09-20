@@ -66,6 +66,7 @@ export let Table = styled.div`
     align-items: center;
     font-size: 0.8rem;
     border: 1px solid black;
+    position: relative;
 `
 
 export let Cell = styled.p`
@@ -89,8 +90,10 @@ export let Delete = styled(delete_icon)`
     width: 34px;
     padding: 7px;
     position: absolute;
-    right: 8px;
+    right: -35px;
     cursor: pointer;
+    grid-column: 3/4;
+    grid-row: ${({ row }) => `${row + 1} / ${row + 2}`};
     > path {
         fill: #ccc;
         transition: fill 0.3s;

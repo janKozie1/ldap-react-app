@@ -58,6 +58,7 @@ let Browse = () => {
     let [query, setQuery] = useState(null)
     let [recordToEdit, setRecordToEdit] = useState(null)
     let [users, setUsers] = useState([])
+    let [querySubmiting, setQuerySubmiting] = useState(false)
     let [result, error, isLoading, setResult] = useFetch(
         query,
         DEF_URL,
@@ -73,7 +74,7 @@ let Browse = () => {
         setRecordToEdit(null)
     }
     let submitEdit = async data => {
-        console.log(data)
+        setQuerySubmiting(true)
         let res = await fetch(`${BASE_URL}/update`, {
             ...DEF_PARAMS,
             method: 'PUT',
@@ -83,6 +84,21 @@ let Browse = () => {
             },
             body: JSON.stringify(data)
         })
+        let body = await res.json()
+        if (body.ok) {
+            setQuerySubmiting(false)
+            setResult(result =>
+                result.map(e => {
+                    return e.group_ID === data.group_ID
+                        ? {
+                              ...e,
+                              owners: [...data.owners],
+                              ownersCount: data.owners.length
+                          }
+                        : e
+                })
+            )
+        }
     }
     let getOutput = () => {
         if (result) {
@@ -126,6 +142,7 @@ let Browse = () => {
                             stopEditing={stopEditing}
                             users={users}
                             submitEdit={submitEdit}
+                            querySubmiting={querySubmiting}
                         />
                     </S.EditPanel>
                 </S.Cover>

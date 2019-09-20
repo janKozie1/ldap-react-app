@@ -4,19 +4,22 @@ import * as S from './styledComponents'
 import Autocomplete from '../Autocomplete'
 import Spinner from '../Spinner'
 
-const EditForm = ({ data, stopEditing, users, submitEdit }) => {
+const EditForm = ({ data, stopEditing, users, submitEdit, querySubmiting }) => {
     let [path, setPath] = useState(data.folderPath)
     let [groupName, setGroupName] = useState(data.groupName)
     let [owners, setOwners] = useState(data.owners)
-    let [isLoading, setIsLoading] = useState(false)
     let [newOwnerType, setNewOwnerType] = useState('')
     let handleNewOwner = obj => {
         setOwners(owners => [...owners, { ...obj, roleType: '' }])
     }
     let handleFormSubmit = async e => {
         e.preventDefault()
-        setIsLoading(true)
-        submitEdit(data)
+        let req = (({ group_ID, folder_ID }) => ({
+            group_ID,
+            folder_ID
+        }))(data)
+
+        submitEdit({ ...req, owners, path, groupName })
     }
     let handleRemove = id => {
         setOwners(owners => owners.filter(e => e.user_ID !== id))
@@ -53,7 +56,7 @@ const EditForm = ({ data, stopEditing, users, submitEdit }) => {
             <S.SelectLabel as='div'>
                 <S.LabelTitle>Właśc.</S.LabelTitle>
                 <S.Table>
-                    {owners.map(e => {
+                    {owners.map((e, i) => {
                         return (
                             <React.Fragment key={`${e.user_ID}`}>
                                 <S.Cell main>{e.userFullName}</S.Cell>
@@ -66,6 +69,7 @@ const EditForm = ({ data, stopEditing, users, submitEdit }) => {
                                     }
                                 />
                                 <S.Delete
+                                    row={i}
                                     onClick={() => handleRemove(e.user_ID)}
                                 />
                             </React.Fragment>
@@ -92,7 +96,11 @@ const EditForm = ({ data, stopEditing, users, submitEdit }) => {
                 </S.Table>
             </S.SelectLabel>
             <S.Submit>
-                {isLoading ? <Spinner size={20} color={'white'} /> : 'Zapisz'}
+                {querySubmiting ? (
+                    <Spinner size={20} color={'white'} />
+                ) : (
+                    'Zapisz'
+                )}
             </S.Submit>
         </S.Form>
     )

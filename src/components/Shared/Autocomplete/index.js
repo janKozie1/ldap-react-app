@@ -21,14 +21,7 @@ const Autocomplete = ({
             toCheck &&
             value !== toCheck &&
             !exclude.filter(ex => ex[matchBy] === toCheck).length &&
-            (r.test(toCheck.toLowerCase()) ||
-                r.test(
-                    toCheck
-                        .toLowerCase()
-                        .split(' ')
-                        .reverse()
-                        .join(' ')
-                ))
+            r.test(toCheck.toLowerCase())
         )
     })
 

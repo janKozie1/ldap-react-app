@@ -77,7 +77,11 @@ const DataItem = React.memo(
         )
     },
     (a, b) => {
-        return a.data.open === b.data.open && a.index === b.index
+        return (
+            a.data.open === b.data.open &&
+            a.index === b.index &&
+            b.data.owners === a.data.owners
+        )
     }
 )
 
