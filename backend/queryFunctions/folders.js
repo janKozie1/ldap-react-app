@@ -31,6 +31,14 @@ const checkFolderExists = async (pool, folderPath) => {
 
     return Boolean(response.recordset.length)
 }
-
+const getAllFolders = async pool => {
+    let response = await pool
+        .request()
+        .query(
+            `select Folder_ID as folder_ID, FolderPath as folderPath from dbo.Folders`
+        )
+    return response.recordset
+}
 module.exports.getFolderOwners = getFolderOwners
 module.exports.checkFolderExists = checkFolderExists
+module.exports.getAllFolders = getAllFolders

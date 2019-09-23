@@ -5,12 +5,13 @@ import { useStateValue } from 'logic/store'
 
 import Select from 'components/Shared/Select'
 import Form from './Form'
+import GroupForm from './GroupForm'
 
 import { fetchDefConfig } from 'constants/defaultVariables'
 
 import * as S from './styledComponents'
 
-const { DEF_URL, DEF_PARAMS, BASE_URL } = fetchDefConfig
+const { DEF_PARAMS, BASE_URL } = fetchDefConfig
 const OPTIONS = [
     {
         text: 'Użytkownik',
@@ -90,12 +91,16 @@ const RecordCreator = () => {
                     width={'150px'}
                 />
             </S.Type>
-            <Form
-                loading={loading}
-                response={response}
-                onSubmit={onSubmit}
-                fields={fields[current._id]}
-            />
+            {current._id === 'group' ? (
+                <GroupForm />
+            ) : (
+                <Form
+                    loading={loading}
+                    response={response}
+                    onSubmit={onSubmit}
+                    fields={fields[current._id]}
+                />
+            )}
         </S.Container>
     )
 }

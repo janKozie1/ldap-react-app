@@ -26,6 +26,7 @@ export const Options = styled.div`
     overflow-x: hidden;
     max-height: calc(${({ maxRows, height }) => `${maxRows} * ${height}`});
     background: white;
+    z-index: 2;
 `
 
 export const Option = styled.div`
@@ -34,8 +35,19 @@ export const Option = styled.div`
     height: 34px;
     display: flex;
     align-items: center;
+    position: relative;
     width: 100%;
+    z-index: 2;
     &:hover {
         background: rgba(0, 0, 0, 0.1);
     }
+`
+
+export const Text = styled.p`
+    white-space: nowrap;
+    overflow: hidden; /* "overflow" value must be different from "visible" */
+    text-overflow: ellipsis;
+    width: ${({ width }) => width};
+    direction: rtl;
+    text-align: left;
 `

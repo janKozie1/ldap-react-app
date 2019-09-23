@@ -13,7 +13,7 @@ const {
 
 const { getAllUsers } = require('../queryFunctions/users')
 
-const { getFolderOwners } = require('../queryFunctions/folders')
+const { getFolderOwners, getAllFolders } = require('../queryFunctions/folders')
 
 router.post('/data', async (req, res) => {
     if (req.body.query && req.body.type) {
@@ -64,5 +64,13 @@ router.post('/allUsers', async (req, res) => {
     let pool = await sql.connect({ ...config.DB, server })
     let users = await getAllUsers(pool)
     res.json(users)
+})
+router.post('/allFolders', async (req, res) => {
+    let server = await readFileAsync(path.resolve(__dirname, '../db_ip.txt'))
+    sql.close()
+    let pool = await sql.connect({ ...config.DB, server })
+    let folders = await getAllFolders(pool)
+    console.log(folders)
+    res.json(folders)
 })
 module.exports = router

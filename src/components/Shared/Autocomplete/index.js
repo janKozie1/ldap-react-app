@@ -6,28 +6,38 @@ const Autocomplete = ({
     matchBy,
     defValue = '',
     height = '34px',
+    width = '100%',
     maxRows,
     uniqueKey,
     display,
     exclude,
-    handleAdd
+    handleAdd,
+    regex
 }) => {
     let [value, setValue] = useState(defValue)
-    let filteredOptions = options.filter(e => {
-        let r = new RegExp(`^${value}.*`, 'i')
-        let toCheck = e[matchBy]
-        return (
+    let filteredOptions = options.reduce((prev, curr) => {
+        console.log(regex.replace(/xxx/g, value))
+        let r = new RegExp(regex.replace(/xxx/g, value) || `^${value}.*`, 'i')
+        let toCheck = curr[matchBy]
+        if (
             value &&
             toCheck &&
             value !== toCheck &&
-            !exclude.filter(ex => ex[matchBy] === toCheck).length &&
-            r.test(toCheck.toLowerCase())
+            !exclude.filter(curr => curr[matchBy] === toCheck).length &&
+            r.test(toCheck.toLowerCase()) &&
+            prev.length < 25
         )
-    })
+            return [...prev, curr]
+        else return prev
+    }, [])
 
     let handleOptionSelect = text => {
-        handleAdd(filteredOptions.find(e => e[display] === text))
-        setValue('')
+        if (handleAdd) {
+            handleAdd(filteredOptions.find(e => e[display] === text))
+            setValue('')
+        } else {
+            setValue(text)
+        }
     }
     return (
         <S.Container>
@@ -43,7 +53,7 @@ const Autocomplete = ({
                         <S.Option
                             onClick={() => handleOptionSelect(e[display])}
                             key={e[uniqueKey]}>
-                            {e[display]}
+                            <S.Text width={width}>{e[display]}</S.Text>
                         </S.Option>
                     )
                 })}
