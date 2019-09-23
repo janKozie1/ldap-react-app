@@ -40,5 +40,21 @@ const addNewUser = async (pool, user) => {
     }
 }
 
+const addNewFolder = async (pool, folder) => {
+    try {
+        await pool
+            .request()
+            .input('path', sql.VarChar(255), folder.folderPath)
+            .input('location', sql.NVarChar(31), folder.location)
+            .query(
+                `insert into dbo.Folders (FolderPath, FolderLocation) values (@path,@location)`
+            )
+        return true
+    } catch (err) {
+        console.log(err)
+        return false
+    }
+}
 module.exports.updateOwners = updateOwners
 module.exports.addNewUser = addNewUser
+module.exports.addNewFolder = addNewFolder

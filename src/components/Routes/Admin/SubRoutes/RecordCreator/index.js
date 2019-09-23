@@ -4,7 +4,7 @@ import withProtectedRoute from 'components/HOC/ProtectedRoute'
 import { useStateValue } from 'logic/store'
 
 import Select from 'components/Shared/Select'
-import UserCreator from './GroupCreator'
+import Form from './Form'
 
 import { fetchDefConfig } from 'constants/defaultVariables'
 
@@ -22,10 +22,6 @@ const OPTIONS = [
     },
     {
         text: 'Grupa',
-        _id: 'group'
-    },
-    {
-        text: 'Relacja',
         _id: 'group'
     }
 ]
@@ -51,7 +47,7 @@ const fields = {
     folder: [
         {
             text: 'Ścieżka',
-            id: 'path'
+            id: 'folderPath'
         },
         {
             text: 'Lokalizacja',
@@ -94,7 +90,7 @@ const RecordCreator = () => {
                     width={'150px'}
                 />
             </S.Type>
-            <UserCreator
+            <Form
                 loading={loading}
                 response={response}
                 onSubmit={onSubmit}
@@ -108,21 +104,3 @@ export default withProtectedRoute({
     protectedRoute: true,
     redirectTo: '/login'
 })(RecordCreator)
-
-// const Form = ({ handleRequest, isLoading }) => {
-//     let [current, setCurrent] = useState(OPTIONS[0])
-//     let [userInput, setUserInput] = useState('')
-//     let onFormSubmit = e => {
-//         e.preventDefault()
-//         handleRequest({ type: current._id, query: userInput })
-//     }
-//     let handleSelect = obj => {
-//         setCurrent(obj)
-//     }
-//     return (
-//         <S.Form onSubmit={onFormSubmit}>
-//             <Select
-//                 current={current}
-//                 options={OPTIONS}
-//                 selectFunction={handleSelect}
-//             />

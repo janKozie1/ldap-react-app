@@ -1,7 +1,7 @@
 const router = require('express').Router()
 let { config } = require('../../config')
 const sql = require('mssql')
-
+const path = require('path')
 const { readFileAsync, determineGroupType } = require('../functions')
 
 const {
@@ -20,7 +20,10 @@ router.post('/data', async (req, res) => {
         try {
             sql.close()
             let temp = Date.now()
-            let server = await readFileAsync('../db_ip.txt')
+            console.log(path.resolve)
+            let server = await readFileAsync(
+                path.resolve(__dirname, '../db_ip.txt')
+            )
             let pool = await sql.connect({ ...config.DB, server })
             let groups = await (async type => {
                 const { query } = req.body
@@ -56,7 +59,7 @@ router.post('/data', async (req, res) => {
     } else return res.status(400).send('Invalid query')
 })
 router.post('/allUsers', async (req, res) => {
-    let server = await readFileAsync('../db_ip.txt')
+    let server = await readFileAsync(path.resolve(__dirname, '../db_ip.txt'))
     sql.close()
     let pool = await sql.connect({ ...config.DB, server })
     let users = await getAllUsers(pool)

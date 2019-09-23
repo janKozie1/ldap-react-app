@@ -20,4 +20,17 @@ const getFolderOwners = async (pool, path) => {
     }))
 }
 
+const checkFolderExists = async (pool, folderPath) => {
+    let response = await pool
+        .request()
+        .input('path', sql.NVarChar(255), folderPath).query(`select distinct
+                    Folder_ID
+                from Folders 
+                    where 
+                        FolderPath = @path`)
+
+    return Boolean(response.recordset.length)
+}
+
 module.exports.getFolderOwners = getFolderOwners
+module.exports.checkFolderExists = checkFolderExists

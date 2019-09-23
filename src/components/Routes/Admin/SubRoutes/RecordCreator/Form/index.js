@@ -63,46 +63,6 @@ const UserCreator = ({ onSubmit, isLoading, response, fields }) => {
                     </S.Label>
                 )
             })}
-            {/* <S.Label>
-                <S.LabelTitle>ID</S.LabelTitle>
-                <S.Input
-                    type='text'
-                    value={userID}
-                    maxLength={15}
-                    onChange={({ target: { value } }) =>
-                        setUserID(value.toUpperCase())
-                    }
-                />
-            </S.Label>
-            <S.Label>
-                <S.LabelTitle>Imię</S.LabelTitle>
-                <S.Input
-                    type='text'
-                    value={userName.firstName}
-                    onChange={({ target: { value } }) =>
-                        updateUserName('firstName', value)
-                    }
-                />
-            </S.Label>
-            <S.Label>
-                <S.LabelTitle>Naziwsko</S.LabelTitle>
-                <S.Input
-                    type='text'
-                    value={userName.surname}
-                    onChange={({ target: { value } }) =>
-                        updateUserName('surname', value)
-                    }
-                />
-            </S.Label>
-            <S.Label>
-                <S.LabelTitle>Biuro</S.LabelTitle>
-                <S.Input
-                    maxLength={40}
-                    type='text'
-                    value={userOffice}
-                    onChange={({ target: { value } }) => setUserOffice(value)}
-                />
-            </S.Label> */}
             <S.Footer>
                 <S.Message ok={response.ok}>{response.msg}</S.Message>
                 <S.Submit>
