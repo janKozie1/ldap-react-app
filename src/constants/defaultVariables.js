@@ -1,4 +1,4 @@
-const DEF_URL = 'http://127.0.0.1:8080/users/data'
+const DEF_URL = 'http://127.0.0.1:8080/data/data'
 const BASE_URL = 'http://127.0.0.1:8080'
 const DEF_PARAMS = {
     method: 'POST',

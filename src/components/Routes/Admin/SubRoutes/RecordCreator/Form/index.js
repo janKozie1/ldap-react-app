@@ -10,7 +10,7 @@ let f = [
         id: 'userID'
     }
 ]
-const UserCreator = ({ onSubmit, isLoading, response, fields }) => {
+const UserCreator = ({ onSubmit, loading, response, fields }) => {
     let [userInput, setUserInput] = useState(
         fields.reduce(
             (prev, curr) => ({
@@ -66,11 +66,7 @@ const UserCreator = ({ onSubmit, isLoading, response, fields }) => {
             <S.Footer>
                 <S.Message ok={response.ok}>{response.msg}</S.Message>
                 <S.Submit>
-                    {isLoading ? (
-                        <Spinner size={20} color={'white'} />
-                    ) : (
-                        'Zapisz'
-                    )}
+                    {loading ? <Spinner size={20} color={'white'} /> : 'Zapisz'}
                 </S.Submit>
             </S.Footer>
         </S.Form>

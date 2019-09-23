@@ -130,7 +130,7 @@ let Browse = () => {
     }
     useEffect(() => {
         let getUsers = async () => {
-            let res = await fetch(`${BASE_URL}/users/allUsers`, DEF_PARAMS)
+            let res = await fetch(`${BASE_URL}/data/allUsers`, DEF_PARAMS)
             let body = await res.json()
             return body
         }

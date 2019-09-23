@@ -15,9 +15,11 @@ const EditForm = ({
     let [path, setPath] = useState(data.folderPath)
     let [groupName, setGroupName] = useState(data.groupName)
     let [owners, setOwners] = useState(data.owners)
+    let [userInput, setUserInput] = useState('')
     let [newOwnerType, setNewOwnerType] = useState('')
     let handleNewOwner = obj => {
         setOwners(owners => [...owners, { ...obj, roleType: '' }])
+        setUserInput('')
     }
     let handleFormSubmit = async e => {
         e.preventDefault()
@@ -92,6 +94,8 @@ const EditForm = ({
                             maxRows={10}
                             exclude={owners}
                             uniqueKey={'user_ID'}
+                            value={userInput}
+                            handleInput={setUserInput}
                         />
                     </S.Users>
                     <S.RoleType

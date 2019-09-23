@@ -110,7 +110,17 @@ const getGroupsByUserFullName = async (pool, query) => {
     return parseGroupResults(response.recordset)
 }
 
+const getAllGroups = async pool => {
+    let response = await pool
+        .request()
+        .query(
+            `select Group_ID as group_ID, GroupName as groupName from dbo.Groups`
+        )
+    return response.recordset
+}
+
 module.exports.getGroupsForPath = getGroupsForPath
 module.exports.getMatchingGroups = getMatchingGroups
 module.exports.getGroupsByUserID = getGroupsByUserID
 module.exports.getGroupsByUserFullName = getGroupsByUserFullName
+module.exports.getAllGroups = getAllGroups

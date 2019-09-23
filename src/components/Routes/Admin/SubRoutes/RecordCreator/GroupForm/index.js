@@ -8,33 +8,66 @@ import * as S from './styledComponents'
 
 const { DEF_PARAMS, BASE_URL } = fetchDefConfig
 
-const GroupForm = (onFormSubmit, response, isLoading) => {
-    let [paths, setPaths] = useState([])
-    let [group, setGroup] = useState('')
-    console.log('?')
+const GroupForm = ({ onSubmit, response, isLoading }) => {
+    console.log(onSubmit)
+    let [folders, setFolders] = useState([])
+    let [groups, setGroups] = useState([])
+    let [group, setGroup] = useState({
+        group_ID: null,
+        groupName: ''
+    })
+    let [folder, setFolder] = useState({
+        folder_ID: null,
+        folderPath: ''
+    })
     useEffect(() => {
-        let getPaths = async () => {
-            let res = await fetch(`${BASE_URL}/users/allFolders`, DEF_PARAMS)
-            let body = await res.json()
-            setPaths(body)
+        let getData = async () => {
+            let folders = await fetch(`${BASE_URL}/data/allFolders`, DEF_PARAMS)
+            let groups = await fetch(`${BASE_URL}/data/allGroups`, DEF_PARAMS)
+            setGroups(await groups.json())
+            setFolders(await folders.json())
         }
-        getPaths()
+        getData()
     }, [])
+    let handleAdd = obj => {
+        setFolder(obj)
+    }
+    let handleGroupAdd = obj => {
+        setGroup(obj)
+    }
+    let pathInput = data => {
+        setFolder({ ...folder, folderPath: data })
+    }
+    let groupInput = data => {
+        console.log(data)
+        setGroup({ ...group, groupName: data })
+    }
     return (
-        <S.Form onSubmit={onFormSubmit}>
+        <S.Form onSubmit={onSubmit}>
             <S.Header>Dodaj</S.Header>
             <S.Label>
                 <S.LabelTitle>Grupa</S.LabelTitle>
-                <S.Input
-                    value={group}
-                    onChange={({ target: { value } }) => setGroup(value)}
-                />
+                <S.Container>
+                    <Autocomplete
+                        options={groups}
+                        matchBy={'groupName'}
+                        maxRows={6}
+                        uniqueKey={'group_ID'}
+                        display={'groupName'}
+                        exclude={[]}
+                        width={'320px'}
+                        regex={`.*xxx.*`}
+                        value={group.groupName}
+                        handleInput={groupInput}
+                        handleAdd={handleGroupAdd}
+                    />
+                </S.Container>
             </S.Label>
             <S.Label>
                 <S.LabelTitle>Ścieżka</S.LabelTitle>
                 <S.Container>
                     <Autocomplete
-                        options={paths}
+                        options={folders}
                         matchBy={'folderPath'}
                         maxRows={6}
                         uniqueKey={'folder_ID'}
@@ -42,6 +75,9 @@ const GroupForm = (onFormSubmit, response, isLoading) => {
                         exclude={[]}
                         width={'320px'}
                         regex={`.*xxx.*`}
+                        value={folder.folderPath}
+                        handleInput={pathInput}
+                        handleAdd={handleAdd}
                     />
                 </S.Container>
             </S.Label>

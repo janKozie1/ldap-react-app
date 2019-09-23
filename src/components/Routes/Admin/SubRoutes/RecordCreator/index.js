@@ -80,6 +80,10 @@ const RecordCreator = () => {
             setResponse({ ok, msg })
         }, 300)
     }
+    let handleSelect = obj => {
+        setResponse({})
+        setCurrent(obj)
+    }
     return (
         <S.Container>
             <S.Type>
@@ -87,12 +91,16 @@ const RecordCreator = () => {
                 <Select
                     options={OPTIONS}
                     current={current}
-                    selectFunction={setCurrent}
+                    selectFunction={handleSelect}
                     width={'150px'}
                 />
             </S.Type>
             {current._id === 'group' ? (
-                <GroupForm />
+                <GroupForm
+                    loading={loading}
+                    response={response}
+                    onSubmit={onSubmit}
+                />
             ) : (
                 <Form
                     loading={loading}

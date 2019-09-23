@@ -8,7 +8,8 @@ const {
     getGroupsForPath,
     getMatchingGroups,
     getGroupsByUserID,
-    getGroupsByUserFullName
+    getGroupsByUserFullName,
+    getAllGroups
 } = require('../queryFunctions/groups')
 
 const { getAllUsers } = require('../queryFunctions/users')
@@ -70,7 +71,16 @@ router.post('/allFolders', async (req, res) => {
     sql.close()
     let pool = await sql.connect({ ...config.DB, server })
     let folders = await getAllFolders(pool)
-    console.log(folders)
+    console.log('?')
     res.json(folders)
 })
+router.post('/allGroups', async (req, res) => {
+    let server = await readFileAsync(path.resolve(__dirname, '../db_ip.txt'))
+    sql.close()
+    let pool = await sql.connect({ ...config.DB, server })
+    let folders = await getAllGroups(pool)
+    console.log('!')
+    res.json(folders)
+})
+
 module.exports = router

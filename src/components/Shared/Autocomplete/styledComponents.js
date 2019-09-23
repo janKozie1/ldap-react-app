@@ -21,12 +21,12 @@ export const Options = styled.div`
     left: -2px;
     top: calc(100% + 2px);
     width: calc(100% + 4px);
-    border: 1px solid #ddd;
+
     border-top: 0;
     overflow-x: hidden;
     max-height: calc(${({ maxRows, height }) => `${maxRows} * ${height}`});
     background: white;
-    z-index: 2;
+    z-index: 12;
 `
 
 export const Option = styled.div`
@@ -37,7 +37,7 @@ export const Option = styled.div`
     align-items: center;
     position: relative;
     width: 100%;
-    z-index: 2;
+    z-index: 10;
     &:hover {
         background: rgba(0, 0, 0, 0.1);
     }

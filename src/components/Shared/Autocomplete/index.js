@@ -4,7 +4,6 @@ import * as S from './styledComponents'
 const Autocomplete = ({
     options,
     matchBy,
-    defValue = '',
     height = '34px',
     width = '100%',
     maxRows,
@@ -12,12 +11,17 @@ const Autocomplete = ({
     display,
     exclude,
     handleAdd,
+    handleInput,
+    value,
     regex
 }) => {
-    let [value, setValue] = useState(defValue)
     let filteredOptions = options.reduce((prev, curr) => {
-        console.log(regex.replace(/xxx/g, value))
-        let r = new RegExp(regex.replace(/xxx/g, value) || `^${value}.*`, 'i')
+        let r = new RegExp(
+            regex
+                ? regex.replace(/xxx/g, value).replace(/\\/g, '\\\\')
+                : `^${value}.*`,
+            'i'
+        )
         let toCheck = curr[matchBy]
         if (
             value &&
@@ -32,12 +36,7 @@ const Autocomplete = ({
     }, [])
 
     let handleOptionSelect = text => {
-        if (handleAdd) {
-            handleAdd(filteredOptions.find(e => e[display] === text))
-            setValue('')
-        } else {
-            setValue(text)
-        }
+        handleAdd(filteredOptions.find(e => e[display] === text))
     }
     return (
         <S.Container>
@@ -45,7 +44,7 @@ const Autocomplete = ({
                 type='text'
                 height={height}
                 value={value}
-                onChange={({ target: { value } }) => setValue(value)}
+                onChange={({ target: { value } }) => handleInput(value)}
             />
             <S.Options maxRows={maxRows} height={height}>
                 {filteredOptions.map(e => {
