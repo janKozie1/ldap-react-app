@@ -6,7 +6,7 @@ const checkRelationExists = async (pool, folder_ID, group_ID) => {
         .input('folderID', sql.Int, folder_ID)
         .input('groupID', sql.Int, group_ID)
         .query(
-            `select * from Relations where Folder_ID = @folderID and Group_ID = @groupID`
+            `select * from dbo.Relations where Folder_ID = @folderID and Group_ID = @groupID`
         )
     return Boolean(response.recordset.length)
 }

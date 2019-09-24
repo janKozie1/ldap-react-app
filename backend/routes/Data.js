@@ -13,7 +13,7 @@ const {
 } = require('../queryFunctions/groups')
 
 const { getAllUsers } = require('../queryFunctions/users')
-
+const { getAllRelations } = require('../queryFunctions/relations')
 const { getFolderOwners, getAllFolders } = require('../queryFunctions/folders')
 
 router.post('/data', async (req, res) => {
@@ -71,7 +71,6 @@ router.post('/allFolders', async (req, res) => {
     sql.close()
     let pool = await sql.connect({ ...config.DB, server })
     let folders = await getAllFolders(pool)
-    console.log('?')
     res.json(folders)
 })
 router.post('/allGroups', async (req, res) => {
@@ -79,7 +78,6 @@ router.post('/allGroups', async (req, res) => {
     sql.close()
     let pool = await sql.connect({ ...config.DB, server })
     let folders = await getAllGroups(pool)
-    console.log('!')
     res.json(folders)
 })
 

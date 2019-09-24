@@ -8,7 +8,7 @@ import * as S from './styledComponents'
 
 const { DEF_PARAMS, BASE_URL } = fetchDefConfig
 
-const GroupForm = ({ onSubmit, response, isLoading }) => {
+const GroupForm = ({ onSubmit, response, loading }) => {
     let [folders, setFolders] = useState([])
     let [groups, setGroups] = useState([])
     let [group, setGroup] = useState({
@@ -86,11 +86,7 @@ const GroupForm = ({ onSubmit, response, isLoading }) => {
             <S.Footer>
                 <S.Message ok={response.ok}>{response.msg}</S.Message>
                 <S.Submit>
-                    {isLoading ? (
-                        <Spinner size={20} color={'white'} />
-                    ) : (
-                        'Zapisz'
-                    )}
+                    {loading ? <Spinner size={20} color={'white'} /> : 'Zapisz'}
                 </S.Submit>
             </S.Footer>
         </S.Form>

@@ -4,8 +4,11 @@ import withProtectedRoute from 'components/HOC/ProtectedRoute'
 import { useStateValue } from 'logic/store'
 
 import Select from 'components/Shared/Select'
-import Form from './Form'
-import GroupForm from './GroupForm'
+
+import UserRemover from './UserRemover'
+import RelationRemover from './RelationRemover'
+import GroupRemover from './GroupRemover'
+import FolderRemover from './FolderRemover'
 
 import { fetchDefConfig } from 'constants/defaultVariables'
 
@@ -31,51 +34,15 @@ const OPTIONS = [
         _id: 'relation'
     }
 ]
-const fields = {
-    user: [
-        {
-            text: 'ID',
-            id: 'userID'
-        },
-        {
-            text: 'Imię',
-            id: 'firstName'
-        },
-        {
-            text: 'Nazwisko',
-            id: 'surname'
-        },
-        {
-            text: 'Biuro',
-            id: 'office'
-        }
-    ],
-    folder: [
-        {
-            text: 'Ścieżka',
-            id: 'folderPath'
-        },
-        {
-            text: 'Lokalizacja',
-            id: 'location'
-        }
-    ],
-    group: [
-        {
-            text: 'Grupa',
-            id: 'group'
-        }
-    ]
-}
 
-const RecordCreator = () => {
+const RecordRemover = () => {
     let [{ token }] = useStateValue()
     let [current, setCurrent] = useState(OPTIONS[0])
     let [loading, setLoading] = useState(false)
     let [response, setResponse] = useState({})
     let onSubmit = async data => {
         setLoading(true)
-        let res = await fetch(`${BASE_URL}/update/add/${current._id}`, {
+        let res = await fetch(`${BASE_URL}/update/delete/${current._id}`, {
             ...DEF_PARAMS,
             method: 'POST',
             headers: {
@@ -94,6 +61,21 @@ const RecordCreator = () => {
         setResponse({})
         setCurrent(obj)
     }
+
+    let getForm = () => {
+        let props = { response, loading, onSubmit }
+        switch (current._id) {
+            case 'group':
+                return <GroupRemover {...props} />
+            case 'relation':
+                return <RelationRemover {...props} />
+            case 'folder':
+                return <FolderRemover {...props} />
+            case 'user':
+            default:
+                return <UserRemover {...props} />
+        }
+    }
     return (
         <S.Container>
             <S.Type>
@@ -104,20 +86,7 @@ const RecordCreator = () => {
                     width={'150px'}
                 />
             </S.Type>
-            {current._id === 'relation' ? (
-                <GroupForm
-                    loading={loading}
-                    response={response}
-                    onSubmit={onSubmit}
-                />
-            ) : (
-                <Form
-                    loading={loading}
-                    response={response}
-                    onSubmit={onSubmit}
-                    fields={fields[current._id]}
-                />
-            )}
+            {getForm()}
         </S.Container>
     )
 }
@@ -125,4 +94,4 @@ const RecordCreator = () => {
 export default withProtectedRoute({
     protectedRoute: true,
     redirectTo: '/login'
-})(RecordCreator)
+})(RecordRemover)

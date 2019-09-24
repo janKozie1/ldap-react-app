@@ -4,13 +4,7 @@ import Spinner from 'components/Shared/Spinner'
 
 import * as S from './styledComponents'
 
-let f = [
-    {
-        text: 'ID',
-        id: 'userID'
-    }
-]
-const UserCreator = ({ onSubmit, loading, response, fields }) => {
+const Form = ({ onSubmit, loading, response, fields }) => {
     let [userInput, setUserInput] = useState(
         fields.reduce(
             (prev, curr) => ({
@@ -73,4 +67,4 @@ const UserCreator = ({ onSubmit, loading, response, fields }) => {
     )
 }
 
-export default UserCreator
+export default Form

@@ -3,6 +3,8 @@ import { NavLink as link } from 'react-router-dom'
 import { ReactComponent as f } from 'assets/find.svg'
 import { ReactComponent as h } from 'assets/history.svg'
 import { ReactComponent as a } from 'assets/add.svg'
+import { ReactComponent as r } from 'assets/remove.svg'
+
 export let Main = styled.main`
     height: 100vh;
     width: 100%;
@@ -78,6 +80,12 @@ export let HistroyIcon = styled(h)`
     fill: ${({ theme: { colors } }) => colors.font};
 `
 export let AddIcon = styled(a)`
+    height: 18px;
+    margin-right: 10px;
+    fill: ${({ theme: { colors } }) => colors.font};
+`
+
+export let RemoveIcon = styled(r)`
     height: 18px;
     margin-right: 10px;
     fill: ${({ theme: { colors } }) => colors.font};
