@@ -19,7 +19,7 @@ const DataItem = React.memo(
         handleEdit
     }) => {
         let handleOpen = () => {
-            handleRowInteraction(group_ID, 'open')
+            handleRowInteraction({ g_id: group_ID, f_id: folder_ID }, 'open')
         }
 
         return (

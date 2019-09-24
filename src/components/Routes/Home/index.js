@@ -18,17 +18,24 @@ const Home = () => {
     let handleRequest = query => {
         setQuery(query)
     }
-    let handleRowInteraction = (id, type) => {
+    let handleRowInteraction = ({ g_id, f_id }, type) => {
+        console.log(g_id, f_id)
         setResult(result =>
             result.map(e => {
-                if (type === 'check' && e.group_ID === id) {
+                if (
+                    type === 'check' &&
+                    e.group_ID === g_id &&
+                    e.folder_ID === f_id
+                ) {
                     if (e.check) {
                         setSelectedCount(selectedCount - 1)
                     } else {
                         setSelectedCount(selectedCount + 1)
                     }
                 }
-                return e.group_ID === id ? { ...e, [type]: !e[type] } : e
+                return e.group_ID === g_id && e.folder_ID === f_id
+                    ? { ...e, [type]: !e[type] }
+                    : e
             })
         )
     }

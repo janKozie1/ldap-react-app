@@ -71,6 +71,21 @@ const addNewRelation = async (pool, folder_ID, group_ID) => {
         return false
     }
 }
+
+const addNewGroup = async (pool, group) => {
+    try {
+        await pool
+            .request()
+            .input('group', sql.VarChar(127), group)
+            .query(`insert into dbo.Groups (GroupName) values (@group)`)
+        return true
+    } catch (err) {
+        console.log(err)
+        return false
+    }
+}
 module.exports.updateOwners = updateOwners
 module.exports.addNewUser = addNewUser
 module.exports.addNewFolder = addNewFolder
+module.exports.addNewRelation = addNewRelation
+module.exports.addNewGroup = addNewGroup

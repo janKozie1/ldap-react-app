@@ -93,11 +93,14 @@ const DataDisplay = ({
                 <S.Cell />
                 {sortedData.map((e, i) => {
                     return (
-                        <React.Fragment key={`${e.group_ID}`}>
+                        <React.Fragment key={`${e.group_ID}-${e.folder_ID}`}>
                             <S.Cell>
                                 <CheckBox
                                     clickHandler={handleCheck}
-                                    returnData={e.group_ID}
+                                    returnData={{
+                                        g_id: e.group_ID,
+                                        f_id: e.folder_ID
+                                    }}
                                     checked={e.check}
                                     size={12}
                                 />

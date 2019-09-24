@@ -22,6 +22,10 @@ const OPTIONS = [
         _id: 'folder'
     },
     {
+        text: 'Grupa',
+        _id: 'group'
+    },
+    {
         text: 'Relacja',
         _id: 'relation'
     }
@@ -53,6 +57,12 @@ const fields = {
         {
             text: 'Lokalizacja',
             id: 'location'
+        }
+    ],
+    group: [
+        {
+            text: 'Grupa',
+            id: 'group'
         }
     ]
 }

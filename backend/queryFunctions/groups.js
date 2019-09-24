@@ -23,12 +23,12 @@ const BASE_GROUP_QUERY_NAME_OR_ID = `
         f.Folder_ID, 
         f.FolderPath 
     from Groups g 
-        join Relations r on 
-            r.Group_ID = g.Group_ID 
+        join Relations re on 
+            re.Group_ID = g.Group_ID 
         join Folders f on 
-            f.Folder_ID = r.Folder_ID
+            f.Folder_ID = re.Folder_ID
         join Roles r on 
-            r.Folder_ID = g.Folder_ID 
+            r.Folder_ID = re.Folder_ID 
         join Users u on 
             r.User_ID = u.User_ID 
         where 
@@ -123,8 +123,17 @@ const getAllGroups = async pool => {
     return response.recordset
 }
 
+const checkGroupExists = async (pool, group) => {
+    let response = await pool
+        .request()
+        .input('group', sql.VarChar(127), group)
+        .query(`select * from Groups where GroupName like @group`)
+    return Boolean(response.recordset.length)
+}
+
 module.exports.getGroupsForPath = getGroupsForPath
 module.exports.getMatchingGroups = getMatchingGroups
 module.exports.getGroupsByUserID = getGroupsByUserID
 module.exports.getGroupsByUserFullName = getGroupsByUserFullName
 module.exports.getAllGroups = getAllGroups
+module.exports.checkGroupExists = checkGroupExists
