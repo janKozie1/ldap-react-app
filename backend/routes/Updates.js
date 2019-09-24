@@ -12,9 +12,15 @@ const {
     addNewGroup
 } = require('../queryFunctions/update')
 const { checkUserExists } = require('../queryFunctions/users')
-const { checkFolderExists } = require('../queryFunctions/folders')
+const {
+    checkFolderExists,
+    checkFolderIsValid
+} = require('../queryFunctions/folders')
 const { checkRelationExists } = require('../queryFunctions/relations')
-const { checkGroupExists } = require('../queryFunctions/groups')
+const {
+    checkGroupExists,
+    checkGroupIsValid
+} = require('../queryFunctions/groups')
 router.put('/', auth, async (req, res) => {
     if (req.body.owners) {
         try {
@@ -129,8 +135,8 @@ router.post('/add/relation', auth, async (req, res) => {
         if (!group || !group.group_ID || !group.groupName)
             return res.status(400).json({ ok: false, msg: 'Niepoprawna grupa' })
 
-        const { folder_ID } = folder
-        const { group_ID } = group
+        const { folder_ID, folderPath } = folder
+        const { group_ID, groupName } = group
         let server = await readFileAsync(
             path.resolve(__dirname, '../db_ip.txt')
         )
@@ -140,6 +146,18 @@ router.post('/add/relation', auth, async (req, res) => {
             return res
                 .status(400)
                 .json({ ok: false, msg: 'Powiązanie już istnieje' })
+
+        let folderValid = await checkFolderIsValid(pool, folder_ID, folderPath)
+        if (!folderValid)
+            return res
+                .status(400)
+                .json({ ok: false, msg: 'Folder nie istnieje' })
+
+        let groupValid = await checkGroupIsValid(pool, group_ID, groupName)
+        if (!groupValid)
+            return res
+                .status(400)
+                .json({ ok: false, msg: 'Grupa nie istnieje' })
 
         let ok = await addNewRelation(pool, folder_ID, group_ID)
         if (ok) return res.json({ ok: true, msg: 'Powiązanie dodane' })
