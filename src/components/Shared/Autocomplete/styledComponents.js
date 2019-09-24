@@ -16,7 +16,7 @@ export const Input = styled.input`
 `
 
 export const Options = styled.div`
-    display: grid;
+    display: ${({ isVisible }) => (isVisible ? 'grid' : 'none')};
     position: absolute;
     left: -2px;
     top: calc(100% + 2px);

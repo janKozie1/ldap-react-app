@@ -39,6 +39,7 @@ const getAllFolders = async pool => {
         )
     return response.recordset
 }
+
 module.exports.getFolderOwners = getFolderOwners
 module.exports.checkFolderExists = checkFolderExists
 module.exports.getAllFolders = getAllFolders

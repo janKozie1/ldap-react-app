@@ -9,7 +9,6 @@ import * as S from './styledComponents'
 const { DEF_PARAMS, BASE_URL } = fetchDefConfig
 
 const GroupForm = ({ onSubmit, response, isLoading }) => {
-    console.log(onSubmit)
     let [folders, setFolders] = useState([])
     let [groups, setGroups] = useState([])
     let [group, setGroup] = useState({
@@ -39,11 +38,14 @@ const GroupForm = ({ onSubmit, response, isLoading }) => {
         setFolder({ ...folder, folderPath: data })
     }
     let groupInput = data => {
-        console.log(data)
         setGroup({ ...group, groupName: data })
     }
+    let onFormSubmit = e => {
+        e.preventDefault()
+        onSubmit({ group, folder })
+    }
     return (
-        <S.Form onSubmit={onSubmit}>
+        <S.Form onSubmit={onFormSubmit}>
             <S.Header>Dodaj</S.Header>
             <S.Label>
                 <S.LabelTitle>Grupa</S.LabelTitle>

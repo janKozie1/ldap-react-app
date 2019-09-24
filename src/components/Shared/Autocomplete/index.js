@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import * as S from './styledComponents'
 
 const Autocomplete = ({
@@ -15,6 +15,8 @@ const Autocomplete = ({
     value,
     regex
 }) => {
+    let ref = useRef(null)
+    let [isFocused, setIsFocused] = useState(false)
     let filteredOptions = options.reduce((prev, curr) => {
         let r = new RegExp(
             regex
@@ -36,6 +38,7 @@ const Autocomplete = ({
     }, [])
 
     let handleOptionSelect = text => {
+        ref.current.blur()
         handleAdd(filteredOptions.find(e => e[display] === text))
     }
     return (
@@ -44,9 +47,11 @@ const Autocomplete = ({
                 type='text'
                 height={height}
                 value={value}
+                onFocus={() => setIsFocused(true)}
+                ref={ref}
                 onChange={({ target: { value } }) => handleInput(value)}
             />
-            <S.Options maxRows={maxRows} height={height}>
+            <S.Options isVisible={isFocused} maxRows={maxRows} height={height}>
                 {filteredOptions.map(e => {
                     return (
                         <S.Option

@@ -22,8 +22,8 @@ const OPTIONS = [
         _id: 'folder'
     },
     {
-        text: 'Grupa',
-        _id: 'group'
+        text: 'Relacja',
+        _id: 'relation'
     }
 ]
 const fields = {
@@ -64,7 +64,6 @@ const RecordCreator = () => {
     let [response, setResponse] = useState({})
     let onSubmit = async data => {
         setLoading(true)
-        console.log(data)
         let res = await fetch(`${BASE_URL}/update/add/${current._id}`, {
             ...DEF_PARAMS,
             method: 'POST',
@@ -95,7 +94,7 @@ const RecordCreator = () => {
                     width={'150px'}
                 />
             </S.Type>
-            {current._id === 'group' ? (
+            {current._id === 'relation' ? (
                 <GroupForm
                     loading={loading}
                     response={response}

@@ -9,8 +9,10 @@ const BASE_GROUP_QUERY_PATH_OR_GROUP = `
         f.Folder_ID,
         f.FolderPath
     from Groups g 
+        join Relations r on 
+            r.Group_ID = g.Group_ID 
         join Folders f on 
-            f.Folder_ID = g.Folder_ID 
+            f.Folder_ID = r.Folder_ID
         where
 `
 
@@ -21,8 +23,10 @@ const BASE_GROUP_QUERY_NAME_OR_ID = `
         f.Folder_ID, 
         f.FolderPath 
     from Groups g 
+        join Relations r on 
+            r.Group_ID = g.Group_ID 
         join Folders f on 
-            f.Folder_ID = g.Folder_ID 
+            f.Folder_ID = r.Folder_ID
         join Roles r on 
             r.Folder_ID = g.Folder_ID 
         join Users u on 
