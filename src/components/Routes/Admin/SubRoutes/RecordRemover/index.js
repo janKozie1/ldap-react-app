@@ -42,7 +42,7 @@ const RecordRemover = () => {
     let [response, setResponse] = useState({})
     let onSubmit = async data => {
         setLoading(true)
-        let res = await fetch(`${BASE_URL}/update/delete/${current._id}`, {
+        let res = await fetch(`${BASE_URL}/delete/${current._id}`, {
             ...DEF_PARAMS,
             method: 'POST',
             headers: {

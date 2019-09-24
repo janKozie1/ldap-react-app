@@ -81,4 +81,11 @@ router.post('/allGroups', async (req, res) => {
     res.json(folders)
 })
 
+router.post('/allRelations', async (req, res) => {
+    let server = await readFileAsync(path.resolve(__dirname, '../db_ip.txt'))
+    sql.close()
+    let pool = await sql.connect({ ...config.DB, server })
+    let relations = await getAllRelations(pool)
+    res.json(relations)
+})
 module.exports = router

@@ -53,7 +53,6 @@ export let Submit = styled.button`
     align-self: flex-end;
     cursor: pointer;
     position: relative;
-    background: ${({ theme: { colors } }) => colors.error};
 `
 
 export let Footer = styled.div`

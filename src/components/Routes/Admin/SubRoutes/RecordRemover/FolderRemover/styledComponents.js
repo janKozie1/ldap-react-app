@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const Form = styled.form`
-    width: 450px;
+    width: 600px;
     display: flex;
     margin-top: 80px;
     position: relative;
@@ -33,11 +33,11 @@ export const LabelTitle = styled.p`
     margin-right: 20px;
 `
 
-export const Input = styled.input`
+export const AContainer = styled.div`
     border: 2px solid #333;
     height: 100%;
-    padding: 0 10px;
     font-family: inherit;
+    width: 400px;
 `
 export let Submit = styled.button`
     background: ${({ theme: { colors } }) => colors.green};
@@ -53,7 +53,6 @@ export let Submit = styled.button`
     align-self: flex-end;
     cursor: pointer;
     position: relative;
-    background: ${({ theme: { colors } }) => colors.error};
 `
 
 export let Footer = styled.div`

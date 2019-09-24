@@ -22,27 +22,3 @@ export const Lola = styled.div`
     margin-top: ${({ theme: { sizes } }) =>
         css`calc(${sizes.margins.formMargin} * 2)`};
 `
-// {/* <S.Container>
-//             <S.Type>
-//                 <Select
-//                     options={OPTIONS}
-//                     current={current}
-//                     selectFunction={handleSelect}
-//                     width={'150px'}
-//                 />
-//             </S.Type>
-//             {/* {current._id === 'relation' ? (
-//                 <GroupForm
-//                     loading={loading}
-//                     response={response}
-//                     onSubmit={onSubmit}
-//                 />
-//             ) : (
-//                 <Form
-//                     loading={loading}
-//                     response={response}
-//                     onSubmit={onSubmit}
-//                     fields={fields[current._id]}
-//                 />
-//             )} */}
-//         </S.Container> */}

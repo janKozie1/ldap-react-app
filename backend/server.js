@@ -5,6 +5,7 @@ let app = express()
 const data = require('./routes/Data')
 const admin = require('./routes/Admin')
 const update = require('./routes/Updates')
+const deleteR = require('./routes/Delete')
 
 app.use(cors({ origin: '*' }))
 app.use(express.json())
@@ -13,6 +14,7 @@ app.use(express.static('build'))
 app.use('/data', data)
 app.use('/admin', admin)
 app.use('/update', update)
+app.use('/delete', deleteR)
 
 app.get('/', (req, res) => {
     console.log('?')

@@ -131,9 +131,36 @@ const checkGroupExists = async (pool, group) => {
     return Boolean(response.recordset.length)
 }
 
+const checkGroupIsValid = async (pool, group_ID, groupName) => {
+    let response = await pool
+        .request()
+        .input('groupName', sql.VarChar(127), groupName)
+        .input('groupID', sql.Int, group_ID)
+        .query(
+            `select * from Groups where GroupName = @groupName and Group_ID = @groupID`
+        )
+    return Boolean(response.recordset.length)
+}
+const deleteGroup = async (pool, group_ID, groupName) => {
+    await pool
+        .request()
+        .input('groupID', sql.Int, group_ID)
+        .query(`delete from dbo.Relations where Group_ID = @groupID`)
+    let response = await pool
+        .request()
+        .input('groupID', sql.Int, group_ID)
+        .input('groupName', sql.VarChar(127), groupName)
+        .query(
+            `delete from dbo.Groups where Group_ID = @groupID and GroupName = @groupName`
+        )
+    return Boolean(response.rowsAffected[0])
+}
+
 module.exports.getGroupsForPath = getGroupsForPath
 module.exports.getMatchingGroups = getMatchingGroups
 module.exports.getGroupsByUserID = getGroupsByUserID
 module.exports.getGroupsByUserFullName = getGroupsByUserFullName
 module.exports.getAllGroups = getAllGroups
 module.exports.checkGroupExists = checkGroupExists
+module.exports.checkGroupIsValid = checkGroupIsValid
+module.exports.deleteGroup = deleteGroup

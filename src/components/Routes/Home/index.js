@@ -19,7 +19,6 @@ const Home = () => {
         setQuery(query)
     }
     let handleRowInteraction = ({ g_id, f_id }, type) => {
-        console.log(g_id, f_id)
         setResult(result =>
             result.map(e => {
                 if (

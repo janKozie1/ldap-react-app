@@ -56,7 +56,7 @@ const UserRemover = ({ onSubmit, loading, response }) => {
             <S.Footer>
                 <S.Message ok={response.ok}>{response.msg}</S.Message>
                 <S.Submit>
-                    {loading ? <Spinner size={20} color={'white'} /> : 'Zapisz'}
+                    {loading ? <Spinner size={20} color={'white'} /> : 'Usuń'}
                 </S.Submit>
             </S.Footer>
         </S.Form>
