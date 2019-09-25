@@ -16,7 +16,7 @@ app.use('/admin', admin)
 app.use('/update', update)
 app.use('/delete', deleteR)
 
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
     console.log('?')
     res.sendFile('index.html', { root: path.join(__dirname, '/build') })
 })

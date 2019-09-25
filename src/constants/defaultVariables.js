@@ -1,5 +1,5 @@
-const DEF_URL = 'http://127.0.0.1:8080/data/data'
-const BASE_URL = 'http://127.0.0.1:8080'
+const DEF_URL = '/data/data'
+const BASE_URL = ''
 const DEF_PARAMS = {
     method: 'POST',
     headers: {
@@ -14,3 +14,4 @@ export const fetchDefConfig = {
     DEF_QUERY,
     BASE_URL
 }
+//http://127.0.0.1:8080

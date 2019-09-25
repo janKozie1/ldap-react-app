@@ -37,10 +37,6 @@ let Admin = props => {
                         <S.RemoveIcon />
                         Usuń rekordy
                     </S.Link>
-                    <S.Link to='/admin/history' activeClassName='active'>
-                        <S.HistroyIcon />
-                        Historia zmian
-                    </S.Link>
                 </S.Nav>
                 <S.Logout onClick={() => handleSignOut()}>Wyloguj</S.Logout>
             </S.Header>

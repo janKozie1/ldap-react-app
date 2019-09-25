@@ -38,9 +38,12 @@ const Autocomplete = ({
     }, [])
 
     let handleOptionSelect = text => {
-        ref.current.blur()
-        handleAdd(filteredOptions.find(e => e[display] === text))
+        setTimeout(() => {
+            setIsFocused(false)
+            handleAdd(filteredOptions.find(e => e[display] === text))
+        }, 0)
     }
+
     return (
         <S.Container>
             <S.Input
@@ -57,7 +60,9 @@ const Autocomplete = ({
                         <S.Option
                             onClick={() => handleOptionSelect(e[display])}
                             key={e[uniqueKey]}>
-                            <S.Text width={width}>{e[display]}</S.Text>
+                            <S.Text width={width}>
+                                <bdi>{e[display]}</bdi>
+                            </S.Text>
                         </S.Option>
                     )
                 })}

@@ -48,7 +48,7 @@ export const Option = styled.div`
 
 export const Text = styled.p`
     white-space: nowrap;
-    overflow: hidden; /* "overflow" value must be different from "visible" */
+    overflow: hidden;
     text-overflow: ellipsis;
     width: ${({ width }) => width};
     direction: rtl;
